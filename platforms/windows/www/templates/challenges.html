@@ -1,15 +1,13 @@
 ﻿<ion-view view-title="Challenges Bank">
     <ion-content>
 		<div class="row text-center custom-search">
-			 <div class="col col-40">
+			 <div class="col col-50">
 				<div class="list">
 				   <label class="item item-input item-select">
 					  <div class="input-label"></div>
-					  <select>
-						 <option selected>Category</option>
-						 <option>Drink Water</option>
-						 <option>Work 4 Gym</option>
-						 <option>Drink Water</option>
+					  <select name="sCategory" ng-model="sCategory.idCategoria" ng-init="sCategory=''">
+						  <option ng-selected="true" value="">Category</option>
+						  <option ng-repeat = "category in categories" value="{{category.idCategoria}}">{{ category.strNombreCategoria }}</option>
 					  </select>
 				   </label>
 				</div>
@@ -18,11 +16,18 @@
 				<div class="list">
 				   <label class="item item-input item-select">
 					  <div class="input-label"></div>
-					  <select>
-						 <option selected>Level</option>
-						 <option>1</option>
-						 <option>2</option>
-						 <option>3</option>
+					  <select name="sLevel" ng-model="sLevel.levelReto" ng-init="sLevel=''">
+						 <option ng-selected="true" value="">Level</option>
+						 <option value="1">1</option>
+						 <option value="2">2</option>
+						 <option value="3">3</option>
+						 <option value="4">4</option>
+						 <option value="5">5</option>
+						 <option value="6">6</option>
+						 <option value="7">7</option>
+						 <option value="8">8</option>
+						 <option value="9">9</option>
+						 <option value="10">10</option>
 					  </select>
 				   </label>
 				</div>
@@ -30,18 +35,18 @@
 			 <div class="col col-20">
 				<div class="list">
 					<label class="item item-input">
-						<input type="text" placeholder="Points">
+						<input type="text" placeholder="Points" name="sPoint" ng-model="sPoint.points">
 					</label>
 				</div>
 			 </div>
-			 <div class="col col-10">
+			 <!-- <div class="col col-10">
 				<button class="button button-custom icon ion-android-search"></button>
-			</div>
-			 <div class="col col-10">
-				<button class="button button-custom icon ion-android-refresh"></button>
+			 </div> -->
+			 <div class="col col-10" style="text-align: left;">
+				<button class="button button-custom icon ion-android-refresh" ng-click="sCategory = sLevel = sPoint = ''"></button>
 			</div>
 		</div>
-		<a ng-repeat = "challenge in challenges" ng-if="challenge.challenge_id" ui-sref="app.challenge-details({challenge_id:challenge.challenge_id})">
+		<a ng-repeat = "challenge in challenges | filter:sCategory | filter:sPoint | filter:sLevel" ng-if="challenge.challenge_id" ui-sref="app.challenge-details({challenge_id:challenge.challenge_id})">
          <div style="position:relative;width:100%;line-height: 0;">
             <img ng-if="challenge.image" src="{{ challenge.image }}" style="width:100%" alt="challengeImg">			  
             <div class="ion-dom"></div>

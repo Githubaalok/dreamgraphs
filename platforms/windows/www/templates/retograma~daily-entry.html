@@ -34,7 +34,7 @@
 					<a class="item item-thumbnail-left" href="" ng-repeat="getcomment in dailyentries[$index].getcomments">
 					  <img ng-if="getcomment.user_image_url" src="{{ getcomment.user_image_url }}">
 					  <h3>{{ getcomment.username }}</h3>
-					  <p>{{ getcomment.comment }}</p>
+					  <p style="white-space: normal;">{{ getcomment.comment }}</p>
 					</a>
 					<a class="item item-thumbnail-left" style="padding:12px !important;" href="" ng-if="dailyentries[$index].getcomments == 'No Comment Found'">
 					  <p>You Will Be The First To Comment On This</p>

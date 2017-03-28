@@ -14,6 +14,18 @@
 					<div class="video-container" ng-if="wallitem.type == 'video'">
 						<iframe src="" dynamic-url dynamic-url-src="{{ wallitem.wall_image_url}}" frameborder="0" width="560" height="315" ></iframe>
 					</div>
+					<!-- For result -->
+					<div class="Cresult" ng-if="wallitem.type == 'c_c' || wallitem.type == 'f_f'">
+						<div class="resultCtitle_points">
+							<p>{{ wallitem.descripcion }}</p>
+							<p>Points: {{ wallitem.points }} </p>
+						</div>
+						<img class="full-image" src="{{ wallitem.wall_image_url}}">
+						<div class="Cresult_text">
+							<h2 class="Cresult_textcc" ng-if="wallitem.type == 'c_c'"><i class="ion-android-happy"></i> Reto Completado!!</h2>
+							<h2 class="Cresult_textff" ng-if="wallitem.type == 'f_f'"><i class="ion-android-sad"></i> Reto Fallido!!</h2>
+						</div>
+					</div>
 				</div>
 				<p>{{ wallitem.details }}</p>
 				<p class="likeandcomments">
@@ -34,7 +46,7 @@
 					<a class="item item-thumbnail-left" href="" ng-repeat="getcomment in wallitems[$index].getcomments">
 					  <img ng-if="getcomment.user_image_url" src="{{ getcomment.user_image_url }}">
 					  <h3>{{ getcomment.username }}</h3>
-					  <p>{{ getcomment.comment }}</p>
+					  <p style="white-space: normal;">{{ getcomment.comment }}</p>
 					</a>
 					<a class="item item-thumbnail-left" style="padding:12px !important;" href="" ng-if="wallitems[$index].getcomments == 'No Comment Found'">
 					  <p>You Will Be The First To Comment On This</p>
