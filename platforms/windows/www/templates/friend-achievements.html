@@ -1,7 +1,7 @@
-﻿<ion-view view-title="Achievements">
+﻿<ion-view view-title="Challenges Friends / Achievements">
     <ion-content>
 		<div class="list list-custom achievement">
-		   <a class="item item-thumbnail-left item-icon-left item-icon-right" ng-repeat="data in achievments" href="">
+		   <a class="item item-thumbnail-left item-icon-left item-icon-right" ng-repeat="data in achievments" ui-sref="app.friend-achievments-details({ record_id:data.id })">
 			  <img ng-if="data.image" src="{{ data.image }}"></img>
 			  <h2>{{ data.challenge_name }}</h2>
 			  <p><i class="ion-help-buoy" style="color:#3FEA57;"></i> {{ data.category_name }}</p>

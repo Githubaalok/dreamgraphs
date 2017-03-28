@@ -846,6 +846,26 @@ angular.module('starter.controllers', [])
 		});
 	});
 })
+/** Friend Without Accept Details Controller **/
+.controller('friendWithoutAcceptedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+	/** http://dreamgraphs.com/web_service.php?action=not_accpeted&user_id=12&record_id=231 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.notaccepted = {};
+		var action = "not_accpeted";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.notaccepteddetails = response.data[0];
+				$ionicLoading.hide();
+			}
+		});
+	});
+})
 /** Friend In-Progress Controller **/
 .controller('friendInProgressCtrl', function($http,$scope,$state,$ionicLoading) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge&user_id=20&condition=in_progress **/
@@ -861,6 +881,25 @@ angular.module('starter.controllers', [])
 			if(response.success == "Y"){
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 				$scope.in_progress = response.data;
+				$ionicLoading.hide();
+			}
+		});
+	});
+})
+/** Friend In-Progress Details Controller **/
+.controller('friendInProgressDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_inprogress_details&user_id=20&record_id=234 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.inprogress_details = {};
+		var action = "friend_challenge_inprogress_details";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.inprogress_details = response.data;
 				$ionicLoading.hide();
 			}
 		});
@@ -886,6 +925,25 @@ angular.module('starter.controllers', [])
 		});
 	});
 })
+/** Friend In-Failed Details Controller **/
+.controller('friendInFailedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_infailed_details&user_id=20&record_id=234 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.infailed_details = {};
+		var action = "friend_challenge_infailed_details";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.infailed_details = response.data;
+				$ionicLoading.hide();
+			}
+		});
+	});
+})
 /** Friend Achievments Controller **/
 .controller('friendAchievmentsCtrl', function($http,$scope,$state,$ionicLoading) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge&user_id=20&condition=completed **/
@@ -905,6 +963,31 @@ angular.module('starter.controllers', [])
 			}
 		});
 	});
+})
+/** Friend Achievments Details Controller **/
+.controller('friendAchievmentDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_achievements_details&user_id=20&record_id=234 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.achievments_details = {};
+		var action = "friend_challenge_achievements_details";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.achievments_details = response.data;
+				$ionicLoading.hide();
+			}
+		});
+	});
+	$scope.GotoPage = function(page){ 
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
+		$state.go('app.'+page);
+	}
 })
 /** Friend List Controller **/
 .controller('friendsListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup) {

@@ -1,7 +1,7 @@
-<ion-view view-title="In Progress">
+<ion-view view-title="Challenges Friends / In Progress">
     <ion-content>
 		<div class="list list-custom achievement">
-		   <a class="item item-thumbnail-left item-icon-left item-icon-right" ng-repeat="data in in_progress" href="">
+		   <a class="item item-thumbnail-left item-icon-left item-icon-right" ng-repeat="data in in_progress" ui-sref="app.friend-in-progress-details({ record_id:data.id })">
 			  <img ng-if="data.image" src="{{ data.image }}"></img>
 			  <h2>{{ data.challenge_name }}</h2>
 			  <p><i class="ion-help-buoy" style="color:#3FEA57;"></i> {{ data.category_name }}</p>
