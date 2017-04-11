@@ -576,35 +576,36 @@ angular.module('starter.controllers', [])
 /** Home Controller **/
 .controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope) {
 	/** Check Login **/
-		$scope.$on('$ionicView.enter', function() {
-			var login_var_local = window.localStorage.getItem("login_var_local");
-			if(login_var_local !== undefined && login_var_local != null) {
-				console.log(login_var_local);
-				$rootScope.$broadcast('login_var',{global_login:login_var_local});
-				/** http://dreamgraphs.com/web_service.php?action=testimonials **/
-				var action = "testimonials";
-				var data_parameters = "action="+action;
-				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-				$http.post(globalip,data_parameters, {
-					headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-				})
-				.success(function(response) {
-					if(response.success == "Y"){
-						//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-						$scope.complete_challenge = response.complete_challenge;
-						$scope.testimonials = response.testimonials;
-						setTimeout(function(){
-							$ionicSlideBoxDelegate.update();
-							$ionicSlideBoxDelegate.loop(true);
-						},1000);
-						$ionicLoading.hide();
-					}
-				});
-			}
-			else{
-				$state.go('app.login');
-			}	
-		});
+	$scope.$on('$ionicView.enter', function() {
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local !== undefined && login_var_local != null) {
+			console.log(login_var_local);
+			$rootScope.$broadcast('login_var',{global_login:login_var_local});
+			/** http://dreamgraphs.com/web_service.php?action=testimonials **/
+			var action = "testimonials";
+			var data_parameters = "action="+action;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.then(function(response) {
+				alert();
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.complete_challenge = response.complete_challenge;
+					$scope.testimonials = response.testimonials;
+					setTimeout(function(){
+						$ionicSlideBoxDelegate.update();
+						$ionicSlideBoxDelegate.loop(true);
+					},1000);
+				}
+				$ionicLoading.hide();
+			});
+		}
+		else{
+			$state.go('app.login');
+		}	
+	});
 	/** End Check Login **/
 	// Form
 	$scope.formData = {};
