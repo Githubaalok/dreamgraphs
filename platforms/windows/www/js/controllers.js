@@ -588,8 +588,7 @@ angular.module('starter.controllers', [])
 			$http.post(globalip,data_parameters, {
 				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
 			})
-			.then(function(response) {
-				alert();
+			.success(function(response) {
 				if(response.success == "Y"){
 					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 					$scope.complete_challenge = response.complete_challenge;

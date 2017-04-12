@@ -573,6 +573,37 @@ angular.module('starter.controllers', [])
 		});
 	}
 })
+/** updateProfileCtrl Controller **/
+.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$filter) {
+	$scope.userData = {};
+	// Datepicker
+	$scope.userData.Dateofbirth = $filter('date')(new Date(), "dd-MM-yyyy"); 
+	$scope.CallbackDateofbirth = function (val) {
+		if (!val) {	
+			console.log('Date not selected');
+		} else {
+			console.log('Selected date is : ', val);
+			val = $filter('date')(val, "dd-MM-yyyy");
+			$scope.userData.Dateofbirth = val;
+		}
+	};
+	$scope.$on('$ionicView.enter', function() {
+		/** http://dreamgraphs.com/web_service.php?action=follow_unfollow_list&user_id=12&option=following **/
+		$scope.country_arr = country_arr;
+		/*var action = "follow_unfollow_list";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&option=following";
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.followings = response.data;
+				$ionicLoading.hide();
+			}
+		});*/
+	});
+})
 /** Home Controller **/
 .controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope) {
 	/** Check Login **/
@@ -588,8 +619,7 @@ angular.module('starter.controllers', [])
 			$http.post(globalip,data_parameters, {
 				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
 			})
-			.then(function(response) {
-				alert();
+			.success(function(response) {
 				if(response.success == "Y"){
 					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 					$scope.complete_challenge = response.complete_challenge;

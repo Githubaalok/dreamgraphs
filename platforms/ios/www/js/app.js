@@ -299,12 +299,39 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	  }
 	}
   })
+  .state('app.friend-without-accepted-details', {
+	url: '/friend-without-accepted-details/:record_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/friend-without-accepted-details.html',
+		controller: 'friendWithoutAcceptedDetailsCtrl'
+	  }
+	}
+  })
   .state('app.friend-in-progress', {
 	url: '/friend-in-progress',
 	views: {
 	  'menuContent': {
 		templateUrl: 'templates/friend-in-progress.html',
 		controller: 'friendInProgressCtrl'
+	  }
+	}
+  })
+  .state('app.friend-in-progress-details', {
+	url: '/friend-in-progress-details/:record_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/friend-in-progress-details.html',
+		controller: 'friendInProgressDetailsCtrl'
+	  }
+	}
+  })
+  .state('app.friend-challenges~daily-entry', {
+	url: '/friend-challenges~daily-entry/:record_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/friend-challenges~daily-entry.html',
+		controller: 'retogramaDailyentryCtrl'
 	  }
 	}
   })
@@ -317,12 +344,30 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	  }
 	}
   })
+  .state('app.friend-in-failed-details', {
+	url: '/friend-in-failed-details/:record_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/friend-in-failed-details.html',
+		controller: 'friendInFailedDetailsCtrl'
+	  }
+	}
+  })
   .state('app.friend-achievements', {
 	url: '/friend-achievements',
 	views: {
 	  'menuContent': {
 		templateUrl: 'templates/friend-achievements.html',
 		controller: 'friendAchievmentsCtrl'
+	  }
+	}
+  })
+  .state('app.friend-achievments-details', {
+	url: '/friend-achievments-details/:record_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/friend-achievments-details.html',
+		controller: 'friendAchievmentDetailsCtrl'
 	  }
 	}
   })

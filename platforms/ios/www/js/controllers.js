@@ -389,10 +389,11 @@ angular.module('starter.controllers', [])
 	});
 })
 /** My Activity Controller **/
-.controller('myActivityCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('myActivityCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter) {
 	/** http://dreamgraphs.com/web_service.php?action=get_user_wall&user_id=50 **/
+	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
-		$scope.myactivities = {};
+		$scope.wallitems = {};
 		var action = "get_user_wall";
 		var data_parameters = "action="+action+"&user_id="+global_login_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -402,11 +403,108 @@ angular.module('starter.controllers', [])
 		.success(function(response) {
 			if(response.success == "Y"){
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.myactivities = response.data;
+				$scope.wallitems = response.data;
 				$ionicLoading.hide();
 			}
 		});
 	});
+	/** Like Details **/
+	$scope.likeDetails = function(wall_id) {
+		/** http://dreamgraphs.com/web_service.php?action=get_like_of_wall&wall_id=373 **/
+		var likers = '';
+		var action = "get_like_of_wall";
+		var data_parameters = "action="+action+"&wall_id="+wall_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				angular.forEach(response.data, function(value, key){
+					likers += '<p class="bottom-border">'+value.username+'</p>';
+				});
+				$ionicLoading.hide();
+				$ionicPopup.show({
+				  template: likers,
+				  title: 'Likes',
+				  scope: $scope,
+				  cssClass: 'my-custom-popup',
+				  buttons: [
+					{ 
+					  text: 'Close',
+					  type: 'button-custom'
+					},
+				  ]
+				});
+			}
+		});
+	}
+	$scope.loadingComments = new Array();
+	/** Like Details **/
+	$scope.commentsDetails = function(wall_id,index) {
+		/** http://dreamgraphs.com/web_service.php?action=get_comment_of_wall&wall_id=373 **/
+		$scope.loadingComments[index] = true;
+		var action = "get_comment_of_wall";
+		var data_parameters = "action="+action+"&wall_id="+wall_id;
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.wallitems[index].getcomments = response.data;
+				$scope.wallitems[index].comment_count = response.comment_count;
+			}
+			$scope.loadingComments[index] = false;
+		});
+	}
+	/** Like Dislike **/
+	$scope.wallLikeDislike = function(wall_id,index,user_exist) {
+		/** http://dreamgraphs.com/web_service.php?action=wall_like_dislike&user_id=12&wall_id=377 **/
+		var likers = '';
+		var action = "wall_like_dislike";
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&wall_id="+wall_id;
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.wallitems[index].like_count = response.total_like;
+				$scope.wallitems[index].user_exist = !user_exist;
+			}
+			$ionicLoading.hide();
+		});
+	}
+	$scope.formData = {};
+	// Write A Comment
+	$scope.submitcommentForm = function(wall_id,index) {
+		/** http://dreamgraphs.com/web_service.php?action=put_comment_on_wall&user_id=12&wall_id=377&comment=looking nice **/
+		var data_parameters = "action=put_comment_on_wall"+"&user_id="+global_login_id+"&wall_id="+wall_id+"&comment="+$scope.formData.newcomment[index];
+		if($scope.formData.newcomment[index] != '' && $scope.formData.newcomment[index] != undefined) {
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == 'Y'){
+					$scope.formData.newcomment[index] = '';
+					var data_parameters2 = "action=get_comment_of_wall"+"&wall_id="+wall_id;
+					$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+					$http.post(globalip,data_parameters2, {
+						headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+					})
+					.success(function(response2) {
+						if(response2.success == "Y"){
+							$scope.wallitems[index].getcomments = response2.data;
+							$scope.wallitems[index].comment_count = response2.comment_count;
+						}
+						$ionicLoading.hide();
+					}); 
+				}
+				$ionicLoading.hide();
+			});
+		}
+	}
 })
 /** Following Controller **/
 .controller('followingCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicPopup,$ionicHistory) {
@@ -478,35 +576,35 @@ angular.module('starter.controllers', [])
 /** Home Controller **/
 .controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope) {
 	/** Check Login **/
-		$scope.$on('$ionicView.enter', function() {
-			var login_var_local = window.localStorage.getItem("login_var_local");
-			if(login_var_local !== undefined && login_var_local != null) {
-				console.log(login_var_local);
-				$rootScope.$broadcast('login_var',{global_login:login_var_local});
-				/** http://dreamgraphs.com/web_service.php?action=testimonials **/
-				var action = "testimonials";
-				var data_parameters = "action="+action;
-				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-				$http.post(globalip,data_parameters, {
-					headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-				})
-				.success(function(response) {
-					if(response.success == "Y"){
-						//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-						$scope.complete_challenge = response.complete_challenge;
-						$scope.testimonials = response.testimonials;
-						setTimeout(function(){
-							$ionicSlideBoxDelegate.update();
-							$ionicSlideBoxDelegate.loop(true);
-						},1000);
-						$ionicLoading.hide();
-					}
-				});
-			}
-			else{
-				$state.go('app.login');
-			}	
-		});
+	$scope.$on('$ionicView.enter', function() {
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local !== undefined && login_var_local != null) {
+			console.log(login_var_local);
+			$rootScope.$broadcast('login_var',{global_login:login_var_local});
+			/** http://dreamgraphs.com/web_service.php?action=testimonials **/
+			var action = "testimonials";
+			var data_parameters = "action="+action;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.complete_challenge = response.complete_challenge;
+					$scope.testimonials = response.testimonials;
+					setTimeout(function(){
+						$ionicSlideBoxDelegate.update();
+						$ionicSlideBoxDelegate.loop(true);
+					},1000);
+				}
+				$ionicLoading.hide();
+			});
+		}
+		else{
+			$state.go('app.login');
+		}	
+	});
 	/** End Check Login **/
 	// Form
 	$scope.formData = {};
@@ -568,6 +666,7 @@ angular.module('starter.controllers', [])
 			if(response.success == "Y"){
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 				$scope.challenges = response.data;
+				$scope.categories = response.categories;
 				$ionicLoading.hide();
 			}
 		});
@@ -846,6 +945,26 @@ angular.module('starter.controllers', [])
 		});
 	});
 })
+/** Friend Without Accept Details Controller **/
+.controller('friendWithoutAcceptedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+	/** http://dreamgraphs.com/web_service.php?action=not_accpeted&user_id=12&record_id=231 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.notaccepted = {};
+		var action = "not_accpeted";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.notaccepteddetails = response.data[0];
+				$ionicLoading.hide();
+			}
+		});
+	});
+})
 /** Friend In-Progress Controller **/
 .controller('friendInProgressCtrl', function($http,$scope,$state,$ionicLoading) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge&user_id=20&condition=in_progress **/
@@ -861,6 +980,25 @@ angular.module('starter.controllers', [])
 			if(response.success == "Y"){
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 				$scope.in_progress = response.data;
+				$ionicLoading.hide();
+			}
+		});
+	});
+})
+/** Friend In-Progress Details Controller **/
+.controller('friendInProgressDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_inprogress_details&user_id=20&record_id=234 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.inprogress_details = {};
+		var action = "friend_challenge_inprogress_details";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.inprogress_details = response.data;
 				$ionicLoading.hide();
 			}
 		});
@@ -886,6 +1024,25 @@ angular.module('starter.controllers', [])
 		});
 	});
 })
+/** Friend In-Failed Details Controller **/
+.controller('friendInFailedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_infailed_details&user_id=20&record_id=234 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.infailed_details = {};
+		var action = "friend_challenge_infailed_details";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.infailed_details = response.data;
+				$ionicLoading.hide();
+			}
+		});
+	});
+})
 /** Friend Achievments Controller **/
 .controller('friendAchievmentsCtrl', function($http,$scope,$state,$ionicLoading) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge&user_id=20&condition=completed **/
@@ -905,6 +1062,31 @@ angular.module('starter.controllers', [])
 			}
 		});
 	});
+})
+/** Friend Achievments Details Controller **/
+.controller('friendAchievmentDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_achievements_details&user_id=20&record_id=234 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.achievments_details = {};
+		var action = "friend_challenge_achievements_details";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.achievments_details = response.data;
+				$ionicLoading.hide();
+			}
+		});
+	});
+	$scope.GotoPage = function(page){ 
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
+		$state.go('app.'+page);
+	}
 })
 /** Friend List Controller **/
 .controller('friendsListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup) {
@@ -978,7 +1160,7 @@ angular.module('starter.controllers', [])
 /** Users List Controller **/
 .controller('usersListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup) {
 	/** http://dreamgraphs.com/web_service.php?action=users_list&current_user=12 **/
-	$scope.users = {};
+	//$scope.users = {};
 	$scope.$on('$ionicView.enter', function() {
 		var action = "users_list";
 		var data_parameters = "action="+action+"&current_user="+global_login_id;

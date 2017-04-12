@@ -407,6 +407,15 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	  }
 	}
   })
+  .state('app.update-profile', {
+	url: '/update-profile',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/update-profile.html',
+		controller: 'updateProfileCtrl'
+	  }
+	}
+  })
   .state('app.settings', {
 	url: '/settings',
 	views: {
