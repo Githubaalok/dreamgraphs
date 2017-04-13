@@ -359,22 +359,17 @@ angular.module('starter.controllers', [])
 		}
 	}
 })
-/** Member Profile Controller **/
-.controller('memberProfileCtrl',function($scope,$http,$ionicLoading,$ionicHistory,$state,$ionicPopup) {
-	$scope.GotoPage = function(page){ 
-		$ionicHistory.nextViewOptions({
-			disableBack: true
-		});
-		$state.go('app.'+page);
-	}
-})
 /** Followers Controller **/
 .controller('followersCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
 	/** http://dreamgraphs.com/web_service.php?action=follow_unfollow_list&user_id=12&option=followers **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.followers = {};
+		$scope.viewingSelfProfile = 'NO';
+		if($stateParams.user_id == global_login_id){
+			$scope.viewingSelfProfile = 'YES';
+		}
 		var action = "follow_unfollow_list";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&option=followers";
+		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id+"&option=followers";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -394,8 +389,14 @@ angular.module('starter.controllers', [])
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
 		$scope.wallitems = {};
+		$scope.viewingSelfProfile = 'NO';
+		$scope.tit = 'User';
+		if($stateParams.user_id == global_login_id){
+			$scope.viewingSelfProfile = 'YES';
+			$scope.tit = 'My';
+		}
 		var action = "get_user_wall";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
+		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -511,8 +512,12 @@ angular.module('starter.controllers', [])
 	/** http://dreamgraphs.com/web_service.php?action=follow_unfollow_list&user_id=12&option=following **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.followings = {};
+		$scope.viewingSelfProfile = 'NO';
+		if($stateParams.user_id == global_login_id){
+			$scope.viewingSelfProfile = 'YES';
+		}
 		var action = "follow_unfollow_list";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&option=following";
+		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id+"&option=following";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -571,6 +576,86 @@ angular.module('starter.controllers', [])
 			}
 			$ionicLoading.hide();
 		});
+	}
+})
+/** updateProfileCtrl Controller **/
+.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams) {
+	$scope.userData = {};
+	$scope.viewingSelfProfile = 'NO';
+	// Datepicker
+	$scope.userData.dob = $filter('date')(new Date(), "dd-MM-yyyy"); 
+	$scope.Callbackdob = function (val) {
+		if (!val) {	
+			console.log('Date not selected');
+		} else {
+			console.log('Selected date is : ', val);
+			val = $filter('date')(val, "dd-MM-yyyy");
+			$scope.userData.dob = val;
+		}
+	};
+	$scope.$on('$ionicView.enter', function() {
+		if($stateParams.user_id == global_login_id){
+			$scope.viewingSelfProfile = 'YES';
+		}
+		/** http://dreamgraphs.com/web_service.php?action=profile_details&user_id=48 **/
+		$scope.country_arr = country_arr;
+		var action = "profile_details";
+		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.userData = response.data;
+				$ionicLoading.hide();
+			}
+		});
+	});
+	$scope.submitUpdateForm = function(FormName) {
+		/** http://dreamgraphs.com/web_service.php?action=user_registration&update=1&user_id=12&dob=5-10-1992&country=india&city=bhopal&aboutme=edited&gender=male&phone=9827568454&username=jay&first_name=jay&last_name=rrr&email=jay@gmail.com */
+		var action = "user_registration";
+		var data_parameters = "action="+action+"&username="+$scope.userData.user_name+"&first_name="+$scope.userData.first_name+"&last_name="+$scope.userData.last_name+"&email="+$scope.userData.email+"&phone="+$scope.userData.phone+"&dob="+$scope.userData.dob+"&country="+$scope.userData.country+"&city="+$scope.userData.city+"&aboutme="+$scope.userData.aboutme+"&gender="+$scope.userData.gender+"&user_id="+global_login_id+"&update=1" ;
+		if(FormName.$invalid) {
+			console.log('Form is invalid');
+			$ionicPopup.show({
+			  template: '',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  scope: $scope,
+			  buttons: [
+				{ 
+				  text: 'Ok',
+				  type: 'button-custom'
+				},
+			  ]
+			});
+		}
+		else{
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-ios-information icon-popup"></i></p> '+response[0].msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					},
+				  ]
+				});
+				$ionicLoading.hide();
+			});
+		}
+	};
+	$scope.GotoPage = function(page){ 
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
+		$state.go('app.'+page);
 	}
 })
 /** Home Controller **/
@@ -2091,7 +2176,12 @@ angular.module('starter.controllers', [])
 		$timeout(function(){
 			$ionicTabsDelegate.select(tab);
 		},100);
-		$state.go('app.'+page);
+		if(tab == 5 && page == 'member-profile'){
+			$state.go('app.'+page,{user_id:global_login_id});
+		}
+		else{
+			$state.go('app.'+page);
+		}
 	}
 })
 /** Menu **/

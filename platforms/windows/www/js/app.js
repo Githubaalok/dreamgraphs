@@ -372,16 +372,16 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	}
   })
   .state('app.member-profile', {
-	url: '/member-profile',
+	url: '/member-profile/:user_id',
 	views: {
 	  'menuContent': {
 		templateUrl: 'templates/member-profile.html',
-		controller: 'memberProfileCtrl'
+		controller: 'updateProfileCtrl'
 	  }
 	}
   })
   .state('app.followers', {
-	url: '/followers',
+	url: '/followers/:user_id',
 	views: {
 	  'menuContent': {
 		templateUrl: 'templates/followers.html',
@@ -390,7 +390,7 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	}
   })
   .state('app.my-activity', {
-	url: '/my-activity',
+	url: '/my-activity/:user_id',
 	views: {
 	  'menuContent': {
 		templateUrl: 'templates/my-activity.html',
@@ -399,11 +399,20 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	}
   })
   .state('app.following', {
-	url: '/following',
+	url: '/following/:user_id',
 	views: {
 	  'menuContent': {
 		templateUrl: 'templates/following.html',
 		controller: 'followingCtrl'
+	  }
+	}
+  })
+  .state('app.update-profile', {
+	url: '/update-profile/:user_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/update-profile.html',
+		controller: 'updateProfileCtrl'
 	  }
 	}
   })

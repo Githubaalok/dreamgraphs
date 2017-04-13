@@ -117,7 +117,9 @@ map { display: block;width: 100%;height: 100%; }
 .bg-orange { background: #f8ac59 none repeat scroll 0 0; margin: 0 2px 9px; }
 .bg-blue { background: #1c84c6 none repeat scroll 0 0; margin: 0 2px 9px; }
 .bg-green { background: #23c6c8 none repeat scroll 0 0; margin: 0 2px 9px; }
-.bg-orange  p , .bg-blue  p , .bg-green  p { color: #ffffff; font-size: 15px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100% !important; margin:0px; }
+.bg-purple { background: #A26BF2 none repeat scroll 0 0;  margin: 0 2px 9px; }
+.bg-lightpink { background: #FA9EA8 none repeat scroll 0 0;  margin: 0 2px 9px; }
+.bg-orange  p , .bg-blue  p , .bg-green  p , .bg-purple  p , .bg-lightpink  p  { color: #ffffff; font-size: 15px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100% !important; margin:0px; }
 .custom-button-group.button-bar > .button:first-child  { border-radius: 0px; }
 .custom-button-group.button-bar > .button:last-child  { border-radius: 0px; border-right-width: 1px; }
 .pro-img { padding-left:0px; }
@@ -196,8 +198,9 @@ map { display: block;width: 100%;height: 100%; }
 .row.bitacoramediabuttons { text-align: center; margin: 25px 0px 0px 0px; }
 .bitacoramediabuttons .icon { font-size: 30px; text-align: center; color: #ccc; background: rgba(0,0,0,0.3); padding: 10px 25px 10px 25px; }
 .custom-nav-top .tabs { top: 43px; background: none; height: 35px; border: 1px solid rgba(255,255,255,0.3); line-height: 31px; }
-.custom-nav-top .tabb { background: #021D30; margin: 0px 1px 0px 0px; max-width: 100%; opacity: 1; }
-.tabb.tab-item-active, .tabb.tab-item.active, .tabb.tab-item.activated { opacity: 1; background: #021023; font-weight: 600; }
+.custom-nav-top .tabb { background: #021D30; max-width: 100%; opacity: 1; }
+.tabb.tab-item-active, .tabb.tab-item.active, .tabb.tab-item.activated { opacity: 1; background: #000; font-weight: 800; }
+.tabb:last-child { border-left: 1px solid rgba(255,255,255,0.3); }	
 .bar.search-bar-friendlist { background: none; border: none; top: 71px; padding:2px; }
 .bar.search-bar-friendlist .button-refresh { position: absolute; right: 15px; top: 5px; color: #838383; font-size: 25px; }
 .bar.search-bar-friendlist .button-refresh.activated {background: none; border: none; opacity: 1;color:#fff;}

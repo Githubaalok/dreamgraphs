@@ -6,11 +6,11 @@
 				<div class="list list-custom">
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">User</span>
-						<input type="text" placeholder="Username" ng-model="userData.username" name="username" ng-minlength="5" required>
+						<span class="input-label">Username</span>
+						<input type="text" placeholder="Username" ng-model="userData.user_name" name="user_name" ng-minlength="5" required>
 					  </label>
-					  <p class="error-p" ng-show="updateProfileForm.username.$error.required && (!updateProfileForm.username.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.username.$error.minlength && (!updateProfileForm.username.$pristine || updateProfileForm.$submitted)">Min 5 Characters Is Required</p>
+					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.required && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.minlength && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">Min 5 Characters Is Required</p>
 					<!--/ Input -->
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
@@ -47,13 +47,13 @@
 					  <p class="error-p" ng-show="updateProfileForm.phone.$error.pattern && (!updateProfileForm.phone.$pristine || updateProfileForm.$submitted) && !updateProfileForm.phone.$error.minlength">Phone Number Is Invalid</p>
 				    <!--/ Input -->
 					<!-- Input -->
-						<ionic-datepicker date="Dateofbirth" callback="CallbackDateofbirth">
+						<ionic-datepicker date="dob" callback="Callbackdob">
 							<label class="item item-custom item-input item-floating-label">
-								<span class="input-label">Start Date</span>
-								<input type="text" placeholder="Date of Birth" ng-model="userData.Dateofbirth" name="Dateofbirth" required>
+								<span class="input-label">Date of Birth</span>
+								<input type="text" placeholder="Date of Birth" ng-model="userData.dob" name="dob" required>
 							</label>
 						</ionic-datepicker>
-						<p class="error-p" ng-show="updateProfileForm.Dateofbirth.$error.required && (!updateProfileForm.Dateofbirth.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+						<p class="error-p" ng-show="updateProfileForm.dob.$error.required && (!updateProfileForm.dob.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
 					<!--/ Input -->
 					<!-- Input -->
 						<label class="item item-input item-select">	
@@ -75,7 +75,7 @@
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
 						<span class="input-label">About Me</span>
-						<textarea placeholder="About Me" ng-model="userData.about" name="about"></textarea>
+						<textarea placeholder="About Me" ng-model="userData.aboutme" name="aboutme"></textarea>
 					  </label>
 					<!--/ Input -->
 					<!-- Input -->
@@ -91,7 +91,7 @@
 					<!--/ Input -->
 				</div>
 				<button class="button button-custom button-block">
-					CREATE ACCOUNT
+					Save
 				</button>
             </form>
           </div>
