@@ -3,7 +3,11 @@
 		<div class="list list-custom list-followers">
 			<div class="item item-avatar" href="" ng-repeat="following in followings" ng-if="followings">
 			  <img ng-if="following.user_image_url" src="{{ following.user_image_url }}">
-			  <h2 class="text-white">{{ following.first_name }} {{ following.last_name }}</h2>
+			  <h2 class="text-white">
+				<a style="color:white;" ui-sref="app.member-profile({user_id:following.user_id})">
+					{{ following.first_name }} {{ following.last_name }}
+				</a>
+			  </h2>
 			  <p><i class="ion-ios-location"></i> {{ following.city }}  {{ following.country }}</p>
 			  <a href="" ng-if="viewingSelfProfile == 'YES'" ng-click="unfollowUser(following.user_id);" class="button button-small ion-minus button-unfollow button-custom"></a>
 			</div>
