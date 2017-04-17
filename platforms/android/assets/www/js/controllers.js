@@ -1172,6 +1172,10 @@ angular.module('starter.controllers', [])
 		});
 		$state.go('app.'+page);
 	}
+	$scope.GotoLink = function(){
+	  var ref = window.open('https://www.dreamgraphs.com?action=award&accept_id='+$stateParams.record_id,'_blank','location=no'); 
+	  return false;
+	}
 })
 /** Friend List Controller **/
 .controller('friendsListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup) {
@@ -1964,6 +1968,29 @@ angular.module('starter.controllers', [])
 		});
 	});
 })
+/** My-in_failed Details Challenges **/
+.controller('myInFailedDetailsCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup,$stateParams) {
+	/** http://dreamgraphs.com/web_service.php?action=my_challenge_infailed_details&record_id=168 **/
+	$scope.$on('$ionicView.enter', function() {
+		var action = "my_challenge_infailed_details";
+		var record_id = $stateParams.record_id;
+		var data_parameters = "action="+action+"&record_id="+record_id+"&user_id="+global_login_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				$scope.myInFailedDetails = response.data;
+			}
+			$ionicLoading.hide();
+		});
+	});
+	$scope.GotoLink = function(){
+	  var ref = window.open('https://www.dreamgraphs.com?action=penalty&accept_id='+$stateParams.record_id,'_blank','location=no'); 
+	  return false;
+	}
+})
 /** My-Achievments Challenges **/
 .controller('myAchievementsCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
 	/** http://dreamgraphs.com/web_service.php?action=my_challenge&user_id=48&condition=completed **/
@@ -1988,7 +2015,7 @@ angular.module('starter.controllers', [])
 	/** http://dreamgraphs.com/web_service.php?action=achievement_deatils&record_id=168 **/
 	$scope.$on('$ionicView.enter', function() {
 		var action = "achievement_deatils";
-		var record_id = $stateParams.record_id
+		var record_id = $stateParams.record_id;
 		var data_parameters = "action="+action+"&record_id="+record_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {

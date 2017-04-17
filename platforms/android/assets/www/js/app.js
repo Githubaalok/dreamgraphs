@@ -236,6 +236,15 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	  }
 	}
   })
+  .state('app.my-in-failed~details', {
+	url: '/my-in-failed~details/:record_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/my-in-failed~details.html',
+		controller: 'myInFailedDetailsCtrl'
+	  }
+	}
+  })
   .state('app.my-achievements', {
 	url: '/my-achievements',
 	views: {

@@ -1,7 +1,7 @@
 <ion-view view-title="My Challenge / Failed">
     <ion-content>
 		<div class="list list-custom achievement">
-			<a href="" ng-repeat="myInFailedChallenge in myInFailedChallenges" class="item item-thumbnail-left item-icon-left item-icon-right" >
+			<a ng-repeat="myInFailedChallenge in myInFailedChallenges" ui-sref="app.my-in-failed~details({record_id:myInFailedChallenge.id})" class="item item-thumbnail-left item-icon-left item-icon-right" >
 			  <img ng-if="myInFailedChallenge.image" src="{{ myInFailedChallenge.image }}">
 			  <h2 ng-if="myInFailedChallenge.challenge_name" style="width:30%">{{ myInFailedChallenge.challenge_name }}</h2>
 			  <p ng-if="myInFailedChallenge.category_name" style="width:30%"><i class="ion-help-buoy" style="color:#3FEA57;"></i> {{ myInFailedChallenge.category_name }}</p>

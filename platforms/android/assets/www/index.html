@@ -56,7 +56,7 @@
 		  <div class="list list-custom list-followers" style="margin-top:55px;">
 			<div class="item item-avatar" href="" ng-repeat="friend in friends | filter:searchfrnd" ng-if="friends">
 			  <img ng-if="friend.image" src="{{ friend.image }}">
-			  <h2 class="text-white">{{ friend.fullname }}</h2>
+			  <h2 class="text-white"><a style="color:white;" ui-sref="app.member-profile({user_id:friend.user_id})">{{ friend.fullname }}</a></h2>
 			  <p><i class="ion-ios-location"></i> {{ friend.city }}  {{ friend.country }}</p>
 			  <a href="" ng-click="unfriendUser(friend.user_id);" class="button button-small ion-minus button-unfollow button-custom"></a>
 			</div>
@@ -100,7 +100,7 @@
 		  <div class="list list-custom list-followers" style="margin-top:55px;">
 			<div class="item item-avatar" href="" ng-repeat="user in users | filter:searchuser" ng-if="users">
 			  <img ng-if="user.image" src="{{ user.image }}">
-			  <h2 class="text-white">{{ user.fullname }}</h2>
+			  <h2 class="text-white"><a style="color:white;" ui-sref="app.member-profile({user_id:user.user_id})">{{ user.fullname }}</a></h2>
 			  <p ng-if="user.city || user.country" ><i class="ion-ios-location"></i> {{ user.city }}  {{ user.country }}</p>
 			  <a href="" ng-click="sendFriendRequest(user.user_id,user);" ng-if="user.friend == 'no'" class="button button-small button-unfollow button-custom">
 				<i class="ion-plus-round text-primary" ng-if="user.send_request == 'no'"></i>
