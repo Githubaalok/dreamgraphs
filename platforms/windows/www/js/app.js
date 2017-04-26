@@ -236,6 +236,15 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	  }
 	}
   })
+  .state('app.my-in-failed~details', {
+	url: '/my-in-failed~details/:record_id',
+	views: {
+	  'menuContent': {
+		templateUrl: 'templates/my-in-failed~details.html',
+		controller: 'myInFailedDetailsCtrl'
+	  }
+	}
+  })
   .state('app.my-achievements', {
 	url: '/my-achievements',
 	views: {
@@ -470,15 +479,16 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	views: {
 	  'menuContent': {
 		templateUrl: 'templates/compensation~transaction.html',
-		//controller: 'compensationTransactionCtrl'
+		controller: 'compensationTransactionCtrl'
 	  }
 	}
   })
   .state('app.compensation~transaction~detail', {
-	url: '/compensation~transaction~detail',
+	url: '/compensation~transaction~detail/:trans_id',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/compensation~transaction~detail.html'    
+		templateUrl: 'templates/compensation~transaction~detail.html',
+		controller: 'compensationTransactionDetailCtrl'
 	  }
 	}
   })
@@ -494,7 +504,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/application-for-compensation~paypal',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/application-for-compensation~paypal.html'    
+		templateUrl: 'templates/application-for-compensation~paypal.html',
+		controller: 'compenAppPaypalCtrl'
 	  }
 	}
   })
@@ -502,7 +513,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/application-for-compensation~payu',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/application-for-compensation~payu.html'    
+		templateUrl: 'templates/application-for-compensation~payu.html',
+		controller: 'compenAppPayuCtrl'    
 	  }
 	}
   })
@@ -510,7 +522,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/application-for-compensation~payment-colombia',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/application-for-compensation~payment-colombia.html'    
+		templateUrl: 'templates/application-for-compensation~payment-colombia.html',
+		controller: 'compenAppPayColCtrl'    
 	  }
 	}
   })

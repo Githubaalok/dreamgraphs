@@ -11,12 +11,10 @@
              <div class="list list-custom">
 			    <!-- Input -->
 				  <label class="item item-custom item-input item-floating-label">
-					<span class="input-label">Email</span>
-					<input type="email" placeholder="Email" ng-model="email" name="email" ng-maxlength="30" required>
+					<span class="input-label">Username Or Email</span>
+					<input type="text" placeholder="Username Or Email" ng-model="email" name="email" required>
 				  </label>
 				  <p class="error-p" ng-show="memberloginForm.email.$error.required && (!memberloginForm.email.$pristine || memberloginForm.$submitted)">This Field Is Required</p>
-				  <p class="error-p" ng-show="memberloginForm.email.$error.maxlength && (!memberloginForm.email.$pristine || memberloginForm.$submitted)">Cannot Longer Than 30 Characters</p>
-				  <p class="error-p" ng-show="memberloginForm.email.$invalid && (!memberloginForm.email.$pristine || memberloginForm.$submitted) && !memberloginForm.email.$error.required">Email Is Not Valid</p>
 				<!--/ Input -->
 			    <!-- Input -->
 				  <label class="item item-custom item-input item-floating-label">

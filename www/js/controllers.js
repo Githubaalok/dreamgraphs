@@ -241,6 +241,290 @@ angular.module('starter.controllers', [])
 		});
 	});
 })
+/** Compensation/Transaction Details Controller **/
+.controller('compensationTransactionDetailCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+	/** http://dreamgraphs.com/web_service.php?action=transactions&user_id=20&record_id=18 **/
+	$scope.$on('$ionicView.enter', function() {
+		$scope.transactions = {};
+		var action = "transactions";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.trans_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.transaction = response.data[0];
+				$ionicLoading.hide();
+			}
+		});
+	});
+})
+/** Application compensation paypal Controller **/
+.controller('compenAppPaypalCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup) {
+	$scope.comData = {};
+	/* http://dreamgraphs.com/web_service.php?action=point_redeem_insert_entry&user_id=12&point=50&type_id=jayraj@gmail.com&payment_type=payu */
+	$scope.submitamountRedeemForm = function(FormName) {
+		var action = "point_redeem_insert_entry";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.comData.points+"&type_id="+$scope.comData.type_id+"&payment_type=paypal";
+		if(FormName.$invalid) {
+			console.log('Form is invalid');
+			$ionicPopup.show({
+			  template: '',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  scope: $scope,
+			  buttons: [
+				{ 
+				  text: 'Ok',
+				  type: 'button-custom'
+				},
+			  ]
+			});
+		}
+		else{
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-ios-information icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					},
+				  ]
+				});
+				if(response.success == 'Y'){
+					$scope.comData = {} ;
+					FormName.$setPristine();
+				}
+				$ionicLoading.hide();
+			});
+		}
+	};
+})
+/** Application compensation Payu Controller **/
+.controller('compenAppPayuCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup) {
+	$scope.comData = {};
+	/* http://dreamgraphs.com/web_service.php?action=point_redeem_insert_entry&user_id=12&point=50&type_id=jayraj@gmail.com&payment_type=payu */
+	$scope.submitamountRedeemForm = function(FormName) {
+		var action = "point_redeem_insert_entry";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.comData.points+"&type_id="+$scope.comData.type_id+"&payment_type=payu";
+		if(FormName.$invalid) {
+			console.log('Form is invalid');
+			$ionicPopup.show({
+			  template: '',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  scope: $scope,
+			  buttons: [
+				{ 
+				  text: 'Ok',
+				  type: 'button-custom'
+				},
+			  ]
+			});
+		}
+		else{
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-ios-information icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					},
+				  ]
+				});
+				if(response.success == 'Y'){
+					$scope.comData = {} ;
+					FormName.$setPristine();
+				}
+				$ionicLoading.hide();
+			});
+		}
+	};
+})
+/** Compensation pay colombia Controller **/
+.controller('compenAppPayColCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$cordovaCamera,$cordovaFileTransfer) {
+	var alertPopup; 
+	$scope.banklist = $scope.data = {};
+	$scope.data.imageData = '';
+	/** http://dreamgraphs.com/web_service.php?action=bank_list **/
+	$scope.$on('$ionicView.enter', function() {
+		var action = "bank_list";
+		var data_parameters = "action="+action;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.banklist = response.msg;
+				$ionicLoading.hide();
+			}
+		});
+	});
+	$scope.chooseOption4PPhoto = function() {
+		alertPopup = $ionicPopup.show({
+		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4UploadPPhotoM();"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4UploadPPhotoM();" ></button></div></div>',
+		  title: 'Choose Option',
+		  scope: $scope,
+		  buttons: [
+			{ 
+			  text: 'Close',
+			  type: 'button-custom'
+			},
+		  ]
+		});
+	};
+	// open PhotoLibrary
+    $scope.takePhoto4UploadPPhotoM = function () {
+		alertPopup.close();
+		console.log('takePhoto');
+		var options = {
+			quality: 75,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 800,
+			targetHeight: 500,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.data.imageData = imageData;
+			$scope.$apply();
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	$scope.choosePhoto4UploadPPhotoM = function () {
+		alertPopup.close();
+		console.log('choosePhoto');
+		var options = {
+			quality: 75,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 800,
+			targetHeight: 500,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.data.imageData = imageData;
+			$scope.$apply();
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	$scope.submitamountRedeemForm = function(FormName) {
+		/** http://dreamgraphs.com/web_service.php?action=point_redeem_insert_entry&user_id=12&point=50&type_id=jayraj@gmail.com&payment_type=payu **/
+		/** Additional bank_name,account_number,typeof_account,nameof_owner,phone,document **/
+		if(FormName.$invalid) {
+			console.log('Form is invalid');
+			$ionicPopup.show({
+			  template: '',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  scope: $scope,
+			  buttons: [
+				{ 
+				  text: 'Ok',
+				  type: 'button-custom'
+				},
+			  ]
+			});
+		}
+		else{
+			if($scope.data.imageData == ''){
+				var action = "point_redeem_insert_entry";
+				var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.data.points+"&type_id="+$scope.data.type_id+"&payment_type=colombia"+"&bank_name="+$scope.data.bank_name+"&account_number="+$scope.data.account_number+"&typeof_account="+$scope.data.typeof_account+"&nameof_owner="+$scope.data.nameof_owner+"&phone="+$scope.data.phone ;
+				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+				$http.post(globalip,data_parameters, {
+					headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+				})
+				.success(function(response) {
+					$ionicPopup.show({
+					  template: '',
+					  title: '<p><i class="ion-ios-information icon-popup"></i></p> '+response.msg,
+					  scope: $scope,
+					  buttons: [
+						{ 
+						  text: 'Ok',
+						  type: 'button-custom'
+						},
+					  ]
+					});
+					if(response.success == 'Y'){
+						$scope.data = {};
+						FormName.$setPristine();
+					}
+					$ionicLoading.hide();
+				});
+			}
+			if($scope.data.imageData != ''){
+				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+				var server = globalip;
+				var imageData = $scope.data.imageData;
+				var options = new FileUploadOptions();
+				options.fileKey = "document";
+				options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+				options.mimeType = "image/jpeg";
+				options.chunkedMode = false; // Transfer picture to server
+				var params = new Object(); 
+				params.action = 'point_redeem_insert_entry';
+				params.user_id = global_login_id;
+				params.point = $scope.data.points;
+				params.type_id = $scope.data.type_id;
+				params.payment_type = 'colombia';
+				params.bank_name = $scope.data.bank_name;
+				params.account_number = $scope.data.account_number;
+				params.typeof_account = $scope.data.typeof_account;
+				params.nameof_owner = $scope.data.nameof_owner;
+				params.phone = $scope.data.phone;
+				//Send Parameters			
+				options.params = params;
+				var ft = new FileTransfer();
+				ft.upload(imageData, server, function(r) {
+					var k = JSON.parse(r.response);
+					$ionicLoading.hide();
+					$ionicPopup.show({
+					  template: '',
+					  title: k.msg,
+					  scope: $scope,
+					  buttons: [
+						{ 
+						  text: 'Ok',
+						  type: 'button-positive'
+						},
+					  ]
+					});
+					if(k.success == 'Y'){
+						$scope.data = {};
+						FormName.$setPristine();
+					}
+				}, function(error) {
+				   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+				   $ionicLoading.hide();
+				}, options);
+			}
+		}
+	};
+})
 /** Wall Controller **/
 .controller('wallCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter) {
 	/** http://dreamgraphs.com/web_service.php?action=wall&user_id=48 **/

@@ -1,6 +1,33 @@
 <ion-view view-title="Compensation / Transaction - Details">
 	<ion-content>
-						<div class="shadow-custom">			  <img src="https://www.dreamgraphs.com/admin/img/retos/gym4.png" style="width:100%" alt="challengeImg">			  <div class="ion-dom">				<p class="challenge_heading text-center">Carbohydrades</p>							  </div>		</div>				<div class="list list-custom">		  <a class="item">			<span class="datatitle">Name</span> <span class="datavalue">Johnny</span>		  </a>		  <a class="item">			<span class="datatitle">Challenges</span> <span class="datavalue">Working</span>		  </a>		  <a class="item">			<span class="datatitle">Amount</span> <span class="datavalue">50$</span>		  </a>		  <a class="item">			<span class="datatitle">Status</span> <span class="datavalue">Complited</span>		  </a>		  <a class="item">			<span class="datatitle">Send/Received</span> <span class="datavalue">Received</span>		  </a>		  <a class="item">			<span class="datatitle">Date</span> <span class="datavalue">22/11/2016</span>		  </a>		</div>
+		<div class="shadow-custom">
+			<img src="{{ transaction.image_url }}" style="width:100%" alt="challengeImg">	<div class="ion-dom">
+				<p class="challenge_heading text-center">{{ transaction.strDescripcion }}</p>
+			</div>
+		</div>
+		<div class="list list-custom">
+			<a class="item">
+				<span class="datatitle">Name</span>
+				<span class="datavalue">{{ transaction.user_name }}</span>
+			</a>
+			<a class="item">
+				<span class="datatitle">Challenges</span>
+				<span class="datavalue">{{ transaction.strDescripcion }}</span>
+			</a>
+			<a class="item">
+				<span class="datatitle">Amount</span>
+				<span class="datavalue">{{ transaction.amount }}$</span>
+			</a>
+			<a class="item">
+				<span class="datatitle">Send/Received</span>
+				<span class="datavalue" ng-if="transaction.status == 'received'">Received</span>
+				<span class="datavalue" ng-if="transaction.status == 'sent'">Sent</span>
+			</a>
+			<a class="item">
+				<span class="datatitle">Date</span>
+				<span class="datavalue">{{ transaction.date_time }}</span>
+			</a>
+		</div>
 		<div class="row">
 			<div class="col col-100" style="margin-bottom:30px;"></div>
 		</div>

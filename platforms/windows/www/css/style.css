@@ -152,7 +152,8 @@ map { display: block;width: 100%;height: 100%; }
 .testimonial img { width:30%; border-radius:50%; }
 .testimonial .icon::before { color: #54a39f; font-size: 24px; }
 .spinner.spinner-primary { fill: #56A7A2; stroke: #56A7A2; }
-.colombia-img {    margin-left: 20px;    margin-top: 3px;    width: 28px;}.custom-amount-select {    background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;    color: #ffffff !important;}.custom-input-lable{color:#fff;opacity:.6;}
+.colombia-img {  margin-left: 20px;
+margin-top: 0px; width: 30px;height: 16px;}.custom-amount-select {    background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;    color: #ffffff !important;}.custom-input-lable{color:#fff;opacity:.6;}
 .datatitle-t { color: #ffffff; white-space: normal; }
 .recd-challenges { border-bottom: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 10px; }
 .list.list-inner a { background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border-color: rgba(255, 255, 255, 0.16); border-style: solid;border-width: 0 0 1px; color: #ffffff; }
@@ -198,8 +199,9 @@ map { display: block;width: 100%;height: 100%; }
 .row.bitacoramediabuttons { text-align: center; margin: 25px 0px 0px 0px; }
 .bitacoramediabuttons .icon { font-size: 30px; text-align: center; color: #ccc; background: rgba(0,0,0,0.3); padding: 10px 25px 10px 25px; }
 .custom-nav-top .tabs { top: 43px; background: none; height: 35px; border: 1px solid rgba(255,255,255,0.3); line-height: 31px; }
-.custom-nav-top .tabb { background: #021D30; margin: 0px 1px 0px 0px; max-width: 100%; opacity: 1; }
+.custom-nav-top .tabb { background: #021D30; max-width: 100%; opacity: 1; }
 .tabb.tab-item-active, .tabb.tab-item.active, .tabb.tab-item.activated { opacity: 1; background: #000; font-weight: 800; }
+.tabb:last-child { border-left: 1px solid rgba(255,255,255,0.3); }	
 .bar.search-bar-friendlist { background: none; border: none; top: 71px; padding:2px; }
 .bar.search-bar-friendlist .button-refresh { position: absolute; right: 15px; top: 5px; color: #838383; font-size: 25px; }
 .bar.search-bar-friendlist .button-refresh.activated {background: none; border: none; opacity: 1;color:#fff;}

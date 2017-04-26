@@ -152,7 +152,8 @@ map { display: block;width: 100%;height: 100%; }
 .testimonial img { width:30%; border-radius:50%; }
 .testimonial .icon::before { color: #54a39f; font-size: 24px; }
 .spinner.spinner-primary { fill: #56A7A2; stroke: #56A7A2; }
-.colombia-img {    margin-left: 20px;    margin-top: 3px;    width: 28px;}.custom-amount-select {    background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;    color: #ffffff !important;}.custom-input-lable{color:#fff;opacity:.6;}
+.colombia-img {  margin-left: 20px;
+margin-top: 0px; width: 30px;height: 16px;}.custom-amount-select {    background: rgba(0, 0, 0, 0) none repeat scroll 0 0 !important;    color: #ffffff !important;}.custom-input-lable{color:#fff;opacity:.6;}
 .datatitle-t { color: #ffffff; white-space: normal; }
 .recd-challenges { border-bottom: 1px solid rgba(255, 255, 255, 0.3); margin-bottom: 10px; }
 .list.list-inner a { background: rgba(0, 0, 0, 0) none repeat scroll 0 0; border-color: rgba(255, 255, 255, 0.16); border-style: solid;border-width: 0 0 1px; color: #ffffff; }

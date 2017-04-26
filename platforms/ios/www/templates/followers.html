@@ -1,11 +1,15 @@
 <ion-view view-title="Followers">
 	<ion-content>
 		<div class="list list-custom list-followers">
-			<a class="item item-avatar" href="#" ng-repeat="follower in followers" ng-if="followers">
+			<div class="item item-avatar" href="#" ng-repeat="follower in followers" ng-if="followers">
 			  <img ng-if="follower.user_image_url" src="{{ follower.user_image_url }}">
-			  <h2 class="text-white">{{ follower.first_name }} {{ follower.last_name }}</h2>
+			  <h2 class="text-white">
+				<a style="color:white;" ui-sref="app.member-profile({user_id:follower.user_id})">
+					{{ follower.first_name }} {{ follower.last_name }}
+				</a>
+			  </h2>
 			  <p><i class="ion-ios-location"></i> {{ follower.city }}  {{ follower.country }}</p>
-			</a>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col col-100 text-center" style="margin-bottom:30px;">
