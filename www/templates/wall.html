@@ -1,6 +1,6 @@
 <ion-view view-title="Wall">
     <ion-content>
-		<div class="list card custom-list-card" ng-repeat="wallitem in wallitems" ng-if="!wallitems.err">
+		<div class="list card custom-list-card" ng-repeat="wallitem in wallitems track by $index" ng-if="!wallitems.err">
 			<div class="item item-avatar">
 				<img ng-if="wallitem.user_image_url" src="{{ wallitem.user_image_url }}">
 				<span class="pull-left">
@@ -63,6 +63,7 @@
 					</div>
 				</div>
 			</div>
+			<button onclick="window.plugins.socialsharing.shareViaFacebook('Message via Facebook', null /* img */, null /* url */, function() {console.log('share ok')}, function(errormsg){alert(errormsg)})">msg via Facebook (with errcallback)</button>
 		</div>
 		<div class="row">
 			<div class="col col-100 text-center" style="margin-bottom:20px;">

@@ -884,7 +884,7 @@ angular.module('starter.controllers', [])
 		/** http://dreamgraphs.com/web_service.php?action=profile_details&user_id=48 **/
 		$scope.country_arr = country_arr;
 		var action = "profile_details";
-		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id;
+		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id+"&current_user="+global_login_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -934,6 +934,47 @@ angular.module('starter.controllers', [])
 				$ionicLoading.hide();
 			});
 		}
+	};
+	/** Follow - Unfollow **/
+	$scope.followunfollow = function(user_id,current_status) {
+		/** http://dreamgraphs.com/web_service.php?action=follow&user_id=48&current_user=12 **/
+		var action = "follow";
+		var data_parameters = "action="+action+"&user_id="+user_id+"&current_user="+global_login_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.userData.follow_is = current_status == '1' ? '0' : '1';
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-thumbsup icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					}
+				  ]
+				});
+			}
+			else{
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-ios-information icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					},
+				  ]
+				});
+			}
+			$ionicLoading.hide();
+		});
 	};
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({

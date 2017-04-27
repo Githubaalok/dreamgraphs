@@ -51,6 +51,9 @@
         <param name="android-package" value="io.ionic.keyboard.IonicKeyboard" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="SocialSharing">
+        <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
     <name>Dreamgraphs</name>
     <description>
         Dreamgraphs Sample Application.
@@ -62,6 +65,7 @@
     <access origin="*" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <splash src="resources/splash.png" />
+    <gap:plugin name="cordova-plugin-x-socialsharing" source="npm" />
     <icon density="ldpi" src="resources/android/icon/drawable-ldpi-icon.png" />
     <icon density="mdpi" src="resources/android/icon/drawable-mdpi-icon.png" />
     <icon density="hdpi" src="resources/android/icon/drawable-hdpi-icon.png" />

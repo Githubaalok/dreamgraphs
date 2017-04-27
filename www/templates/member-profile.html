@@ -71,13 +71,14 @@
 								<p>{{ userData.bonus }}</p>
 							</div>
 						</div>
-						<!-- <div class="row">
+						<div class="row">
 							<div class="col col-100">
-								<a href="" ng-if="viewingSelfProfile != 'YES'" ng-click="" >
-									<span class="button button-positive button-small button-block">Follow</span>
+								<a href="" ng-if="viewingSelfProfile != 'YES'" ng-click="followunfollow(userData.user_id,userData.follow_is);" >
+									<span class="button button-balanced button-small button-block" style="border-radius: 0;padding-top: 6px;padding-bottom: 6px;margin-top: 0;" ng-if="userData.follow_is == '0'">Follow</span>
+									<span class="button button-assertive button-small button-block" style="border-radius: 0;padding-top: 6px;padding-bottom: 6px;margin-top: 0;" ng-if="userData.follow_is == '1'">Unfollow</span>
 								</a> 
 							</div>
-						</div> -->
+						</div>
 					</div>
 				</div>			
 			</div>
