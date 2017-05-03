@@ -864,6 +864,7 @@ angular.module('starter.controllers', [])
 })
 /** updateProfileCtrl Controller **/
 .controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams) {
+	var alertPopup;
 	$scope.userData = {};
 	$scope.viewingSelfProfile = 'NO';
 	// Datepicker
@@ -884,7 +885,7 @@ angular.module('starter.controllers', [])
 		/** http://dreamgraphs.com/web_service.php?action=profile_details&user_id=48 **/
 		$scope.country_arr = country_arr;
 		var action = "profile_details";
-		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id;
+		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id+"&current_user="+global_login_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -934,6 +935,229 @@ angular.module('starter.controllers', [])
 				$ionicLoading.hide();
 			});
 		}
+	};
+	//Profile Photo
+	$scope.chooseOption4ProfileP = function() {
+		alertPopup = $ionicPopup.show({
+		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4Updateprofile()"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4Updateprofile()" ></button></div></div>',
+		  title: 'Choose Option',
+		  scope: $scope,
+		  buttons: [
+			{ 
+			  text: 'Cancel',
+			  type: 'button-positive'
+			},
+		  ]
+		});
+	};
+	// open CAMERA
+	/** http://dreamgraphs.com/web_service.php?action=change_image&image_for=profile_cover **/
+    $scope.takePhoto4Updateprofile = function () {
+		alertPopup.close();
+		console.log('takePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 300,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.user_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'profile';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	//Open Library
+	$scope.choosePhoto4Updateprofile = function () {
+		alertPopup.close();
+		console.log('choosePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 300,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.user_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'profile';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	};
+	//Cover Photo
+	$scope.chooseOption4CoverP = function() {
+		alertPopup = $ionicPopup.show({
+		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4Updatecover()"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4Updatecover()" ></button></div></div>',
+		  title: 'Choose Option',
+		  scope: $scope,
+		  buttons: [
+			{ 
+			  text: 'Cancel',
+			  type: 'button-positive'
+			},
+		  ]
+		});
+	};
+	// open CAMERA
+	/** http://dreamgraphs.com/web_service.php?action=change_image&image_for=profile_cover **/
+    $scope.takePhoto4Updatecover = function () {
+		alertPopup.close();
+		console.log('takePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 800,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.cover_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'cover';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	//Open Library
+	$scope.choosePhoto4Updatecover = function () {
+		alertPopup.close();
+		console.log('choosePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 800,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.cover_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'cover';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	};
+	/** Follow - Unfollow **/
+	$scope.followunfollow = function(user_id,current_status) {
+		/** http://dreamgraphs.com/web_service.php?action=follow&user_id=48&current_user=12 **/
+		var action = "follow";
+		var data_parameters = "action="+action+"&user_id="+user_id+"&current_user="+global_login_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.userData.follow_is = current_status == '1' ? '0' : '1';
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-thumbsup icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					}
+				  ]
+				});
+			}
+			else{
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-ios-information icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					},
+				  ]
+				});
+			}
+			$ionicLoading.hide();
+		});
 	};
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({
