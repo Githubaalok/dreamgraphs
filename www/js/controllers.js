@@ -863,7 +863,7 @@ angular.module('starter.controllers', [])
 	}
 })
 /** updateProfileCtrl Controller **/
-.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams) {
+.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams,$cordovaCamera,$cordovaFileTransfer) {
 	var alertPopup;
 	$scope.userData = {};
 	$scope.viewingSelfProfile = 'NO';
