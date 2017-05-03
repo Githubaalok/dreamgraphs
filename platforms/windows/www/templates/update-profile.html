@@ -12,29 +12,35 @@
 					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.required && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
 					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.minlength && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">Min 5 Characters Is Required</p>
 					<!--/ Input -->
-					<!-- Input -->
-					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">First Name</span>
-						<input type="text" placeholder="First Name" ng-model="userData.first_name" name="first_name" ng-maxlength="15" required>
-					  </label>
-					  <p class="error-p" ng-show="updateProfileForm.first_name.$error.required && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.first_name.$error.maxlength && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 15 Characters</p>
-					<!--/ Input -->
-					<!-- Input -->
-					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">Last Name</span>
-						<input type="text" placeholder="Last Name" ng-model="userData.last_name" name="last_name" ng-maxlength="15" required>
-					  </label>
-					  <p class="error-p" ng-show="updateProfileForm.last_name.$error.required && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.last_name.$error.maxlength && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 15 Characters</p>
-					<!--/ Input -->
+					<div class="row" style="padding-left: 0;padding-right: 0;">
+						<div class="col col-50" style="padding-left: 0;">
+							<!-- Input -->
+							  <label class="item item-custom item-input item-floating-label">
+								<span class="input-label">First Name</span>
+								<input type="text" placeholder="First Name" ng-model="userData.first_name" name="first_name" ng-maxlength="15" required>
+							  </label>
+							  <p class="error-p" ng-show="updateProfileForm.first_name.$error.required && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+							  <p class="error-p" ng-show="updateProfileForm.first_name.$error.maxlength && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 15 Characters</p>
+							<!--/ Input -->
+						</div>
+						<div class="col col-50" style="padding-right: 0;">
+						<!-- Input -->
+						  <label class="item item-custom item-input item-floating-label">
+							<span class="input-label">Last Name</span>
+							<input type="text" placeholder="Last Name" ng-model="userData.last_name" name="last_name" ng-maxlength="15" required>
+						  </label>
+						  <p class="error-p" ng-show="updateProfileForm.last_name.$error.required && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+						  <p class="error-p" ng-show="updateProfileForm.last_name.$error.maxlength && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 15 Characters</p>
+						<!--/ Input -->
+						</div>
+					</div>
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
 						<span class="input-label">Email</span>
-						<input type="email" placeholder="Email" ng-model="userData.email" name="email" ng-maxlength="30" required>
+						<input type="email" placeholder="Email" ng-model="userData.email" name="email" ng-maxlength="40" required>
 					  </label>
 					  <p class="error-p" ng-show="updateProfileForm.email.$error.required && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.email.$error.maxlength && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 30 Characters</p>
+					  <p class="error-p" ng-show="updateProfileForm.email.$error.maxlength && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 40 Characters</p>
 					  <p class="error-p" ng-show="updateProfileForm.email.$invalid && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted) && !updateProfileForm.email.$error.required">Email Is Not Valid</p>
 					<!--/ Input -->
 				    <!-- Input -->

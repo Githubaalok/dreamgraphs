@@ -863,7 +863,7 @@ angular.module('starter.controllers', [])
 	}
 })
 /** updateProfileCtrl Controller **/
-.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams) {
+.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams,$cordovaCamera,$cordovaFileTransfer) {
 	var alertPopup;
 	$scope.userData = {};
 	$scope.viewingSelfProfile = 'NO';
@@ -2049,7 +2049,7 @@ angular.module('starter.controllers', [])
 .controller('retogramaProgressCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
 	/** http://dreamgraphs.com/web_service.php?action=checkbox_show&accpet_id=193 **/
 	$scope.$on('$ionicView.enter', function() {
-		$scope.tickboxes = {};
+		$scope.tickboxes = $scope.challenge_details = {};
 		var action = "checkbox_show";
 		var data_parameters = "action="+action+"&accpet_id="+$stateParams.record_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -2061,6 +2061,7 @@ angular.module('starter.controllers', [])
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 				$scope.tickboxes = response.data;
 				$scope.percentage = response.process;
+				$scope.challenge_details = response.challenge_details;
 				$ionicLoading.hide();
 			}
 		});
