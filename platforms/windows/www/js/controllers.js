@@ -27,11 +27,12 @@ angular.module('starter.controllers', [])
     };
 })
 /** Member Login Controller**/
-.controller('loginCtrl',function($scope,$http,$state,$ionicLoading,$ionicPopup,$ionicHistory,$rootScope,$ionicSideMenuDelegate) {
+.controller('loginCtrl',function($scope,$http,$state,$ionicLoading,$ionicPopup,$ionicHistory,$rootScope) {
 	/* http://dreamgraphs.com/web_service.php?action=user_login&email=user@gmail.com&password=admin123 */
+	$scope.userdata = {};
 	$scope.submitLoginForm = function(FormName) {
 		var action = "user_login";
-        var data_parameters = "action="+action+"&email="+$scope.email+"&password="+$scope.password;
+        var data_parameters = "action="+action+"&email="+$scope.userdata.email+"&password="+$scope.userdata.password;
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
@@ -53,7 +54,7 @@ angular.module('starter.controllers', [])
 			})
 			.success(function(response) {
 				if(response[0].success == 'Y'){
-					$scope.email = $scope.password = '' ;
+					$scope.userdata = {} ;
 					FormName.$setPristine();
 					$ionicHistory.nextViewOptions({
 						disableBack: true
@@ -79,7 +80,12 @@ angular.module('starter.controllers', [])
 			});
 		}
 	};
-	$ionicSideMenuDelegate.canDragContent(false);
+	$scope.GotoPage = function(page){ 
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
+		$state.go('app.'+page);
+	};
 })
 /** Member Registration Controller**/
 .controller('registrationCtrl',function($scope,$http,$state,$ionicLoading,$ionicPopup) {
@@ -530,20 +536,26 @@ angular.module('starter.controllers', [])
 	/** http://dreamgraphs.com/web_service.php?action=wall&user_id=48 **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
-		$scope.wallitems = {};
-		var action = "wall";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.wallitems = response.data;
-				$ionicLoading.hide();
-			}
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			$scope.wallitems = {};
+			var action = "wall";
+			var data_parameters = "action="+action+"&user_id="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.wallitems = response.data;
+					$ionicLoading.hide();
+				}
+			});
+		}
 	});
 	/** Like Details **/
 	$scope.likeDetails = function(wall_id) {
@@ -879,23 +891,29 @@ angular.module('starter.controllers', [])
 		}
 	};
 	$scope.$on('$ionicView.enter', function() {
-		if($stateParams.user_id == global_login_id){
-			$scope.viewingSelfProfile = 'YES';
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
 		}
-		/** http://dreamgraphs.com/web_service.php?action=profile_details&user_id=48 **/
-		$scope.country_arr = country_arr;
-		var action = "profile_details";
-		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id+"&current_user="+global_login_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				$scope.userData = response.data;
-				$ionicLoading.hide();
+		else{
+			if($stateParams.user_id == global_login_id){
+				$scope.viewingSelfProfile = 'YES';
 			}
-		});
+			/** http://dreamgraphs.com/web_service.php?action=profile_details&user_id=48 **/
+			$scope.country_arr = country_arr;
+			var action = "profile_details";
+			var data_parameters = "action="+action+"&user_id="+$stateParams.user_id+"&current_user="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					$scope.userData = response.data;
+					$ionicLoading.hide();
+				}
+			});
+		}
 	});
 	$scope.submitUpdateForm = function(FormName) {
 		/** http://dreamgraphs.com/web_service.php?action=user_registration&update=1&user_id=12&dob=5-10-1992&country=india&city=bhopal&aboutme=edited&gender=male&phone=9827568454&username=jay&first_name=jay&last_name=rrr&email=jay@gmail.com */
@@ -1167,36 +1185,34 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Home Controller **/
-.controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope) {
+.controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope,$ionicSideMenuDelegate) {
+	$ionicSideMenuDelegate.canDragContent(false);
 	/** Check Login **/
 	$scope.$on('$ionicView.enter', function() {
 		var login_var_local = window.localStorage.getItem("login_var_local");
 		if(login_var_local !== undefined && login_var_local != null) {
 			console.log(login_var_local);
 			$rootScope.$broadcast('login_var',{global_login:login_var_local});
-			/** http://dreamgraphs.com/web_service.php?action=testimonials **/
-			var action = "testimonials";
-			var data_parameters = "action="+action;
-			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-			$http.post(globalip,data_parameters, {
-				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-			})
-			.success(function(response) {
-				if(response.success == "Y"){
-					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-					$scope.complete_challenge = response.complete_challenge;
-					$scope.testimonials = response.testimonials;
-					setTimeout(function(){
-						$ionicSlideBoxDelegate.update();
-						$ionicSlideBoxDelegate.loop(true);
-					},1000);
-				}
-				$ionicLoading.hide();
-			});
 		}
-		else{
-			$state.go('app.login');
-		}	
+		/** http://dreamgraphs.com/web_service.php?action=testimonials **/
+		var action = "testimonials";
+		var data_parameters = "action="+action;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.complete_challenge = response.complete_challenge;
+				$scope.testimonials = response.testimonials;
+				setTimeout(function(){
+					$ionicSlideBoxDelegate.update();
+					$ionicSlideBoxDelegate.loop(true);
+				},1000);
+			}
+			$ionicLoading.hide();
+		});	
 	});
 	/** End Check Login **/
 	// Form
@@ -1249,20 +1265,26 @@ angular.module('starter.controllers', [])
 .controller('challengesCtrl', function($http,$scope,$state,$ionicLoading) {
 	/** http://dreamgraphs.com/web_service.php?action=challenge_list **/
 	$scope.$on('$ionicView.enter', function() {
-		var action = "challenge_list";
-		var data_parameters = "action="+action;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.challenges = response.data;
-				$scope.categories = response.categories;
-				$ionicLoading.hide();
-			}
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			var action = "challenge_list";
+			var data_parameters = "action="+action;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.challenges = response.data;
+					$scope.categories = response.categories;
+					$ionicLoading.hide();
+				}
+			});
+		}
 	});
 })
 /** Challenge Details Controller **/
@@ -2657,19 +2679,25 @@ angular.module('starter.controllers', [])
 .controller('myChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
 	/** http://dreamgraphs.com/web_service.php?action=my_challenge_count&user_id=48 **/
 	$scope.$on('$ionicView.enter', function() {
-		var action = "my_challenge_count";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.myChallenges = response.my_challenge;
-			}
-			$ionicLoading.hide();
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			var action = "my_challenge_count";
+			var data_parameters = "action="+action+"&user_id="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.myChallenges = response.my_challenge;
+				}
+				$ionicLoading.hide();
+			});
+		}
 	});
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({
@@ -2682,19 +2710,25 @@ angular.module('starter.controllers', [])
 .controller('friendChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_count&user_id=48 **/
 	$scope.$on('$ionicView.enter', function() {
-		var action = "friend_challenge_count";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.friendChallenges = response.friend_challenge;
-			}
-			$ionicLoading.hide();
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			var action = "friend_challenge_count";
+			var data_parameters = "action="+action+"&user_id="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.friendChallenges = response.friend_challenge;
+				}
+				$ionicLoading.hide();
+			});
+		}
 	});
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({

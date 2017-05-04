@@ -98,5 +98,4 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="ShowSplashScreen" value="true" />
-    <preference name="android-build-tool" value="gradle" />
 </widget>

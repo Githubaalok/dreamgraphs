@@ -20,6 +20,9 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
       StatusBar.styleDefault();
     }
 
+  
+  
+	  
   });
 })
 
@@ -38,7 +41,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/login',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/login.html'
+		templateUrl: 'templates/login.html',
+		controller: 'loginCtrl'
 	  }
 	}
   })
