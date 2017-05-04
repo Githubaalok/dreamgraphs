@@ -2248,7 +2248,7 @@ angular.module('starter.controllers', [])
 						  type: 'button-custom',
 						  onTap: function() { 
 							console.log('tapped');
-							$state.go('app.retograma',{retoID:$stateParams.record_id});
+							$state.go('app.retograma~progress',{record_id:$stateParams.record_id});
 						  }
 						},
 					  ]
@@ -2296,7 +2296,7 @@ angular.module('starter.controllers', [])
 						  type: 'button-positive',
 						  onTap: function() { 
 							console.log('tapped');
-							$state.go('app.retograma',{retoID:$stateParams.record_id});
+							$state.go('app.retograma~progress',{record_id:$stateParams.record_id});
 						  }
 						},
 					  ]
