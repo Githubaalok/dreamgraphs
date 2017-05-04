@@ -21,6 +21,22 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
     }
 
   });
+  
+  var notificationOpenedCallback = function(jsonData) {
+  //console.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+  var data = { origin:jsonData.additionalData.origin};
+  $state.go('app.wall',data);
+ };
+
+ window.plugins.OneSignal.init("6abc3b85-b260-4a6c-a1b6-153a07812d3d",
+         {googleProjectNumber: "823030988590"},
+         notificationOpenedCallback);
+  
+ // Show an alert box if a notification comes in when the user is in your app.
+ window.plugins.OneSignal.enableInAppAlertNotification(true);
+  });
+  
+  
 })
 
 .config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -38,7 +54,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/login',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/login.html'
+		templateUrl: 'templates/login.html',
+		controller: 'loginCtrl'
 	  }
 	}
   })
