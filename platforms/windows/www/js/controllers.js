@@ -2127,7 +2127,7 @@ angular.module('starter.controllers', [])
 .controller('retogramaBitacoraChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$filter,$cordovaCamera,$cordovaFileTransfer) {
 	var alertPopup; 
 	$scope.getdata = $scope.data = {};
-	$scope.data.imageData = '';
+	$scope.data.imageData = $scope.data.videoData = '';
 	/** http://dreamgraphs.com/web_service.php?action=day_count&accpet_id=185 **/
 	$scope.$on('$ionicView.enter', function() {
 		var action = "day_count";
@@ -2187,6 +2187,7 @@ angular.module('starter.controllers', [])
 		};
 		$cordovaCamera.getPicture(options).then(function (imageData) {
 			$scope.data.imageData = imageData;
+			$scope.data.videoData = '';
 			$scope.$apply();
 		}, function (err) {
 			// An error occured. Show a message to the user
@@ -2208,6 +2209,24 @@ angular.module('starter.controllers', [])
 		};
 		$cordovaCamera.getPicture(options).then(function (imageData) {
 			$scope.data.imageData = imageData;
+			$scope.data.videoData = '';
+			$scope.$apply();
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	$scope.chooseRVideo = function () {
+		console.log('chooseVideo');
+		var options = {
+			quality: 75,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			mediaType: Camera.MediaType.ALLMEDIA,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (videoData) {
+			$scope.data.videoData = videoData;
+			$scope.data.imageData = '';
 			$scope.$apply();
 		}, function (err) {
 			// An error occured. Show a message to the user
@@ -2230,7 +2249,7 @@ angular.module('starter.controllers', [])
 			});
 		}
 		else{
-			if($scope.data.imageData == ''){
+			if($scope.data.imageData == '' && $scope.data.videoData == ''){
 				var action = "daily_entry";
 				var data_parameters = "action="+action+"&challenge_id="+$scope.getdata.challenge_id+"&day_name="+$scope.data.days_obj.day_name+"&day_value="+$scope.data.days_obj.value+"&user_id="+global_login_id+"&record_date="+$scope.data.Seldate+"&sensacion="+$scope.data.description+"&accept_challange="+$stateParams.record_id+"&file_type=''" ;
 				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -2261,7 +2280,7 @@ angular.module('starter.controllers', [])
 					$ionicLoading.hide();
 				});
 			}
-			if($scope.data.imageData != ''){
+			else if($scope.data.imageData != ''){
 				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 				var server = globalip;
 				var imageData = $scope.data.imageData;
