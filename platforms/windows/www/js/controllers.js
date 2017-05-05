@@ -2221,7 +2221,7 @@ angular.module('starter.controllers', [])
 			quality: 75,
 			destinationType: Camera.DestinationType.FILE_URI,
 			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-			mediaType: Camera.MediaType.ALLMEDIA,
+			mediaType: Camera.MediaType.VIDEO,
 			saveToPhotoAlbum: false
 		};
 		$cordovaCamera.getPicture(options).then(function (videoData) {
