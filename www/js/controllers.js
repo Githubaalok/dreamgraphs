@@ -2330,6 +2330,56 @@ angular.module('starter.controllers', [])
 				   $ionicLoading.hide();
 				}, options);
 			}
+			else if($scope.data.videoData != ''){
+				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+				var server = globalip;
+				var videoData = $scope.data.videoData;
+				var options = new FileUploadOptions();
+				options.fileKey = "strImagen";
+				options.fileName = videoData.substr(videoData.lastIndexOf('/') + 1);
+				options.mimeType = "video/mp4";
+				options.chunkedMode = false; // Transfer picture to server
+				var params = new Object(); 
+				params.action = 'daily_entry';
+				params.challenge_id = $scope.getdata.challenge_id;
+				params.day_name = $scope.data.days_obj.day_name;
+				params.day_value = $scope.data.days_obj.value;
+				params.user_id = global_login_id;
+				params.record_date = $scope.data.Seldate;
+				params.sensacion = $scope.data.description;
+				params.accept_challange = $stateParams.record_id;
+				params.file_type = 'video';
+				//Send Parameters			
+				options.params = params;
+				var ft = new FileTransfer();
+				ft.upload(videoData, server, function(r) {
+					var k = JSON.parse(r.response);
+					$ionicLoading.hide();
+					$ionicPopup.show({
+					  template: '',
+					  title: k.msg,
+					  scope: $scope,
+					  buttons: [
+						{ 
+						  text: 'Ok',
+						  type: 'button-positive',
+						  onTap: function() { 
+							console.log('tapped');
+							$state.go('app.retograma~progress',{record_id:$stateParams.record_id});
+						  }
+						},
+					  ]
+					});
+					if(k.success == 'Y'){
+						$scope.data.days_obj = {};
+						$scope.data.Seldate = $scope.data.description = $scope.data.videoData = '';
+						FormName.$setPristine();
+					}
+				}, function(error) {
+				   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+				   $ionicLoading.hide();
+				}, options);
+			}
 		}
 	};
 })
