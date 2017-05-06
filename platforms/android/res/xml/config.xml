@@ -95,4 +95,7 @@
     <preference name="show-splash-screen-spinner" value="true" />
     <preference name="AutoHideSplashScreen" value="true" />
     <preference name="ShowSplashScreen" value="true" />
+    <feature name="OneSignalPush">
+        <param name="android-package" value="com.plugin.gcm.OneSignalPush" />
+    </feature>
 </widget>
