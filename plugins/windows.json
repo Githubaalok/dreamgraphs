@@ -54,6 +54,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "Dreamgraphs"
+        },
+        "onesignal-cordova-plugin": {
+            "PACKAGE_NAME": "Dreamgraphs"
         }
     },
     "dependent_plugins": {

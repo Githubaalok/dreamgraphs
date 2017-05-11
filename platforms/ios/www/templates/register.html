@@ -6,28 +6,34 @@
 				<div class="list list-custom">
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">User</span>
-						<input type="text" placeholder="User" ng-model="username" name="username" ng-minlength="5" required>
+						<span class="input-label">Username</span>
+						<input type="text" placeholder="Username" ng-model="username" name="username" ng-minlength="5" required>
 					  </label>
 					  <p class="error-p" ng-show="memberRegistrationForm.username.$error.required && (!memberRegistrationForm.username.$pristine || memberRegistrationForm.$submitted)">This Field Is Required</p>
 					  <p class="error-p" ng-show="memberRegistrationForm.username.$error.minlength && (!memberRegistrationForm.username.$pristine || memberRegistrationForm.$submitted)">Min 5 Characters Is Required</p>
 					<!--/ Input -->
-					<!-- Input -->
-					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">First Name</span>
-						<input type="text" placeholder="First Name" ng-model="first_name" name="first_name" ng-maxlength="15" required>
-					  </label>
-					  <p class="error-p" ng-show="memberRegistrationForm.first_name.$error.required && (!memberRegistrationForm.first_name.$pristine || memberRegistrationForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="memberRegistrationForm.first_name.$error.maxlength && (!memberRegistrationForm.first_name.$pristine || memberRegistrationForm.$submitted)">Cannot Longer Than 15 Characters</p>
-					<!--/ Input -->
-					<!-- Input -->
-					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">Last Name</span>
-						<input type="text" placeholder="Last Name" ng-model="last_name" name="last_name" ng-maxlength="15" required>
-					  </label>
-					  <p class="error-p" ng-show="memberRegistrationForm.last_name.$error.required && (!memberRegistrationForm.last_name.$pristine || memberRegistrationForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="memberRegistrationForm.last_name.$error.maxlength && (!memberRegistrationForm.last_name.$pristine || memberRegistrationForm.$submitted)">Cannot Longer Than 15 Characters</p>
-					<!--/ Input -->
+					<div class="row" style="padding-left: 0;padding-right: 0;">
+						<div class="col col-50" style="padding-left: 0;">
+							<!-- Input -->
+							  <label class="item item-custom item-input item-floating-label">
+								<span class="input-label">First Name</span>
+								<input type="text" placeholder="First Name" ng-model="first_name" name="first_name" ng-maxlength="15" required>
+							  </label>
+							  <p class="error-p" ng-show="memberRegistrationForm.first_name.$error.required && (!memberRegistrationForm.first_name.$pristine || memberRegistrationForm.$submitted)">This Field Is Required</p>
+							  <p class="error-p" ng-show="memberRegistrationForm.first_name.$error.maxlength && (!memberRegistrationForm.first_name.$pristine || memberRegistrationForm.$submitted)">Cannot Longer Than 15 Characters</p>
+							<!--/ Input -->
+						</div>
+						<div class="col col-50" style="padding-right: 0;">
+							<!-- Input -->
+							  <label class="item item-custom item-input item-floating-label">
+								<span class="input-label">Last Name</span>
+								<input type="text" placeholder="Last Name" ng-model="last_name" name="last_name" ng-maxlength="15" required>
+							  </label>
+							  <p class="error-p" ng-show="memberRegistrationForm.last_name.$error.required && (!memberRegistrationForm.last_name.$pristine || memberRegistrationForm.$submitted)">This Field Is Required</p>
+							  <p class="error-p" ng-show="memberRegistrationForm.last_name.$error.maxlength && (!memberRegistrationForm.last_name.$pristine || memberRegistrationForm.$submitted)">Cannot Longer Than 15 Characters</p>
+							<!--/ Input -->
+						</div>
+					</div>
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
 						<span class="input-label">Password</span>
@@ -47,10 +53,10 @@
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
 						<span class="input-label">Email</span>
-						<input type="email" placeholder="Email" ng-model="email" name="email" ng-maxlength="30" required>
+						<input type="email" placeholder="Email" ng-model="email" name="email" ng-maxlength="40" required>
 					  </label>
 					  <p class="error-p" ng-show="memberRegistrationForm.email.$error.required && (!memberRegistrationForm.email.$pristine || memberRegistrationForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="memberRegistrationForm.email.$error.maxlength && (!memberRegistrationForm.email.$pristine || memberRegistrationForm.$submitted)">Cannot Longer Than 30 Characters</p>
+					  <p class="error-p" ng-show="memberRegistrationForm.email.$error.maxlength && (!memberRegistrationForm.email.$pristine || memberRegistrationForm.$submitted)">Cannot Longer Than 40 Characters</p>
 					  <p class="error-p" ng-show="memberRegistrationForm.email.$invalid && (!memberRegistrationForm.email.$pristine || memberRegistrationForm.$submitted) && !memberRegistrationForm.email.$error.required">Email Is Not Valid</p>
 					<!--/ Input -->
 				    <!-- Input -->

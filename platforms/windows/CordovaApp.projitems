@@ -13,4 +13,20 @@
     </ItemGroup>
     <Import Condition="Exists('$(MSBuildThisFileDirectory)CordovaAppDebug.projitems') And '$(Configuration)'=='Debug'" Project="CordovaAppDebug.projitems" />
     <Import Condition="Exists('$(MSBuildThisFileDirectory)CordovaAppRelease.projitems') And '$(Configuration)'!='Debug'" Project="CordovaAppRelease.projitems" />
+    <ItemGroup>
+        <Reference Include="OneSignalSDK_WP_WNS_WRTC">
+            <HintPath>plugins\onesignal-cordova-plugin\OneSignalSDK_WP_WNS_WRTC.winmd</HintPath>
+            <IsWinMDFile>true</IsWinMDFile>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="OneSignalSDK_WP_WNS">
+            <HintPath>plugins\onesignal-cordova-plugin\OneSignalSDK_WP_WNS.dll</HintPath>
+        </Reference>
+    </ItemGroup>
+    <ItemGroup>
+        <Reference Include="Newtonsoft.Json">
+            <HintPath>plugins\onesignal-cordova-plugin\Newtonsoft.Json.dll</HintPath>
+        </Reference>
+    </ItemGroup>
 </Project>

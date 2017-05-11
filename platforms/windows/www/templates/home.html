@@ -1,4 +1,9 @@
 ﻿<ion-view view-title="">
+	<style ng-if="landingpagebackimg != ''">
+		.back-img { 
+			background-image: url("{{ landingpagebackimg }}"); background-position: center top; background-repeat: no-repeat; background-size: cover;
+		}
+	</style>
 	<ion-content class="back-img">
 		<div class="row overlay-light">
 			<div class="col col-100 text-center">

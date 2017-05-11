@@ -1206,6 +1206,7 @@ angular.module('starter.controllers', [])
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 				$scope.complete_challenge = response.complete_challenge;
 				$scope.testimonials = response.testimonials;
+				$scope.landingpagebackimg = response.landingpagebackimg;
 				setTimeout(function(){
 					$ionicSlideBoxDelegate.update();
 					$ionicSlideBoxDelegate.loop(true);

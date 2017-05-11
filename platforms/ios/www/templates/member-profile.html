@@ -3,7 +3,7 @@
 		<div style="background-image: url('{{ userData.cover_image_url }}'); background-size: cover; background-repeat: no-repeat; background-position: center top;">
 			<div class="row text-center profile">
 				<div class="col col-10">
-					<a href="" ng-if="viewingSelfProfile == 'YES'" ng-click="" ><i class="ion-camera" style="background: rgba(0,0,0,0.8);padding: 0px 5px 0px 5px;"></i></a>
+					<a href="" ng-if="viewingSelfProfile == 'YES'" ng-click="chooseOption4CoverP();" ><i class="ion-camera" style="background: rgba(0,0,0,0.8);padding: 0px 5px 0px 5px;"></i></a>
 				</div>
 				<div class="col col-80">
 					<h3>{{ userData.first_name }} {{ userData.last_name }}</h3>
@@ -47,7 +47,7 @@
 				<div class="col col-50 pic">
 					<div class="profile_imgwithicon">
 						<img ng-if="userData.user_image_url" src="{{ userData.user_image_url }}">
-						<a class="icon-profile-camera" href="" ng-if="viewingSelfProfile == 'YES'" ng-click=""><i style="color: rgba(0,0,0,0.5);" class="ion-camera"></i></a>
+						<a class="icon-profile-camera" href="" ng-if="viewingSelfProfile == 'YES'" ng-click="chooseOption4ProfileP();"><i style="color: rgba(0,0,0,0.5);" class="ion-camera"></i></a>
 					</div>
 					<p class="text-white" ng-if="userData.city || userData.country"><i class="ion-ios-location"></i> {{ userData.city }} {{ userData.country }}</p>
 				</div>
@@ -71,13 +71,14 @@
 								<p>{{ userData.bonus }}</p>
 							</div>
 						</div>
-						<!-- <div class="row">
+						<div class="row">
 							<div class="col col-100">
-								<a href="" ng-if="viewingSelfProfile != 'YES'" ng-click="" >
-									<span class="button button-positive button-small button-block">Follow</span>
+								<a href="" ng-if="viewingSelfProfile != 'YES'" ng-click="followunfollow(userData.user_id,userData.follow_is);" style="margin-left: 2px;">
+									<span class="button button-balanced button-small button-block" style="border-radius: 0;padding-top: 6px;padding-bottom: 6px;margin-top: 0;" ng-if="userData.follow_is == '0'">Follow</span>
+									<span class="button button-assertive button-small button-block" style="border-radius: 0;padding-top: 6px;padding-bottom: 6px;margin-top: 0;" ng-if="userData.follow_is == '1'">Unfollow</span>
 								</a> 
 							</div>
-						</div> -->
+						</div>
 					</div>
 				</div>			
 			</div>

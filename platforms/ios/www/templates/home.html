@@ -1,4 +1,9 @@
-<ion-view view-title="Home">
+<ion-view view-title="">
+	<style ng-if="landingpagebackimg != ''">
+		.back-img { 
+			background-image: url("{{ landingpagebackimg }}"); background-position: center top; background-repeat: no-repeat; background-size: cover;
+		}
+	</style>
 	<ion-content class="back-img">
 		<div class="row overlay-light">
 			<div class="col col-100 text-center">
@@ -130,12 +135,5 @@
 			</div>
 		</div>
     </ion-content>
-	<div class="bar bar-footer" style="padding:0px;background:#021D30;border-top: 1px solid rgba(255, 255, 255, 0.5);">
-		<div class="row" style="padding:0px;">
-			<div class="col col-100 text-center" style="padding:3px;">
-				<img src="img/siteimgs/logo_footer.png" alt="logo" style="width:42px;">
-			</div>
-		</div>
-	</div>
-	<!-- <div ng-include src="'templates/bottom-tabs.html'"></div> -->
+	<div ng-include src="'templates/bottom-tabs.html'"></div>
 </ion-view>

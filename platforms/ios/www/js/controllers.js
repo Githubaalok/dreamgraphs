@@ -27,11 +27,12 @@ angular.module('starter.controllers', [])
     };
 })
 /** Member Login Controller**/
-.controller('loginCtrl',function($scope,$http,$state,$ionicLoading,$ionicPopup,$ionicHistory,$rootScope,$ionicSideMenuDelegate) {
+.controller('loginCtrl',function($scope,$http,$state,$ionicLoading,$ionicPopup,$ionicHistory,$rootScope) {
 	/* http://dreamgraphs.com/web_service.php?action=user_login&email=user@gmail.com&password=admin123 */
+	$scope.userdata = {};
 	$scope.submitLoginForm = function(FormName) {
 		var action = "user_login";
-        var data_parameters = "action="+action+"&email="+$scope.email+"&password="+$scope.password;
+        var data_parameters = "action="+action+"&email="+$scope.userdata.email+"&password="+$scope.userdata.password;
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
@@ -53,7 +54,7 @@ angular.module('starter.controllers', [])
 			})
 			.success(function(response) {
 				if(response[0].success == 'Y'){
-					$scope.email = $scope.password = '' ;
+					$scope.userdata = {} ;
 					FormName.$setPristine();
 					$ionicHistory.nextViewOptions({
 						disableBack: true
@@ -79,7 +80,12 @@ angular.module('starter.controllers', [])
 			});
 		}
 	};
-	$ionicSideMenuDelegate.canDragContent(false);
+	$scope.GotoPage = function(page){ 
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
+		$state.go('app.'+page);
+	};
 })
 /** Member Registration Controller**/
 .controller('registrationCtrl',function($scope,$http,$state,$ionicLoading,$ionicPopup) {
@@ -530,20 +536,26 @@ angular.module('starter.controllers', [])
 	/** http://dreamgraphs.com/web_service.php?action=wall&user_id=48 **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
-		$scope.wallitems = {};
-		var action = "wall";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.wallitems = response.data;
-				$ionicLoading.hide();
-			}
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			$scope.wallitems = {};
+			var action = "wall";
+			var data_parameters = "action="+action+"&user_id="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.wallitems = response.data;
+					$ionicLoading.hide();
+				}
+			});
+		}
 	});
 	/** Like Details **/
 	$scope.likeDetails = function(wall_id) {
@@ -863,7 +875,8 @@ angular.module('starter.controllers', [])
 	}
 })
 /** updateProfileCtrl Controller **/
-.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams) {
+.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams,$cordovaCamera,$cordovaFileTransfer) {
+	var alertPopup;
 	$scope.userData = {};
 	$scope.viewingSelfProfile = 'NO';
 	// Datepicker
@@ -878,23 +891,29 @@ angular.module('starter.controllers', [])
 		}
 	};
 	$scope.$on('$ionicView.enter', function() {
-		if($stateParams.user_id == global_login_id){
-			$scope.viewingSelfProfile = 'YES';
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
 		}
-		/** http://dreamgraphs.com/web_service.php?action=profile_details&user_id=48 **/
-		$scope.country_arr = country_arr;
-		var action = "profile_details";
-		var data_parameters = "action="+action+"&user_id="+$stateParams.user_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				$scope.userData = response.data;
-				$ionicLoading.hide();
+		else{
+			if($stateParams.user_id == global_login_id){
+				$scope.viewingSelfProfile = 'YES';
 			}
-		});
+			/** http://dreamgraphs.com/web_service.php?action=profile_details&user_id=48 **/
+			$scope.country_arr = country_arr;
+			var action = "profile_details";
+			var data_parameters = "action="+action+"&user_id="+$stateParams.user_id+"&current_user="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					$scope.userData = response.data;
+					$ionicLoading.hide();
+				}
+			});
+		}
 	});
 	$scope.submitUpdateForm = function(FormName) {
 		/** http://dreamgraphs.com/web_service.php?action=user_registration&update=1&user_id=12&dob=5-10-1992&country=india&city=bhopal&aboutme=edited&gender=male&phone=9827568454&username=jay&first_name=jay&last_name=rrr&email=jay@gmail.com */
@@ -935,6 +954,229 @@ angular.module('starter.controllers', [])
 			});
 		}
 	};
+	//Profile Photo
+	$scope.chooseOption4ProfileP = function() {
+		alertPopup = $ionicPopup.show({
+		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4Updateprofile()"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4Updateprofile()" ></button></div></div>',
+		  title: 'Choose Option',
+		  scope: $scope,
+		  buttons: [
+			{ 
+			  text: 'Cancel',
+			  type: 'button-positive'
+			},
+		  ]
+		});
+	};
+	// open CAMERA
+	/** http://dreamgraphs.com/web_service.php?action=change_image&image_for=profile_cover **/
+    $scope.takePhoto4Updateprofile = function () {
+		alertPopup.close();
+		console.log('takePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 300,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.user_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'profile';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	//Open Library
+	$scope.choosePhoto4Updateprofile = function () {
+		alertPopup.close();
+		console.log('choosePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 300,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.user_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'profile';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	};
+	//Cover Photo
+	$scope.chooseOption4CoverP = function() {
+		alertPopup = $ionicPopup.show({
+		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4Updatecover()"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4Updatecover()" ></button></div></div>',
+		  title: 'Choose Option',
+		  scope: $scope,
+		  buttons: [
+			{ 
+			  text: 'Cancel',
+			  type: 'button-positive'
+			},
+		  ]
+		});
+	};
+	// open CAMERA
+	/** http://dreamgraphs.com/web_service.php?action=change_image&image_for=profile_cover **/
+    $scope.takePhoto4Updatecover = function () {
+		alertPopup.close();
+		console.log('takePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.CAMERA,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 800,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.cover_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'cover';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	//Open Library
+	$scope.choosePhoto4Updatecover = function () {
+		alertPopup.close();
+		console.log('choosePhoto');
+		var options = {
+			quality: 90,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			allowEdit: true,
+			encodingType: Camera.EncodingType.JPEG,
+			targetWidth: 800,
+			targetHeight: 300,
+			popoverOptions: CameraPopoverOptions,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (imageData) {
+			$scope.userData.cover_image_url = imageData;
+			var server = globalip;
+			var options = new FileUploadOptions();
+			options.fileKey = "strImagen";
+			options.fileName = imageData.substr(imageData.lastIndexOf('/') + 1);
+			options.mimeType = "image/jpeg";
+			options.chunkedMode = false; // Transfer picture to server
+			var params = new Object(); 
+			params.action = "change_image";
+			params.user_id = global_login_id;
+			params.image_for = 'cover';
+			options.params = params;
+			var ft = new FileTransfer();
+			ft.upload(imageData, server, function(r) {
+				//document.getElementById('camera_status').innerHTML = "Upload successful: " + r.bytesSent + " bytes uploaded.";
+			}, function(error) {
+			   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+			}, options);
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	};
+	/** Follow - Unfollow **/
+	$scope.followunfollow = function(user_id,current_status) {
+		/** http://dreamgraphs.com/web_service.php?action=follow&user_id=48&current_user=12 **/
+		var action = "follow";
+		var data_parameters = "action="+action+"&user_id="+user_id+"&current_user="+global_login_id;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.userData.follow_is = current_status == '1' ? '0' : '1';
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-thumbsup icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					}
+				  ]
+				});
+			}
+			else{
+				$ionicPopup.show({
+				  template: '',
+				  title: '<p><i class="ion-ios-information icon-popup"></i></p> '+response.msg,
+				  scope: $scope,
+				  buttons: [
+					{ 
+					  text: 'Ok',
+					  type: 'button-custom'
+					},
+				  ]
+				});
+			}
+			$ionicLoading.hide();
+		});
+	};
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({
 			disableBack: true
@@ -943,36 +1185,35 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Home Controller **/
-.controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope) {
+.controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope,$ionicSideMenuDelegate) {
+	$ionicSideMenuDelegate.canDragContent(false);
 	/** Check Login **/
 	$scope.$on('$ionicView.enter', function() {
 		var login_var_local = window.localStorage.getItem("login_var_local");
 		if(login_var_local !== undefined && login_var_local != null) {
 			console.log(login_var_local);
 			$rootScope.$broadcast('login_var',{global_login:login_var_local});
-			/** http://dreamgraphs.com/web_service.php?action=testimonials **/
-			var action = "testimonials";
-			var data_parameters = "action="+action;
-			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-			$http.post(globalip,data_parameters, {
-				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-			})
-			.success(function(response) {
-				if(response.success == "Y"){
-					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-					$scope.complete_challenge = response.complete_challenge;
-					$scope.testimonials = response.testimonials;
-					setTimeout(function(){
-						$ionicSlideBoxDelegate.update();
-						$ionicSlideBoxDelegate.loop(true);
-					},1000);
-				}
-				$ionicLoading.hide();
-			});
 		}
-		else{
-			$state.go('app.login');
-		}	
+		/** http://dreamgraphs.com/web_service.php?action=testimonials **/
+		var action = "testimonials";
+		var data_parameters = "action="+action;
+		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+		$http.post(globalip,data_parameters, {
+			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+		})
+		.success(function(response) {
+			if(response.success == "Y"){
+				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+				$scope.complete_challenge = response.complete_challenge;
+				$scope.testimonials = response.testimonials;
+				$scope.landingpagebackimg = response.landingpagebackimg;
+				setTimeout(function(){
+					$ionicSlideBoxDelegate.update();
+					$ionicSlideBoxDelegate.loop(true);
+				},1000);
+			}
+			$ionicLoading.hide();
+		});	
 	});
 	/** End Check Login **/
 	// Form
@@ -1025,20 +1266,26 @@ angular.module('starter.controllers', [])
 .controller('challengesCtrl', function($http,$scope,$state,$ionicLoading) {
 	/** http://dreamgraphs.com/web_service.php?action=challenge_list **/
 	$scope.$on('$ionicView.enter', function() {
-		var action = "challenge_list";
-		var data_parameters = "action="+action;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.challenges = response.data;
-				$scope.categories = response.categories;
-				$ionicLoading.hide();
-			}
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			var action = "challenge_list";
+			var data_parameters = "action="+action;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.challenges = response.data;
+					$scope.categories = response.categories;
+					$ionicLoading.hide();
+				}
+			});
+		}
 	});
 })
 /** Challenge Details Controller **/
@@ -1803,11 +2050,11 @@ angular.module('starter.controllers', [])
 })
 /** Retograma Benefits Controller **/
 .controller('retogramaBenefitsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=172&column_name=benefits **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=172&colnm=benefits **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.benefits = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&column_name=benefits";
+		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&colnm=benefits";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1825,7 +2072,7 @@ angular.module('starter.controllers', [])
 .controller('retogramaProgressCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
 	/** http://dreamgraphs.com/web_service.php?action=checkbox_show&accpet_id=193 **/
 	$scope.$on('$ionicView.enter', function() {
-		$scope.tickboxes = {};
+		$scope.tickboxes = $scope.challenge_details = {};
 		var action = "checkbox_show";
 		var data_parameters = "action="+action+"&accpet_id="+$stateParams.record_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -1837,6 +2084,7 @@ angular.module('starter.controllers', [])
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 				$scope.tickboxes = response.data;
 				$scope.percentage = response.process;
+				$scope.challenge_details = response.challenge_details;
 				$ionicLoading.hide();
 			}
 		});
@@ -1880,7 +2128,7 @@ angular.module('starter.controllers', [])
 .controller('retogramaBitacoraChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$filter,$cordovaCamera,$cordovaFileTransfer) {
 	var alertPopup; 
 	$scope.getdata = $scope.data = {};
-	$scope.data.imageData = '';
+	$scope.data.imageData = $scope.data.videoData = '';
 	/** http://dreamgraphs.com/web_service.php?action=day_count&accpet_id=185 **/
 	$scope.$on('$ionicView.enter', function() {
 		var action = "day_count";
@@ -1940,6 +2188,7 @@ angular.module('starter.controllers', [])
 		};
 		$cordovaCamera.getPicture(options).then(function (imageData) {
 			$scope.data.imageData = imageData;
+			$scope.data.videoData = '';
 			$scope.$apply();
 		}, function (err) {
 			// An error occured. Show a message to the user
@@ -1961,6 +2210,24 @@ angular.module('starter.controllers', [])
 		};
 		$cordovaCamera.getPicture(options).then(function (imageData) {
 			$scope.data.imageData = imageData;
+			$scope.data.videoData = '';
+			$scope.$apply();
+		}, function (err) {
+			// An error occured. Show a message to the user
+		});
+	}
+	$scope.chooseRVideo = function () {
+		console.log('chooseVideo');
+		var options = {
+			quality: 75,
+			destinationType: Camera.DestinationType.FILE_URI,
+			sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+			mediaType: Camera.MediaType.VIDEO,
+			saveToPhotoAlbum: false
+		};
+		$cordovaCamera.getPicture(options).then(function (videoData) {
+			$scope.data.videoData = videoData;
+			$scope.data.imageData = '';
 			$scope.$apply();
 		}, function (err) {
 			// An error occured. Show a message to the user
@@ -1983,7 +2250,7 @@ angular.module('starter.controllers', [])
 			});
 		}
 		else{
-			if($scope.data.imageData == ''){
+			if($scope.data.imageData == '' && $scope.data.videoData == ''){
 				var action = "daily_entry";
 				var data_parameters = "action="+action+"&challenge_id="+$scope.getdata.challenge_id+"&day_name="+$scope.data.days_obj.day_name+"&day_value="+$scope.data.days_obj.value+"&user_id="+global_login_id+"&record_date="+$scope.data.Seldate+"&sensacion="+$scope.data.description+"&accept_challange="+$stateParams.record_id+"&file_type=''" ;
 				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -2001,7 +2268,7 @@ angular.module('starter.controllers', [])
 						  type: 'button-custom',
 						  onTap: function() { 
 							console.log('tapped');
-							$state.go('app.retograma',{retoID:$stateParams.record_id});
+							$state.go('app.retograma~progress',{record_id:$stateParams.record_id});
 						  }
 						},
 					  ]
@@ -2014,7 +2281,7 @@ angular.module('starter.controllers', [])
 					$ionicLoading.hide();
 				});
 			}
-			if($scope.data.imageData != ''){
+			else if($scope.data.imageData != ''){
 				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 				var server = globalip;
 				var imageData = $scope.data.imageData;
@@ -2049,7 +2316,7 @@ angular.module('starter.controllers', [])
 						  type: 'button-positive',
 						  onTap: function() { 
 							console.log('tapped');
-							$state.go('app.retograma',{retoID:$stateParams.record_id});
+							$state.go('app.retograma~progress',{record_id:$stateParams.record_id});
 						  }
 						},
 					  ]
@@ -2064,16 +2331,66 @@ angular.module('starter.controllers', [])
 				   $ionicLoading.hide();
 				}, options);
 			}
+			else if($scope.data.videoData != ''){
+				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+				var server = globalip;
+				var videoData = $scope.data.videoData;
+				var options = new FileUploadOptions();
+				options.fileKey = "strImagen";
+				options.fileName = videoData.substr(videoData.lastIndexOf('/') + 1);
+				options.mimeType = "video/mp4";
+				options.chunkedMode = false; // Transfer picture to server
+				var params = new Object(); 
+				params.action = 'daily_entry';
+				params.challenge_id = $scope.getdata.challenge_id;
+				params.day_name = $scope.data.days_obj.day_name;
+				params.day_value = $scope.data.days_obj.value;
+				params.user_id = global_login_id;
+				params.record_date = $scope.data.Seldate;
+				params.sensacion = $scope.data.description;
+				params.accept_challange = $stateParams.record_id;
+				params.file_type = 'video';
+				//Send Parameters			
+				options.params = params;
+				var ft = new FileTransfer();
+				ft.upload(videoData, server, function(r) {
+					var k = JSON.parse(r.response);
+					$ionicLoading.hide();
+					$ionicPopup.show({
+					  template: '',
+					  title: k.msg,
+					  scope: $scope,
+					  buttons: [
+						{ 
+						  text: 'Ok',
+						  type: 'button-positive',
+						  onTap: function() { 
+							console.log('tapped');
+							$state.go('app.retograma~progress',{record_id:$stateParams.record_id});
+						  }
+						},
+					  ]
+					});
+					if(k.success == 'Y'){
+						$scope.data.days_obj = {};
+						$scope.data.Seldate = $scope.data.description = $scope.data.videoData = '';
+						FormName.$setPristine();
+					}
+				}, function(error) {
+				   // document.getElementById('camera_status').innerHTML = "Upload failed: Code = " + error.code;
+				   $ionicLoading.hide();
+				}, options);
+			}
 		}
 	};
 })
 /** Retograma Instructions Controller **/
 .controller('retogramaInstructionsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&column_name=instructions **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&colnm=instructions **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.instructions = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&column_name=instructions";
+		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&colnm=instructions";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2093,11 +2410,11 @@ angular.module('starter.controllers', [])
 })
 /** Retograma Motivate Controller **/
 .controller('retogramaMotivateCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&column_name=motivate **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&colnm=motivate **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.motivates = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&column_name=motivate";
+		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&colnm=motivate";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2117,12 +2434,12 @@ angular.module('starter.controllers', [])
 })
 /** Retograma Daily Entry Controller **/
 .controller('retogramaDailyentryCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&user_id=48&record_id=167&column_name=daily_entry **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&user_id=48&record_id=167&colnm=daily_entry **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
 		$scope.dailyentries = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id+"&column_name=daily_entry";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id+"&colnm=daily_entry";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2432,19 +2749,25 @@ angular.module('starter.controllers', [])
 .controller('myChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
 	/** http://dreamgraphs.com/web_service.php?action=my_challenge_count&user_id=48 **/
 	$scope.$on('$ionicView.enter', function() {
-		var action = "my_challenge_count";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.myChallenges = response.my_challenge;
-			}
-			$ionicLoading.hide();
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			var action = "my_challenge_count";
+			var data_parameters = "action="+action+"&user_id="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.myChallenges = response.my_challenge;
+				}
+				$ionicLoading.hide();
+			});
+		}
 	});
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({
@@ -2457,19 +2780,25 @@ angular.module('starter.controllers', [])
 .controller('friendChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_count&user_id=48 **/
 	$scope.$on('$ionicView.enter', function() {
-		var action = "friend_challenge_count";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
-				$scope.friendChallenges = response.friend_challenge;
-			}
-			$ionicLoading.hide();
-		});
+		var login_var_local = window.localStorage.getItem("login_var_local");
+		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
+			$state.go('app.login');
+		}
+		else{
+			var action = "friend_challenge_count";
+			var data_parameters = "action="+action+"&user_id="+global_login_id;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
+					$scope.friendChallenges = response.friend_challenge;
+				}
+				$ionicLoading.hide();
+			});
+		}
 	});
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({

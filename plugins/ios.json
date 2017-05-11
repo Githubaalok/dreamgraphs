@@ -60,6 +60,9 @@
         },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "com.ionicframework.demo2434652"
+        },
+        "onesignal-cordova-plugin": {
+            "PACKAGE_NAME": "com.ionicframework.demo2434652"
         }
     },
     "dependent_plugins": {

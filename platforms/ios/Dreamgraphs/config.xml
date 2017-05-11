@@ -60,6 +60,9 @@
     <feature name="Keyboard">
         <param name="ios-package" onload="true" value="IonicKeyboard" />
     </feature>
+    <feature name="OneSignalPush">
+        <param name="ios-package" value="OneSignalPush" />
+    </feature>
     <name>Dreamgraphs</name>
     <description>
         Dreamgraphs Sample Application.
