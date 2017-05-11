@@ -2049,11 +2049,11 @@ angular.module('starter.controllers', [])
 })
 /** Retograma Benefits Controller **/
 .controller('retogramaBenefitsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=172&column_name=benefits **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=172&colnm=benefits **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.benefits = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&column_name=benefits";
+		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&colnm=benefits";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2385,11 +2385,11 @@ angular.module('starter.controllers', [])
 })
 /** Retograma Instructions Controller **/
 .controller('retogramaInstructionsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&column_name=instructions **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&colnm=instructions **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.instructions = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&column_name=instructions";
+		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&colnm=instructions";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2409,11 +2409,11 @@ angular.module('starter.controllers', [])
 })
 /** Retograma Motivate Controller **/
 .controller('retogramaMotivateCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&column_name=motivate **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&colnm=motivate **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.motivates = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&column_name=motivate";
+		var data_parameters = "action="+action+"&record_id="+$stateParams.record_id+"&colnm=motivate";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2433,12 +2433,12 @@ angular.module('starter.controllers', [])
 })
 /** Retograma Daily Entry Controller **/
 .controller('retogramaDailyentryCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter) {
-	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&user_id=48&record_id=167&column_name=daily_entry **/
+	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&user_id=48&record_id=167&colnm=daily_entry **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
 		$scope.dailyentries = {};
 		var action = "in_progress_deatils";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id+"&column_name=daily_entry";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id+"&colnm=daily_entry";
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
