@@ -217,3 +217,10 @@ margin-top: 0px; width: 30px;height: 16px;}.custom-amount-select {    background
 .datepicker-modal-container .datepicker-modal { width: 90% !important; }
 .bar .button.button-clear, .bar button.button-clear { font-size: 12px !important; }
 .bar button.button-clear .icon::before { font-size: 20px !important; }
+/** Tabs Icons **/
+.tabs .tab-item .icon.custom-thi-person { background-repeat: no-repeat; background-position: 50%; height: 70%; margin-top: 6px;background-image: url('../img/siteimgs/1494588848_user_male3.png'); background-size:contain; }
+.tabs .tab-item .icon.custom-thi-eye { background-repeat: no-repeat; background-position: 50%; height: 106%; background-image: url('../img/siteimgs/1494590421_eye.png'); background-size:contain; }
+.tabs .tab-item .icon.custom-thi-user_activity { background-repeat: no-repeat; background-position: 50%; height: 60%; margin-top: 10px; background-image: url('../img/siteimgs/user_activity.png'); background-size:contain; }
+.tabs .tab-item .icon.custom-thi-bank { background-repeat: no-repeat; background-position: 50%; height: 105%; margin-top: -2px; background-image:url('../img/siteimgs/1494589832_meanicons_60.png'); background-size:contain; }
+.tabs .tab-item .icon.custom-thi-wall { background-repeat: no-repeat; background-position: 50%; height: 55%; margin-top: 10px; background-image:url('../img/siteimgs/IMG_12052017_124756_0.png'); background-size:contain; }
+/** Tabs Icons **/
