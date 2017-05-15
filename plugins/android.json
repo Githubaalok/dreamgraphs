@@ -57,10 +57,16 @@
         },
         "onesignal-cordova-plugin": {
             "PACKAGE_NAME": "com.ionicframework.demo2434652"
+        },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "com.ionicframework.demo2434652"
         }
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.ionicframework.demo2434652"
+        },
+        "es6-promise-plugin": {
             "PACKAGE_NAME": "com.ionicframework.demo2434652"
         }
     }

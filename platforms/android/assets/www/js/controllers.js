@@ -532,7 +532,7 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Wall Controller **/
-.controller('wallCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter) {
+.controller('wallCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter,$ionicPopover) {
 	/** http://dreamgraphs.com/web_service.php?action=wall&user_id=48 **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
@@ -654,6 +654,16 @@ angular.module('starter.controllers', [])
 			});
 		}
 	}
+	$scope.openPopover = function($event,postimg="",anchorlink="") {
+		template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+		$scope.popover = $ionicPopover.fromTemplate(template, {
+			scope: $scope
+		});
+		$scope.popover.show($event);
+	};
+	$scope.closePopover = function() {
+		$scope.popover.hide();
+	};
 })
 /** Followers Controller **/
 .controller('followersCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
