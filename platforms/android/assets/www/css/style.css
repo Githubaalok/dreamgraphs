@@ -18,7 +18,7 @@ map { display: block;width: 100%;height: 100%; }
 .primary { color: #021D30 !important; }
 .pagesubheader{ margin-top: 30px; }
 .item-custom { border-color:rgba(255, 255, 255, 0.2); border-style:none none solid; border-width:medium medium 1px; }
-.scroll-content { background-image:url('../../www/img/siteimgs/back-img.png'); background-position: center top; background-repeat: no-repeat; background-size: cover; }
+.scroll-content { background-image:url('../../www/img/siteimgs/back-img.png') !important; background-position: center top; background-repeat: no-repeat; background-size: cover; }
 .list-custom input::-moz-placeholder, textarea::-moz-placeholder{color:#fff;}
 .list-custom .input-label.has-input {color: #fff;opacity: 0.8 !important;}
 .list-custom input ,.list-custom  textarea  {color: #ccc !important;}
