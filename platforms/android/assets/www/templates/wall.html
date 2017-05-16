@@ -34,7 +34,7 @@
 						<span class="subdued" style="padding-left:10px;"><a href="" ng-init="showComments[$index] = false" ng-click="showComments[$index] = !showComments[$index];showComments[$index] ? commentsDetails(wallitem.wall_id,$index) : '';"><i class="ion-ios-chatbubble-outline text-magenta"></i> <span class="text-primary">{{ wallitem.comment_count }} Comments</span></a></span>
 					</span>
 					<span class="pull-right">
-						<i class="ion-android-share-alt text-magenta" ng-click="openPopover($event,'{{wallitem.wall_image_url}}','https://www.dreamgraphs.com/user/profile-detail.php?user={{wallitem.user_id}}')"></i>
+						<i class="ion-android-share-alt text-magenta" ng-click="openPopover($event,'{{wallitem.wall_image_url}}','https://www.dreamgraphs.com/user/wall.php')"></i>
 					</span>
 				</p>
 			</div>
