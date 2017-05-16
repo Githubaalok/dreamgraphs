@@ -52,6 +52,9 @@
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "Dreamgraphs"
         },
+        "cordova-plugin-x-socialsharing": {
+            "PACKAGE_NAME": "Dreamgraphs"
+        },
         "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "Dreamgraphs"
         },
@@ -61,6 +64,9 @@
     },
     "dependent_plugins": {
         "cordova-plugin-compat": {
+            "PACKAGE_NAME": "Dreamgraphs"
+        },
+        "es6-promise-plugin": {
             "PACKAGE_NAME": "Dreamgraphs"
         }
     }
