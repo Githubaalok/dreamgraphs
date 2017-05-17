@@ -22,7 +22,7 @@
 						<span class="subdued" style="padding-left:10px;"><a href="" ng-init="showComments[$index] = false" ng-click="showComments[$index] = !showComments[$index];showComments[$index] ? commentsDetails(dailyentry.wall_id,$index) : '';"><i class="ion-ios-chatbubble-outline text-magenta"></i> <span class="text-primary">{{ dailyentry.comment_count }} Comments</span></a></span>
 					</span>
 					<span class="pull-right">
-						<i class="ion-android-share-alt text-magenta" ng-click="openPopover($event,'{{dailyentry.wall_image_url}}','https://www.dreamgraphs.com/user/wall.php')"></i>
+						<i class="ion-android-share-alt text-magenta" ng-click="openPopover($event,'{{dailyentry.wall_image_url}}','https://www.dreamgraphs.com/','{{dailyentry.points}}','{{dailyentry.Cumplimiento}}','{{dailyentry.type}}')"></i>
 					</span>
 				</p>
 			</div>

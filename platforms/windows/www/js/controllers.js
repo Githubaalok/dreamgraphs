@@ -655,28 +655,37 @@ angular.module('starter.controllers', [])
 		}
 	}
 	$scope.openPopover = function($event,postimg="",anchorlink="",points="",complete="",type="") {
-		/** Create Image */
-		var action = "create_image_api";
-		if(type == 'c_c' || type == 'f_f' ){
-			complete = type;
-		}
-		var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg;
-		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
-		$http.post(globalip,data_parameters, {
-			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
-		})
-		.success(function(response) {
-			if(response.success == "Y"){
-				postimg = response.data.new_image;
-			}
-			$ionicLoading.hide();
+		if(postimg==""){
 			template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
 			$scope.popover = $ionicPopover.fromTemplate(template, {
 				scope: $scope
 			});
 			$scope.popover.show($event);
-		});
-		/** Create Image End*/
+		}
+		else{
+			/** Create Image */
+			var action = "create_image_api";
+			if(type == 'c_c' || type == 'f_f' ){
+				complete = type;
+			}
+			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					postimg = response.data.new_image;
+				}
+				$ionicLoading.hide();
+				template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+				$scope.popover = $ionicPopover.fromTemplate(template, {
+					scope: $scope
+				});
+				$scope.popover.show($event);
+			});
+			/** Create Image End*/
+		}
 	};
 	$scope.closePopover = function() {
 		$scope.popover.hide();
@@ -829,12 +838,38 @@ angular.module('starter.controllers', [])
 			});
 		}
 	}
-	$scope.openPopover = function($event,postimg="",anchorlink="") {
-		template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
-		$scope.popover = $ionicPopover.fromTemplate(template, {
-			scope: $scope
-		});
-		$scope.popover.show($event);
+	$scope.openPopover = function($event,postimg="",anchorlink="",points="",complete="",type="") {
+		if(postimg==""){
+			template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+			$scope.popover = $ionicPopover.fromTemplate(template, {
+				scope: $scope
+			});
+			$scope.popover.show($event);
+		}
+		else{
+			/** Create Image */
+			var action = "create_image_api";
+			if(type == 'c_c' || type == 'f_f' ){
+				complete = type;
+			}
+			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					postimg = response.data.new_image;
+				}
+				$ionicLoading.hide();
+				template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+				$scope.popover = $ionicPopover.fromTemplate(template, {
+					scope: $scope
+				});
+				$scope.popover.show($event);
+			});
+			/** Create Image End*/
+		}
 	};
 	$scope.closePopover = function() {
 		$scope.popover.hide();
@@ -2586,12 +2621,38 @@ angular.module('starter.controllers', [])
 			});
 		}
 	}
-	$scope.openPopover = function($event,postimg="",anchorlink="") {
-		template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
-		$scope.popover = $ionicPopover.fromTemplate(template, {
-			scope: $scope
-		});
-		$scope.popover.show($event);
+	$scope.openPopover = function($event,postimg="",anchorlink="",points="",complete="",type="") {
+		if(postimg==""){
+			template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+			$scope.popover = $ionicPopover.fromTemplate(template, {
+				scope: $scope
+			});
+			$scope.popover.show($event);
+		}
+		else{
+			/** Create Image */
+			var action = "create_image_api";
+			if(type == 'c_c' || type == 'f_f' ){
+				complete = type;
+			}
+			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg;
+			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
+			$http.post(globalip,data_parameters, {
+				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
+			})
+			.success(function(response) {
+				if(response.success == "Y"){
+					postimg = response.data.new_image;
+				}
+				$ionicLoading.hide();
+				template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+				$scope.popover = $ionicPopover.fromTemplate(template, {
+					scope: $scope
+				});
+				$scope.popover.show($event);
+			});
+			/** Create Image End*/
+		}
 	};
 	$scope.closePopover = function() {
 		$scope.popover.hide();
