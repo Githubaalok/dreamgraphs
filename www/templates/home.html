@@ -8,56 +8,54 @@
 		<div class="row overlay-light">
 			<div class="col col-100 text-center">
 				<img src="img/siteimgs/logo_dgphs.png" style="width:50%" />
-				<p class="text-white">CHALLENGES THAT TRANSFORM LIVES, REAL FRIENDS AND COMPENSATION WONDERFUL</p>
+				<p class="text-white">{{ homepagecontent[0].sectioncontent }}</p>
 			</div>
 		</div>
 		<div class="row overlay-dark">
 			<div class="col col-100 text-center">
-				<h2 class="text-white"><b>YOU ACCEPT</b></h2>
-				<p class="text-white">Responsibility to be better every day</p>
+				<h2 class="text-white"><b>{{ homepagecontent[1].sectioncontent }}</b></h2>
+				<p class="text-white">{{ homepagecontent[2].sectioncontent }}</p>
 				<div class="col col-50 col-offset-25 accept-box"> {{ complete_challenge }}	</div>
-				<p class="text-white">Achievements</p>
+				<p class="text-white">{{ homepagecontent[3].sectioncontent }}</p>
 			</div>
 		</div>
 		<div class="text-center bg-white">
-			<h2><span class="text-primary"><b>WHY</span> DREAMGRAPHS?</b></h2>
-			<p>
-				Because we want and need to improve in some aspect of our lives: health, personal finance at the intellectual level, in our personal relationships or professional level and often do not know where to start and if we take the first step does not know how to stay. Because we seek recognition and compensation for efforts but we do not always get. Because if we do not achieve our goals, we create a sense of frustration that is slowly eating our spirit, and that we should not allow
-			</p>
+			<h2 ng-bind-html="homepagecontent[4].sectioncontent"></h2>
+			<p>{{ homepagecontent[5].sectioncontent }}</p>
 		</div>
 		<div>
 			<div class="row overlay-light">
 				<div class="col col-100 text-center">
 					<div class="text-center workmap-box"><i class="ion-thumbsup"></i></div>
-					<h2 class="text-white">TO CHOOSE</h2>
-					<p class="text-white">A challenge for you or to obserquiarlo to a friend.</p>
+					<h2 class="text-white">{{ homepagecontent[6].sectioncontent }}</h2>
+					<p class="text-white">{{ homepagecontent[7].sectioncontent }}</p>
 				</div>
 			</div>
 			<div class="row overlay-light">
 				<div class="col col-100 text-center">
 					<div class="text-center workmap-box"><i class="ion-android-checkbox"></i></div>
-					<h2 class="text-white">ACT</h2>
-					<p class="text-white">Consistent with the deep desire to be better every day.</p>
+					<h2 class="text-white">{{ homepagecontent[8].sectioncontent }}</h2>
+					<p class="text-white">{{ homepagecontent[9].sectioncontent }}</p>
 				</div>
 			</div>
 			<div class="row overlay-light">
 				<div class="col col-100 text-center">
 					<div class="text-center workmap-box"><i class="ion-android-share-alt"></i></div>
-					<h2 class="text-white">SHARE</h2>
-					<p class="text-white">Your progress and achievements with friends, show your experience and feelings.</p>
+					<h2 class="text-white">{{ homepagecontent[10].sectioncontent }}</h2>
+					<p class="text-white">{{ homepagecontent[11].sectioncontent }}</p>
 				</div>
 			</div>
 			<div class="row overlay-light">
 				<div class="col col-100 text-center">
 					<div class="text-center workmap-box"><i class="ion-social-dropbox"></i></div>
-					<h2 class="text-white">TO RECEIVE</h2>
-					<p class="text-white">Incentives and support to transform your life and be happier.</p>
+					<h2 class="text-white">{{ homepagecontent[12].sectioncontent }}</h2>
+					<p class="text-white">{{ homepagecontent[13].sectioncontent }}</p>
 				</div>
 			</div>
 		</div>
 		<div class="row overlay-dark">
 			<div class="col col-100 text-center" style="margin:30px 0px 30px 0px">
-				<h3 class="text-white">dreamgraphs share <span class="text-primary">with your friends!</span></h3>
+				<span ng-bind-html="homepagecontent[14].sectioncontent" ></span>
 				<form name="shareForm" ng-submit="submitshareForm(shareForm);" novalidate>
 					<div class="list list-custom home-input">
 					  <div class="item item-input-inset">
@@ -82,37 +80,19 @@
 				<h2 class="text-primary"><b>BENEFITS</b></h2>
 			</div>
 		</div>
-		<div class="row overlay-light">
+		<div class="row overlay-light" ng-repeat="benefit in benefits">
 			<div class="col col-100 text-center text-white">
 				<div class="icon-box-high">
-					<i class="ion-happy" style="font-size:50px;"></i>
-					<h2 class="text-white">HAPPINESS</h2>
-					<p class="text-white">When you give and receive, participate in the dynamic exchange of life that will generate inner peace.</p>
+					<span  style="font-size:50px;" ng-bind-html="benefit.app_icon"></span>
+					<h2 class="text-white">{{ benefit.title }}</h2>
+					<p class="text-white">{{ benefit.description }}</p>
 				</div>
 			</div>
 		</div>
 		<div class="row overlay-light">
 			<div class="col col-100 text-center text-white">
-				<div class="icon-box-high">
-					<i class="ion-android-checkbox" style="font-size:50px;"></i>
-					<h2 class="text-white">NEW HABITS</h2>
-					<p class="text-white">Do repetitive tasks that promote positive aspects in your life, strengthen the discipline you need to transform your life.</p>
-				</div>
-			</div>
-		</div>
-		<div class="row overlay-light">
-			<div class="col col-100 text-center text-white">
-				<div class="icon-box-high">
-					<i class="ion-cash" style="font-size:50px;"></i>
-					<h2 class="text-white">COMPENSATIONS</h2>
-					<p class="text-white">The redemption of the points donated by friends is a benefit that can make tangible.</p>
-				</div>
-			</div>
-		</div>
-		<div class="row overlay-light">
-			<div class="col col-100 text-center text-white">
-				<h2 class="text-white">I'M NOT SAYING IT WILL BE EASY <span class="text-primary">BUT CERTAINLY</span></h2>
-				<p class="text-white">will be worth.</p>
+				<span ng-bind-html="homepagecontent[15].sectioncontent" ></span>
+				<span ng-bind-html="homepagecontent[16].sectioncontent" ></span>
 			</div>
 		</div>
 		<div class="overlay-dark text-center testimonial">	

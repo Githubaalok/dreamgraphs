@@ -1268,7 +1268,8 @@ angular.module('starter.controllers', [])
 		}
 		/** http://dreamgraphs.com/web_service.php?action=testimonials **/
 		var action = "testimonials";
-		var data_parameters = "action="+action;
+		var lang = "english";
+		var data_parameters = "action="+action+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1278,7 +1279,10 @@ angular.module('starter.controllers', [])
 				//window.localStorage.setItem("offineData.homepageData", angular.toJson(response));
 				$scope.complete_challenge = response.complete_challenge;
 				$scope.testimonials = response.testimonials;
+				$scope.benefits = response.benefits;
+				$scope.homepagecontent = response.homepagecontent;
 				$scope.landingpagebackimg = response.landingpagebackimg;
+				$rootScope.$broadcast('sidemenus',{sidemenus:response.sidemenus});
 				setTimeout(function(){
 					$ionicSlideBoxDelegate.update();
 					$ionicSlideBoxDelegate.loop(true);
@@ -2933,7 +2937,10 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Menu **/
-.controller('MenuController', function($scope,$ionicSideMenuDelegate,$state,$ionicHistory) {
+.controller('MenuController', function($scope,$ionicSideMenuDelegate,$state,$ionicHistory,$rootScope) {
+	$rootScope.$on('sidemenus', function (event, args) {
+		$scope.sidemenus = args.sidemenus;
+	});
 	$scope.GotoPage = function(page){ 
 		$ionicHistory.nextViewOptions({
 			disableBack: true
