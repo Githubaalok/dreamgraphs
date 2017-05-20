@@ -1,8 +1,13 @@
-﻿<ion-view view-title="Settings / Alert With Vibrations Phone">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Settings / Alert With Vibrations Phone</span>
+		<span ng-if="defaultLang == 'spanish'">Configuración / Alerta con Vibraciones Teléfono</span>
+    </ion-nav-title>
 	<ion-content>
 		<ul class="list custom-toggle">
 		  <li class="item item-toggle">
-			 To Action an Challenge in Progress
+			 <span ng-if="defaultLang == 'english'">To Action an Challenge in Progress</span>
+			 <span ng-if="defaultLang == 'spanish'">A la acción un desafío en progreso</span>
 			 <label class="toggle toggle-balanced">
 			   <input type="checkbox">
 			   <div class="track">
@@ -11,7 +16,8 @@
 			 </label>
 		  </li>
 		  <li class="item item-toggle">
-			 When the user recived points
+			 <span ng-if="defaultLang == 'english'">When the user recived points</span>
+			 <span ng-if="defaultLang == 'spanish'">Cuando el usuario recibe puntos</span>
 			 <label class="toggle toggle-balanced">
 			   <input type="checkbox">
 			   <div class="track">
@@ -20,7 +26,8 @@
 			 </label>
 		  </li>
 		  <li class="item item-toggle">
-			 When a friend completed a challenge
+			 <span ng-if="defaultLang == 'english'">When a friend completed a challenge</span>
+			 <span ng-if="defaultLang == 'spanish'">Cuando un amigo completó un desafío</span>
 			 <label class="toggle toggle-balanced">
 			   <input type="checkbox">
 			   <div class="track">
@@ -29,7 +36,8 @@
 			 </label>
 		  </li>
 		  <li class="item item-toggle">
-			 When a friend failed a challenge
+			 <span ng-if="defaultLang == 'english'">When a friend failed a challenge</span>
+			 <span ng-if="defaultLang == 'spanish'">Cuando un amigo falló en un desafío</span>
 			 <label class="toggle toggle-balanced">
 			   <input type="checkbox">
 			   <div class="track">
@@ -38,7 +46,8 @@
 			 </label>
 		  </li>
 		  <li class="item item-toggle">
-			 When user recieved compensations $ in your bank
+			 <span ng-if="defaultLang == 'english'">When user recieved compensations $ in your bank</span>
+			 <span ng-if="defaultLang == 'spanish'">Cuando el usuario recibe compensaciones $ en su banco</span>
 			 <label class="toggle toggle-balanced">
 			   <input type="checkbox">
 			   <div class="track">

@@ -1,9 +1,14 @@
-﻿<ion-view view-title="My challenges">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">My challenges</span>
+		<span ng-if="defaultLang == 'spanish'">Mis retos</span>
+    </ion-nav-title>
 	<ion-content>
-		<div class="list custom-challenge">			
+		<div class="list custom-challenge">
 		  <a href="" ng-click="GotoPage('my-challenges~without-accepted');">
 			<div class="item item-button-right">
-				Received
+				<span ng-if="defaultLang == 'english'">Received</span>
+				<span ng-if="defaultLang == 'spanish'">Recibido</span>
 				<button class="button button-dark">
 				  {{ myChallenges.received }}
 				</button>
@@ -11,7 +16,8 @@
 		  </a>
 		  <a href="" ng-click="GotoPage('my-in-progress');">
 			<div class="item item-button-right">
-				In Progress
+				<span ng-if="defaultLang == 'english'">In Progress</span>
+				<span ng-if="defaultLang == 'spanish'">En progreso</span>
 				<button class="button button-energized">
 				  {{ myChallenges.in_progress }}
 				</button>
@@ -19,7 +25,8 @@
 		  </a>
 		  <a href="" ng-click="GotoPage('my-in-failed');">
 			<div class="item item-button-right">
-				Failed
+				<span ng-if="defaultLang == 'english'">Failed</span>
+				<span ng-if="defaultLang == 'spanish'">Ha fallado</span>
 				<button class="button button-assertive">
 				  {{ myChallenges.failed }}
 				</button>
@@ -27,7 +34,8 @@
 		  </a>
 		  <a href="" ng-click="GotoPage('my-achievements');">
 			<div class="item item-button-right">
-				Achievement
+				<span ng-if="defaultLang == 'english'">Achievement</span>
+				<span ng-if="defaultLang == 'spanish'">Logro</span>
 				<button class="button button-balanced">
 				  {{ myChallenges.achievement }}
 				</button>
@@ -35,7 +43,8 @@
 		  </a>
 		  <a href="" ng-click="GotoPage('send-challenges');">
 			<div class="item item-button-right">
-				Sent
+				<span ng-if="defaultLang == 'english'">Sent</span>
+				<span ng-if="defaultLang == 'spanish'">Expedido</span>
 				<button class="button button-calm">
 				  {{ myChallenges.Send }}
 				</button>

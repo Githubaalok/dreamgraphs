@@ -186,10 +186,12 @@ angular.module('starter.controllers', [])
 	var defaultLang = window.localStorage.getItem("defaultLang");
 	if(defaultLang !== undefined || defaultLang != null || defaultLang != '') {
 		$scope.userdata.defaultLang = defaultLang;
+		$rootScope.$broadcast('defaultLang',{defaultLang:defaultLang});
 	}
 	$scope.changeDefaultLang = function() {
 		console.log($scope.userdata.defaultLang);
 		window.localStorage.setItem("defaultLang",$scope.userdata.defaultLang);
+		$rootScope.$broadcast('defaultLang',{defaultLang:$scope.userdata.defaultLang});
 		$ionicHistory.nextViewOptions({
 			disableBack: true
 		});
@@ -1272,9 +1274,60 @@ angular.module('starter.controllers', [])
 		$state.go('app.'+page);
 	}
 })
+/** Settings Controller **/
+.controller('settingsCtrl', function($http,$scope,$state,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+})
+/** Settings/Notification Controller **/
+.controller('settingsNotificationCtrl', function($http,$scope,$state,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+})
+/** Settings/Alert With Notification Controller **/
+.controller('settingsAlertWNotificationCtrl', function($http,$scope,$state,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+})
+/** Compensation Controller **/
+.controller('compensationCtrl', function($http,$scope,$state,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+})
+/** Compensation / app for comp Controller **/
+.controller('compensationApp4CompCtrl', function($http,$scope,$state,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+})
 /** Home Controller **/
 .controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope,$ionicSideMenuDelegate) {
 	$ionicSideMenuDelegate.canDragContent(false);
+	var lang = '';
 	/** Check Login **/
 	$scope.$on('$ionicView.enter', function() {
 		//Set Login
@@ -1287,10 +1340,15 @@ angular.module('starter.controllers', [])
 		var defaultLang = window.localStorage.getItem("defaultLang");
 		if(defaultLang === undefined || defaultLang == null || defaultLang == '') {
 			window.localStorage.setItem("defaultLang",'english');
+			$rootScope.$broadcast('defaultLang',{defaultLang:'english'});
+		}
+		else{
+			$rootScope.$broadcast('defaultLang',{defaultLang:defaultLang});
 		}
 		/** http://dreamgraphs.com/web_service.php?action=testimonials **/
 		var action = "testimonials";
-		var lang = defaultLang != '' ? defaultLang : 'english';
+		lang = defaultLang != '' ? defaultLang : 'english';
+		$scope.defaultLang = lang;
 		var data_parameters = "action="+action+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
@@ -1319,16 +1377,18 @@ angular.module('starter.controllers', [])
 	$scope.submitshareForm = function(FormName) {
 		/** https://www.dreamgraphs.com/web_service.php?action=invite&email=jaymakerits@gmail.com **/
 		var action = "invite";
-		var data_parameters = "action="+action+"&email="+$scope.formData.email ;
+		var data_parameters = "action="+action+"&email="+$scope.formData.email+"&lang="+lang ;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p>'+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -1346,7 +1406,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -1942,11 +2002,20 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Recieved Challenges **/
-.controller('recievedChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup,$ionicSideMenuDelegate) {
+.controller('recievedChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup,$ionicSideMenuDelegate,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=received_challenge&user_id=9 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
+		var lang = $scope.defaultLang;
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		var action = "received_challenge";
-		var data_parameters = "action="+action+"&user_id="+global_login_id;
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1963,7 +2032,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -1974,12 +2043,22 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Recieved Challenge Details **/
-.controller('recievedChallengeDetailsCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup,$ionicSideMenuDelegate,$stateParams) {
+.controller('recievedChallengeDetailsCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup,$ionicSideMenuDelegate,$stateParams,$rootScope) {
+	var lang = '';
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+	lang = $scope.defaultLang;
+	var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 	/** http://dreamgraphs.com/web_service.php?action=received_challenge_details&user_id=9&record_id=196 **/
 	$scope.$on('$ionicView.enter', function() {
 		var action = "received_challenge_details";
 		var record_id = $stateParams.record_id;
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+record_id;
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+record_id+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1996,7 +2075,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -2009,7 +2088,7 @@ angular.module('starter.controllers', [])
 	$scope.acceptRecdChallenge = function(record_id,challenge_id,start_date,end_date,challenges_send_by) {
 		/** http://dreamgraphs.com/web_service.php?action=accept_challenge&user_id=9&record_id=5&challenge_id=49&end_date=15-12-2015&days=5&send_by=12 **/
 		var action = "accept_challenge";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+record_id+"&challenge_id="+challenge_id+"&start_date="+start_date+"&end_date="+end_date+"&send_by="+challenges_send_by;
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+record_id+"&challenge_id="+challenge_id+"&start_date="+start_date+"&end_date="+end_date+"&send_by="+challenges_send_by+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2026,7 +2105,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom',
 					  onTap: function() { 
 						console.log('tapped');
@@ -2043,7 +2122,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -2056,7 +2135,7 @@ angular.module('starter.controllers', [])
 	$scope.cancelRecdChallenge = function(record_id,challenge_id) {
 		/** http://dreamgraphs.com/web_service.php?action=cancel_challenge_request&user_id=48&record_id=155 **/
 		var action = "cancel_challenge_request";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+record_id+"&challenge_id="+challenge_id;
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+record_id+"&challenge_id="+challenge_id+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2073,7 +2152,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom',
 					  onTap: function() { 
 						console.log('tapped');
@@ -2090,7 +2169,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -2880,7 +2959,14 @@ angular.module('starter.controllers', [])
 	}
 })
 /** myChallengesCtrl Challenges **/
-.controller('myChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
+.controller('myChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
 	/** http://dreamgraphs.com/web_service.php?action=my_challenge_count&user_id=48 **/
 	$scope.$on('$ionicView.enter', function() {
 		var login_var_local = window.localStorage.getItem("login_var_local");
@@ -2961,12 +3047,12 @@ angular.module('starter.controllers', [])
 /** Menu **/
 .controller('MenuController', function($scope,$ionicSideMenuDelegate,$state,$ionicHistory,$rootScope) {
 	//Set Language
-	var defaultLang = window.localStorage.getItem("defaultLang");
-	if(defaultLang === undefined || defaultLang == null || defaultLang == '') {
-		window.localStorage.setItem("defaultLang",'english');
-		var defaultLang = 'english';
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
 	}
-	$scope.defaultLang = defaultLang;
 	$rootScope.$on('sidemenus', function (event, args) {
 		$scope.sidemenus = args.sidemenus;
 	});

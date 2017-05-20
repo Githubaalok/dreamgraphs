@@ -1,4 +1,8 @@
-﻿<ion-view view-title="My Challenges / Received / Details">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">My Challenges / Received / Details</span>
+		<span ng-if="defaultLang == 'spanish'">Mis retos / Recibido / Detalles</span>
+    </ion-nav-title>
     <ion-content>
         <div class="shadow-custom">
           <img ng-if="recdChallengeDetails.image" src="{{ recdChallengeDetails.image }}" style="width:100%" alt="challengeImg">
@@ -8,42 +12,80 @@
 		</div>
 		<div class="list list-custom">
 		  <a class="item" ng-if="recdChallengeDetails.start_date">
-			<span class="datatitle">Start Date</span> <span class="datavalue">{{ recdChallengeDetails.start_date }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Start Date</span>
+				<span ng-if="defaultLang == 'spanish'">Fecha de inicio</span>
+			</span>
+			<span class="datavalue">{{ recdChallengeDetails.start_date }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.end_date">
-			<span class="datatitle">End Date</span> <span class="datavalue">{{ recdChallengeDetails.end_date }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">End Date</span>
+				<span ng-if="defaultLang == 'spanish'">Fecha final</span>
+			</span>
+			<span class="datavalue">{{ recdChallengeDetails.end_date }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.sender_name">
-			<span class="datatitle">Sent By </span> <span class="datavalue">{{ recdChallengeDetails.sender_name }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Sent By</span>
+				<span ng-if="defaultLang == 'spanish'">Enviado por</span> 
+			</span> 
+			<span class="datavalue">{{ recdChallengeDetails.sender_name }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.cat_name">
-			<span class="datatitle">Category</span> <span class="datavalue">{{ recdChallengeDetails.cat_name }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Category</span>
+				<span ng-if="defaultLang == 'spanish'">Categoría</span> 
+			</span> 
+			<span class="datavalue">{{ recdChallengeDetails.cat_name }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.points">
-			<span class="datatitle">Points</span> <span class="datavalue">{{ recdChallengeDetails.points }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Points</span>
+				<span ng-if="defaultLang == 'spanish'">Puntos</span>
+			</span>
+			<span class="datavalue">{{ recdChallengeDetails.points }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.benefit1">
-			<span class="datatitle">Benefit 1 </span> <span class="datavalue">{{ recdChallengeDetails.benefit1 }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Benefit 1 </span>
+				<span ng-if="defaultLang == 'spanish'">Beneficio 1</span>
+			</span> 
+			<span class="datavalue">{{ recdChallengeDetails.benefit1 }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.benefit2">
-			<span class="datatitle">Benefit 2 </span> <span class="datavalue">{{ recdChallengeDetails.benefit2 }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Benefit 2 </span>
+				<span ng-if="defaultLang == 'spanish'">Beneficio 2</span>
+			</span>
+			<span class="datavalue">{{ recdChallengeDetails.benefit2 }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.benefit3">
-			<span class="datatitle">Benefit 3 </span> <span class="datavalue">{{ recdChallengeDetails.benefit3 }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Benefit 3 </span>
+				<span ng-if="defaultLang == 'spanish'">Beneficio 3</span>
+			</span>
+			<span class="datavalue">{{ recdChallengeDetails.benefit3 }}</span>
 		  </a>
 		  <a class="item" ng-if="recdChallengeDetails.description">
-			<span class="datatitle">Description</span> <span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="recdChallengeDetails.description"></span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Description</span>
+				<span ng-if="defaultLang == 'spanish'">Descripción</span>
+			</span> 
+			<span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="recdChallengeDetails.description"></span>
 		  </a>
 		</div>
 		<div class="row">
 		  <div class="col col-50 text-center">
 			<button ng-click="cancelRecdChallenge(recdChallengeDetails.id,recdChallengeDetails.challenge_id)" class="button button-custom button-block" style="padding:0px;margin:0px;">
-				Cancel
+				<span ng-if="defaultLang == 'english'">Cancel</span>
+				<span ng-if="defaultLang == 'spanish'">Cancelar</span>
 			</button>
 		  </div>
 		  <div class="col col-50 text-center">
 			<button ng-click="acceptRecdChallenge(recdChallengeDetails.id,recdChallengeDetails.challenge_id,recdChallengeDetails.start_date,recdChallengeDetails.end_date,recdChallengeDetails.challenges_send_by)" class="button button-custom button-block" style="padding:0px;margin:0px;">
-				Accept
+				<span ng-if="defaultLang == 'english'">Accept</span>
+				<span ng-if="defaultLang == 'spanish'">Aceptar</span>
 			</button>
 		  </div>
 		</div>

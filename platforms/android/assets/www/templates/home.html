@@ -65,19 +65,28 @@
 							</label>
 						<!--/ Input -->
 						<button class="button button-small button-outline button-primary">
-						  Submit
+							<span ng-if="defaultLang == 'english'">Submit</span>
+							<span ng-if="defaultLang == 'spanish'">Enviar</span>
 						</button>
 					  </div>
-					  <p class="error-p" ng-show="shareForm.email.$error.required && (!shareForm.email.$pristine || shareForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="shareForm.email.$error.maxlength && (!shareForm.email.$pristine || shareForm.$submitted)">Cannot Longer Than 30 Characters</p>
-					  <p class="error-p" ng-show="shareForm.email.$invalid && (!shareForm.email.$pristine || shareForm.$submitted) && !shareForm.email.$error.required">Email Is Not Valid</p>
+					  <p class="error-p" ng-if="defaultLang == 'english'" ng-show="shareForm.email.$error.required && (!shareForm.email.$pristine || shareForm.$submitted)">This Field Is Required</p>
+					  <p class="error-p" ng-if="defaultLang == 'english'" ng-show="shareForm.email.$error.maxlength && (!shareForm.email.$pristine || shareForm.$submitted)">Cannot Longer Than 30 Characters</p>
+					  <p class="error-p" ng-if="defaultLang == 'english'" ng-show="shareForm.email.$invalid && (!shareForm.email.$pristine || shareForm.$submitted) && !shareForm.email.$error.required">Email Is Not Valid</p>
+					  <p class="error-p" ng-if="defaultLang == 'spanish'" ng-show="shareForm.email.$error.required && (!shareForm.email.$pristine || shareForm.$submitted)">Este campo es requerido</p>
+					  <p class="error-p" ng-if="defaultLang == 'spanish'" ng-show="shareForm.email.$error.maxlength && (!shareForm.email.$pristine || shareForm.$submitted)">No puede tener más de 30 caracteres</p>
+					  <p class="error-p" ng-if="defaultLang == 'spanish'" ng-show="shareForm.email.$invalid && (!shareForm.email.$pristine || shareForm.$submitted) && !shareForm.email.$error.required">El correo no es válido</p>
 					</div>
 				</form>
 			</div>
 		</div>
 		<div class="row overlay-light">
 			<div class="col col-100 text-center">
-				<h2 class="text-primary"><b>BENEFITS</b></h2>
+				<h2 class="text-primary">
+					<b>
+						<span ng-if="defaultLang == 'english'">BENEFITS</span>
+						<span ng-if="defaultLang == 'spanish'">BENEFICIOS</span>
+					</b>
+				</h2>
 			</div>
 		</div>
 		<div class="row overlay-light" ng-repeat="benefit in benefits">
@@ -96,7 +105,12 @@
 			</div>
 		</div>
 		<div class="overlay-dark text-center testimonial">	
-			<h2 class="text-white"><b>TESTIMONIALS</b></h2>
+			<h2 class="text-white">
+				<b>
+					<span ng-if="defaultLang == 'english'">TESTIMONIALS</span>
+					<span ng-if="defaultLang == 'spanish'">TESTIMONIOS</span>
+				</b>
+			</h2>
 			<ion-slide-box on-slide-changed="slideChanged(index)" auto-play="true" does-continue="true" show-pager="false">
 			  <ion-slide ng-repeat="testimonial in testimonials">
 				<div class="row">

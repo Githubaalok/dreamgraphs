@@ -2,7 +2,8 @@
 	<ion-content>
 		<ul class="list custom-toggle">
 		  <li class="item item-toggle">
-			 Normal Notification
+			 <span ng-if="defaultLang == 'english'">Normal Notification</span>
+			 <span ng-if="defaultLang == 'spanish'">Notificación Normal</span>
 			 <label class="toggle toggle-balanced">
 			   <input type="checkbox">
 			   <div class="track">

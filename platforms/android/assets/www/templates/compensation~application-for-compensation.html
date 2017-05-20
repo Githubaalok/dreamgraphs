@@ -3,17 +3,20 @@
 		<div class="list list-custom list-no-image">
 			<a class="item item-icon-left item-icon-right" href="#/app/application-for-compensation~paypal">
 				<i class="icon ion-ios-bell" style="display:none"></i>
-				Paypal			
+				<span ng-if="defaultLang == 'english'">Paypal</span>
+				<span ng-if="defaultLang == 'spanish'">Paypal</span>			
 				<i class="icon icon-list ion-chevron-right"></i>
 			</a>		  
 			<a class="item item-icon-left item-icon-right" href="#/app/application-for-compensation~payu">
 				<i class="icon ion-ios-bell" style="display:none"></i>
-				PayU			
+				<span ng-if="defaultLang == 'english'">PayU</span>
+				<span ng-if="defaultLang == 'spanish'">PayU</span>			
 				<i class="icon icon-list ion-chevron-right"></i>
 			</a>
 			<a class="item item-icon-left item-icon-right" href="#/app/application-for-compensation~payment-colombia">
 				<i class="icon ion-ios-bell" style="display:none"></i>
-				Payment Colombia							
+				<span ng-if="defaultLang == 'english'">Payment Colombia</span>
+				<span ng-if="defaultLang == 'spanish'">Pago Colombia</span>							
 				<img class="colombia-img" src="img/siteimgs/Naval_Ensign_of_Colombia.png">
 				<i class="icon icon-list ion-chevron-right"></i>
 			</a>		

@@ -3,17 +3,20 @@
 		<div class="list list-custom list-no-image">
 		  <a href="#/app/settings~notification" class="item item-icon-left item-icon-right">
 			<i class="icon ion-ios-bell"></i>
-				Notification
+				<span ng-if="defaultLang == 'english'">Notification</span>
+				<span ng-if="defaultLang == 'spanish'">Notificación</span>
 			<i class="icon icon-list ion-chevron-right"></i>
 		  </a>
 		  <a href="#/app/settings-alertwithnotification" class="item item-icon-left item-icon-right">
 			<i class="icon ion-ios-bell"></i>
-				Alert With Vibrations Phone
+				<span ng-if="defaultLang == 'english'">Alert With Vibrations Phone</span>
+				<span ng-if="defaultLang == 'spanish'">Alerta con Vibraciones Teléfono</span>
 			<i class="icon icon-list ion-chevron-right"></i>
 		  </a>
 		  <a href="#/app/settings~language" class="item item-icon-left item-icon-right">
 			<i class="icon ion-ios-paper"></i>
-				Language
+				<span ng-if="defaultLang == 'english'">Language</span>
+				<span ng-if="defaultLang == 'spanish'">Idioma</span>
 			<i class="icon icon-list ion-chevron-right"></i>
 		  </a>
 		</div>

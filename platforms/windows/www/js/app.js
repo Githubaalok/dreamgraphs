@@ -439,7 +439,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/settings',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/settings.html'   
+		templateUrl: 'templates/settings.html',
+		controller: 'settingsCtrl'
 	  }
 	}
   })
@@ -447,7 +448,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/settings~notification',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/settings~notification.html'   
+		templateUrl: 'templates/settings~notification.html',
+		controller: 'settingsNotificationCtrl'
 	  }
 	}
   })
@@ -455,7 +457,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/settings-alertwithnotification',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/settings-alertwithnotification.html'   
+		templateUrl: 'templates/settings-alertwithnotification.html',
+		controller: 'settingsAlertWNotificationCtrl'
 	  }
 	}
   })
@@ -481,7 +484,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/compensation',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/compensation.html'    
+		templateUrl: 'templates/compensation.html',
+		controller: 'compensationCtrl'
 	  }
 	}
   })
@@ -507,7 +511,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/compensation~application-for-compensation',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/compensation~application-for-compensation.html'    
+		templateUrl: 'templates/compensation~application-for-compensation.html', 
+		controller: 'compensationApp4CompCtrl'
 	  }
 	}
   })
