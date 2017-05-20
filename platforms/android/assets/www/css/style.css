@@ -28,8 +28,7 @@ map { display: block;width: 100%;height: 100%; }
 .list-custom .item.item-thumbnail-left > img { height: 73%; }
 .list-custom .item.item-thumbnail-left > h2 , .list-custom .item.item-thumbnail-left > p { color:#fff; display: block; margin-left: 100px; }
 .icon.icon-list { color: rgba(255, 255, 255, 0.3); font-size: 14px; }
-.list-language .item-avatar { padding:12px 0px 0px 72px; min-height: 45px; }
-.list-language .item-avatar > img { border-radius: 0; top: 10px; height: 25px; }
+.list-language .item { padding: 5px 0px 0px 15px; }
 .list-followers .item-avatar { padding:12px 0px 0px 72px; }
 .list-followers .item-avatar > p { color:rgba(255, 255, 255, 0.7); }
 .button-custom { background: rgba(0, 0, 0, 0.3) none repeat scroll 0 0; border-color: rgba(255, 255, 255, 0.35); border-radius: 0;border-style: solid; border-width: 1px; color: #fff; }
@@ -228,3 +227,6 @@ margin-top: 0px; width: 30px;height: 16px;}.custom-amount-select {    background
 .social-share { height: 89px !important; }
 .social-share  a { color: #fff !important; }
 .social-share .scroll-content{ background-image: none !important; }
+.lang_imgs{ height:25px; padding-right: 15px; }
+.list-language .item-content > span { position:absolute; }
+.list-language .item-radio .radio-icon { top: -5px !important; }

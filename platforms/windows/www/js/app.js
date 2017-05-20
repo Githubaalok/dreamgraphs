@@ -463,7 +463,8 @@ angular.module('starter', ['ionic', 'starter.controllers','ionic-datepicker','ng
 	url: '/settings~language',
 	views: {
 	  'menuContent': {
-		templateUrl: 'templates/settings~language.html'   
+		templateUrl: 'templates/settings~language.html',
+		controller: 'settingsLangCtrl'
 	  }
 	}
   })

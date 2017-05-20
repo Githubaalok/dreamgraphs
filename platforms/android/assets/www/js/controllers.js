@@ -180,6 +180,22 @@ angular.module('starter.controllers', [])
 		}
 	};
 })
+/** Settings Language Controller **/
+.controller('settingsLangCtrl',function($scope,$http,$ionicLoading,$ionicHistory,$state,$ionicPopup,$rootScope) {
+	$scope.userdata = {};
+	var defaultLang = window.localStorage.getItem("defaultLang");
+	if(defaultLang !== undefined || defaultLang != null || defaultLang != '') {
+		$scope.userdata.defaultLang = defaultLang;
+	}
+	$scope.changeDefaultLang = function() {
+		console.log($scope.userdata.defaultLang);
+		window.localStorage.setItem("defaultLang",$scope.userdata.defaultLang);
+		$ionicHistory.nextViewOptions({
+			disableBack: true
+		});
+		$state.go('app.home',{},{ reload: true });
+	};
+})
 /** Change Password Controller **/
 .controller('changePassCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup) {
 	$scope.data = {};
@@ -1261,14 +1277,20 @@ angular.module('starter.controllers', [])
 	$ionicSideMenuDelegate.canDragContent(false);
 	/** Check Login **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Login
 		var login_var_local = window.localStorage.getItem("login_var_local");
 		if(login_var_local !== undefined && login_var_local != null) {
 			console.log(login_var_local);
 			$rootScope.$broadcast('login_var',{global_login:login_var_local});
 		}
+		//Set Language
+		var defaultLang = window.localStorage.getItem("defaultLang");
+		if(defaultLang === undefined || defaultLang == null || defaultLang == '') {
+			window.localStorage.setItem("defaultLang",'english');
+		}
 		/** http://dreamgraphs.com/web_service.php?action=testimonials **/
 		var action = "testimonials";
-		var lang = "english";
+		var lang = defaultLang != '' ? defaultLang : 'english';
 		var data_parameters = "action="+action+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
@@ -2938,6 +2960,13 @@ angular.module('starter.controllers', [])
 })
 /** Menu **/
 .controller('MenuController', function($scope,$ionicSideMenuDelegate,$state,$ionicHistory,$rootScope) {
+	//Set Language
+	var defaultLang = window.localStorage.getItem("defaultLang");
+	if(defaultLang === undefined || defaultLang == null || defaultLang == '') {
+		window.localStorage.setItem("defaultLang",'english');
+		var defaultLang = 'english';
+	}
+	$scope.defaultLang = defaultLang;
 	$rootScope.$on('sidemenus', function (event, args) {
 		$scope.sidemenus = args.sidemenus;
 	});

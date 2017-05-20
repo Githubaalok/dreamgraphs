@@ -1,14 +1,15 @@
 ﻿<ion-view view-title="Setting / Language">
 	<ion-content>
-		<div class="list list-custom list-language">
-			<a href="" class="item item-avatar" href="#">
-			  <img src="img/siteimgs/spanisflag.png">
-			  <h2 class="text-white">Spanish</h2>
-			</a>
-			<a href="" class="item item-avatar" href="#">
-			  <img src="img/siteimgs/usaflag.png">
-			  <h2 class="text-white">English</h2>
-			</a>
+		<div>
+			<form name="settingsLangForm" ng-submit="submitsettingsLangForm(settingsLangForm);" novalidate>
+				<div class="list list-custom list-language">
+					<!-- Radio -->
+						<ion-radio ng-model="userdata.defaultLang" ng-change="changeDefaultLang();" name="defaultLang" ng-value="'english'" required><img class="lang_imgs" src="img/siteimgs/usaflag.png"> English</ion-radio>
+						<ion-radio ng-model="userdata.defaultLang" ng-change="changeDefaultLang();" name="defaultLang" ng-value="'spanish'" required><img class="lang_imgs" src="img/siteimgs/spanisflag.png"> Spanish</ion-radio>
+						<p class="error-p" ng-show="settingsLangForm.defaultLang.$error.required && (!settingsLangForm.defaultLang.$pristine || settingsLangForm.$submitted)">This Field Is Required</p>
+					<!--/ Radio -->
+				</div>
+			</form>
 		</div>
 		<div class="row">
 			<div class="col col-100" style="margin-bottom:30px;"></div>
