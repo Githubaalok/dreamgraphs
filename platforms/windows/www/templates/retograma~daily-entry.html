@@ -1,4 +1,8 @@
-﻿<ion-view view-title="Retograma / Daily Entry">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Retogram / Daily Entry</span>
+		<span ng-if="defaultLang == 'spanish'">Retograma / Entrada diaria</span>
+    </ion-nav-title>
 	<ion-content>
 		<div class="list card custom-list-card" ng-repeat="dailyentry in dailyentries" ng-if="!dailyentries.err">
 			<div class="item item-avatar">
@@ -37,7 +41,10 @@
 					  <p style="white-space: normal;">{{ getcomment.comment }}</p>
 					</a>
 					<a class="item item-thumbnail-left" style="padding:12px !important;" href="" ng-if="dailyentries[$index].getcomments == 'No Comment Found'">
-					  <p>You Will Be The First To Comment On This</p>
+					  <p>
+						<span ng-if="defaultLang == 'english'">You Will Be The First To Comment On This</span>
+						<span ng-if="defaultLang == 'spanish'">Usted será el primero en comentar sobre esto</span>
+					  </p>
 					</a>
 					<div class="item item-thumbnail-left" style="padding-left:10px !important;">
 						<form name="commentForm[$index]" class="newcommentform" ng-submit="submitcommentForm(dailyentry.wall_id,$index);" novalidate>
@@ -55,7 +62,10 @@
 		<div class="row">
 			<div class="col col-100 text-center" style="margin-bottom:20px;">
 				<p><i ng-if="dailyentries.err" class="ion-alert-circled icon-popup"></i></p>
-				<h4 ng-if="dailyentries.err" class="text-primary">No Results Found</h4>
+				<h4 ng-if="dailyentries.err" class="text-primary">
+					<span ng-if="defaultLang == 'english'">No Results Found</span>
+					<span ng-if="defaultLang == 'spanish'">No se han encontrado resultados</span>
+				</h4>
 			</div>
 		</div>
     </ion-content>

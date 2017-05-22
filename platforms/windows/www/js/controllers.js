@@ -2180,7 +2180,14 @@ angular.module('starter.controllers', [])
 	}
 })
 /** My-In-Progress Challenges **/
-.controller('myInProgressChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
+.controller('myInProgressChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
 	/** http://dreamgraphs.com/web_service.php?action=my_challenge&user_id=15&condition=in_progress **/
 	$scope.$on('$ionicView.enter', function() {
 		var action = "my_challenge";
@@ -2205,8 +2212,15 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Retograma Controller **/
-.controller('retogramaCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('retogramaCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=172 **/
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
 	$scope.$on('$ionicView.enter', function() {
 		$scope.challengeDetails = {};
 		var action = "in_progress_deatils";
@@ -2226,7 +2240,14 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Retograma Benefits Controller **/
-.controller('retogramaBenefitsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('retogramaBenefitsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
 	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=172&colnm=benefits **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.benefits = {};
@@ -2246,7 +2267,17 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Retograma Progress Controller **/
-.controller('retogramaProgressCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('retogramaProgressCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
+	var lang = '';
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+	lang = $scope.defaultLang;
+	var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 	/** http://dreamgraphs.com/web_service.php?action=checkbox_show&accpet_id=193 **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.tickboxes = $scope.challenge_details = {};
@@ -2270,7 +2301,7 @@ angular.module('starter.controllers', [])
 	$scope.retoChanged = function(tickbox,index) {
 		/** http://dreamgraphs.com/web_service.php?action=daily_entry_checkbox&checkbox_name=track2&accpet_challenge_id=55 **/
 		var action = "daily_entry_checkbox";
-		var data_parameters = "action="+action+"&checkbox_name="+tickbox+"&accpet_challenge_id="+$stateParams.record_id;
+		var data_parameters = "action="+action+"&checkbox_name="+tickbox+"&accpet_challenge_id="+$stateParams.record_id+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2291,7 +2322,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -2302,7 +2333,20 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Retograma bitacora-challenge Controller **/
-.controller('retogramaBitacoraChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$filter,$cordovaCamera,$cordovaFileTransfer) {
+.controller('retogramaBitacoraChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$filter,$cordovaCamera,$cordovaFileTransfer,$rootScope) {
+	var lang = '';
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
+	lang = $scope.defaultLang;
+	var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+	var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
+	var m3 = lang == 'english' ? 'Close' : 'Cerca';
+	var m4 = lang == 'english' ? 'Choose Option' : 'Elegir opción';
 	var alertPopup; 
 	$scope.getdata = $scope.data = {};
 	$scope.data.imageData = $scope.data.videoData = '';
@@ -2338,11 +2382,11 @@ angular.module('starter.controllers', [])
 	$scope.chooseOption4PPhoto = function() {
 		alertPopup = $ionicPopup.show({
 		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4UploadPPhotoM();"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4UploadPPhotoM();" ></button></div></div>',
-		  title: 'Choose Option',
+		  title: m4,
 		  scope: $scope,
 		  buttons: [
 			{ 
-			  text: 'Close',
+			  text: m3,
 			  type: 'button-custom'
 			},
 		  ]
@@ -2416,11 +2460,11 @@ angular.module('starter.controllers', [])
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -2429,7 +2473,7 @@ angular.module('starter.controllers', [])
 		else{
 			if($scope.data.imageData == '' && $scope.data.videoData == ''){
 				var action = "daily_entry";
-				var data_parameters = "action="+action+"&challenge_id="+$scope.getdata.challenge_id+"&day_name="+$scope.data.days_obj.day_name+"&day_value="+$scope.data.days_obj.value+"&user_id="+global_login_id+"&record_date="+$scope.data.Seldate+"&sensacion="+$scope.data.description+"&accept_challange="+$stateParams.record_id+"&file_type=''" ;
+				var data_parameters = "action="+action+"&challenge_id="+$scope.getdata.challenge_id+"&day_name="+$scope.data.days_obj.day_name+"&day_value="+$scope.data.days_obj.value+"&user_id="+global_login_id+"&record_date="+$scope.data.Seldate+"&sensacion="+$scope.data.description+"&accept_challange="+$stateParams.record_id+"&file_type=''"+"&lang="+lang ;
 				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 				$http.post(globalip,data_parameters, {
 					headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -2441,7 +2485,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-custom',
 						  onTap: function() { 
 							console.log('tapped');
@@ -2489,7 +2533,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-positive',
 						  onTap: function() { 
 							console.log('tapped');
@@ -2539,7 +2583,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-positive',
 						  onTap: function() { 
 							console.log('tapped');
@@ -2562,7 +2606,14 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Retograma Instructions Controller **/
-.controller('retogramaInstructionsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('retogramaInstructionsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
 	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&colnm=instructions **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.instructions = {};
@@ -2586,7 +2637,14 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Retograma Motivate Controller **/
-.controller('retogramaMotivateCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('retogramaMotivateCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
 	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&record_id=167&colnm=motivate **/
 	$scope.$on('$ionicView.enter', function() {
 		$scope.motivates = {};
@@ -2610,7 +2668,14 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Retograma Daily Entry Controller **/
-.controller('retogramaDailyentryCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter,$ionicPopover) {
+.controller('retogramaDailyentryCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter,$ionicPopover,$rootScope) {
+	//Set Language
+	$rootScope.$on('defaultLang', function (event, args) {
+		$scope.defaultLang = args.defaultLang;
+	});
+	if($scope.defaultLang == ''){
+		$scope.defaultLang = 'english';
+	}
 	/** http://dreamgraphs.com/web_service.php?action=in_progress_deatils&user_id=48&record_id=167&colnm=daily_entry **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
