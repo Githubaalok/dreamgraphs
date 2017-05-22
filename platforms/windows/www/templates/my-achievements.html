@@ -1,4 +1,8 @@
-﻿<ion-view view-title="My Challenges / Achievements">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">My Challenges / Achievements</span>
+		<span ng-if="defaultLang == 'spanish'">Mis retos / logros</span>
+    </ion-nav-title>
     <ion-content>
 		<div class="list list-custom achievement">
 		   <a ng-repeat="myAchievement in myAchievements" class="item item-thumbnail-left item-icon-left item-icon-right" ui-sref="app.achievements~details({ record_id:myAchievement.id })">
@@ -18,7 +22,10 @@
 		<div class="row">
 		   <div class="col col-100 text-center" style="margin-bottom:20px;">
 				<p ng-if="!myAchievements"><i class="ion-alert-circled icon-popup"></i></p>
-				<h4 ng-if="!myAchievements" class="text-primary">No Results Found</h4>
+				<h4 ng-if="!myAchievements" class="text-primary">
+					<span ng-if="defaultLang == 'english'">No Results Found</span>
+					<span ng-if="defaultLang == 'spanish'">No se han encontrado resultados</span>
+				</h4>
 			</div>
 		</div>
     </ion-content>

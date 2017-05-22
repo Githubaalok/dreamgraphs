@@ -1,4 +1,8 @@
-<ion-view view-title="My Challenges / Failed / Details">
+<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">My Challenges / Failed / Details</span>
+		<span ng-if="defaultLang == 'spanish'">Mis retos / Falló / Detalles</span>
+    </ion-nav-title>
     <ion-content>
 		<div class="shadow-custom">
           <img ng-if="myInFailedDetails.image" src="{{ myInFailedDetails.image }}" style="width:100%" alt="challengeImg">
@@ -10,25 +14,49 @@
 			<div class="col col-100 text-center">
 				<div class="list list-custom">
 				  <a class="item">
-					<span class="datatitle">Title</span> <span class="datavalue">{{ myInFailedDetails.challenge_title }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Title</span>
+						<span ng-if="defaultLang == 'spanish'">Título</span>
+					</span>
+					<span class="datavalue">{{ myInFailedDetails.challenge_title }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Category</span> <span class="datavalue">{{ myInFailedDetails.category }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Category</span>
+						<span ng-if="defaultLang == 'spanish'">Categoría</span>
+					</span> 
+					<span class="datavalue">{{ myInFailedDetails.category }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Start Date </span> <span class="datavalue">{{ myInFailedDetails.start_date }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Start Date</span>
+						<span ng-if="defaultLang == 'spanish'">Fecha de inicio</span>
+					</span>
+					<span class="datavalue">{{ myInFailedDetails.start_date }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">End Date</span> <span class="datavalue">{{ myInFailedDetails.end_date }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">End Date</span>
+						<span ng-if="defaultLang == 'spanish'">Fecha final</span>
+					</span>
+					<span class="datavalue">{{ myInFailedDetails.end_date }}</span>
 				  </a>
 				  <a class="item">
 					<span class="datatitle">Challenging</span> <span class="datavalue">{{ myInFailedDetails.first_name }} {{ myInFailedDetails.last_name }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Points</span> <span class="datavalue">{{ myInFailedDetails.points }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Points</span>
+						<span ng-if="defaultLang == 'spanish'">Puntos</span>
+					</span>
+					<span class="datavalue">{{ myInFailedDetails.points }}</span>
 				  </a>
 				  <a class="item" ng-if="myInFailedDetails.description">
-					<span class="datatitle">Description</span> <span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="myInFailedDetails.description"></span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Description</span>
+						<span ng-if="defaultLang == 'spanish'">Descripción</span>
+					</span>
+					<span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="myInFailedDetails.description"></span>
 				  </a>
 				</div>
 			</div>
@@ -36,12 +64,16 @@
 		<div class="row">
 		  <div class="col text-center" ng-if="myInFailedDetails.status == '1' || myInFailedDetails.status == '2' || myInFailedDetails.status == '5'">
 			<a ng-click="GotoLink()" class="button button-custom button-block">
-				Paynow
+				<span ng-if="defaultLang == 'english'">Paynow</span>
+				<span ng-if="defaultLang == 'spanish'">Pague ahora</span>
 			</a>
 		  </div>
 		  <div class="col text-center">
 			<a href="#/app/my-in-failed" class="button button-custom button-block">
-				<span>Back</span>
+				<span>
+					<span ng-if="defaultLang == 'english'">Back</span>
+					<span ng-if="defaultLang == 'spanish'">Espalda</span>
+				</span>
 			</a>
 		  </div>
 		</div>

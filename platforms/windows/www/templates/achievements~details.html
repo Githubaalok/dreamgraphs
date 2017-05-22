@@ -1,31 +1,67 @@
-﻿<ion-view view-title="My Challenge / Achievements / Details">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">My Challenges / Achievements / Details</span>
+		<span ng-if="defaultLang == 'spanish'">Mis retos / logros / Detalles</span>
+    </ion-nav-title>
     <ion-content>
 		<div class="row">
 			<div class="col col-100 text-center">
 				<div class="list list-custom">
 				  <a class="item">
-					<span class="datatitle">Title</span> <span class="datavalue">{{ myAchievementDetails.challenge_name }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Title</span>
+						<span ng-if="defaultLang == 'spanish'">Título</span>
+					</span> 
+					<span class="datavalue">{{ myAchievementDetails.challenge_name }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Category</span> <span class="datavalue">{{ myAchievementDetails.category_name }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Category</span>
+						<span ng-if="defaultLang == 'spanish'">Categoría</span>
+					</span> 
+					<span class="datavalue">{{ myAchievementDetails.category_name }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Start Date </span> <span class="datavalue">{{ myAchievementDetails.start_date }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Start Date</span>
+						<span ng-if="defaultLang == 'spanish'">Fecha de inicio</span> 
+					</span>
+					<span class="datavalue">{{ myAchievementDetails.start_date }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">End Date</span> <span class="datavalue">{{ myAchievementDetails.end_date }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">End Date</span>
+						<span ng-if="defaultLang == 'spanish'">Fecha final</span>
+					</span> 
+					<span class="datavalue">{{ myAchievementDetails.end_date }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Challenging</span> <span class="datavalue">{{ myAchievementDetails.challaging_user }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Challenging</span>
+						<span ng-if="defaultLang == 'spanish'">Desafiante</span>
+					</span>
+					<span class="datavalue">{{ myAchievementDetails.challaging_user }}</span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Points</span> <span class="datavalue">{{ myAchievementDetails.points }}</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Points</span>
+						<span ng-if="defaultLang == 'spanish'">Puntos</span>
+					</span> 
+					<span class="datavalue">{{ myAchievementDetails.points }}</span>
 				  </a>
 				  <a class="item" ng-if="myAchievementDetails.description">
-					<span class="datatitle">Description</span> <span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="myAchievementDetails.description"></span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Description</span>
+						<span ng-if="defaultLang == 'spanish'">Descripción</span>
+					</span>
+					<span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="myAchievementDetails.description"></span>
 				  </a>
 				  <a class="item">
-					<span class="datatitle">Advance</span> <span class="datavalue">100%</span>
+					<span class="datatitle">
+						<span ng-if="defaultLang == 'english'">Advance</span>
+						<span ng-if="defaultLang == 'spanish'">Avanzar</span>
+					</span>
+					<span class="datavalue">100%</span>
 				  </a>
 				</div>
 			</div>
@@ -33,13 +69,20 @@
 		<div class="row">
 		  <div class="col col-50 text-center">
 			<a ui-sref="app.achievements~daily-entry({record_id:myAchievementDetails.id})" class="button button-custom button-block">
-				See
+				<span ng-if="defaultLang == 'english'">See</span>
+				<span ng-if="defaultLang == 'spanish'">Ver</span>
 			</a>
 		  </div>
 		  <div class="col col-50 text-center">
 			<button ng-click="requestSendCancel(myAchievementDetails.redem_requrest,myAchievementDetails.id);" class="button button-custom button-block">
-				<span ng-if="myAchievementDetails.redem_requrest == 0">Request Friend</span>
-				<span ng-if="myAchievementDetails.redem_requrest == 1">Cancel Request</span>
+				<span ng-if="myAchievementDetails.redem_requrest == 0">
+					<span ng-if="defaultLang == 'english'">Request Friend</span>
+					<span ng-if="defaultLang == 'spanish'" style="font-size: 13px;">Solicitud de amigo</span>
+				</span>
+				<span ng-if="myAchievementDetails.redem_requrest == 1">
+					<span ng-if="defaultLang == 'english'">Cancel Request</span>
+					<span ng-if="defaultLang == 'spanish'" style="font-size: 13px;">Cancelar petición</span>
+				</span>
 			</button>
 		  </div>
 		</div>

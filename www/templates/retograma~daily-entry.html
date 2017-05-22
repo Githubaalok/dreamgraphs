@@ -50,7 +50,7 @@
 						<form name="commentForm[$index]" class="newcommentform" ng-submit="submitcommentForm(dailyentry.wall_id,$index);" novalidate>
 							<div class="item item-input-inset">
 								<label class="item-input-wrapper" style="background:none;">
-									<textarea placeholder="Write Your Comment...." style="width:100%" ng-model="formData.newcomment[$index]" required></textarea>
+									<textarea placeholder="{{ defaultLang == 'english' ? 'Write Your Comment' : 'Escriba su comentario' }}...." style="width:100%" ng-model="formData.newcomment[$index]" required></textarea>
 								</label>
 								<button class="button icon ion-paper-airplane button-send" style="margin-left:0px;" ng-disabled="commentForm[$index].$invalid"></button>
 							</div>
