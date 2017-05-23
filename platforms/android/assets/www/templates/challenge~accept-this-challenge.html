@@ -1,17 +1,30 @@
-<ion-view view-title="Challenge / Accept This Challenge">
+<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Challenge / Accept This Challenge</span>
+		<span ng-if="defaultLang == 'spanish'">reto / acepte este reto</span>
+    </ion-nav-title>
 	<ion-content>
 		<div class="shadow-custom">
           <img ng-if="challengeDetails.image" src="{{ challengeDetails.image }}" style="width:100%" alt="challengeImg">
 		  <div class="ion-dom">
 			<p ng-if="challengeDetails.title" class="challenge_heading text-center">{{ challengeDetails.title }}</p>
-			<p ng-if="challengeDetails.points" class="challenge_title text-center">Points Needed : {{ challengeDetails.points }}</p>
+			<p ng-if="challengeDetails.points" class="challenge_title text-center">
+				<span ng-if="defaultLang == 'english'">Points Needed :</span>
+				<span ng-if="defaultLang == 'spanish'">Puntos Necesarios :</span> 
+				{{ challengeDetails.points }}
+			</p>
 		  </div>
 		</div>
 		<div class="row">			
 			<div class="col col-100">
 				<div class="list list-custom">
 					<a class="item">
-						<span class="datatitle-t"><strong>BENEFITS</strong></span> 
+						<span class="datatitle-t">
+							<strong>
+								<span ng-if="defaultLang == 'english'">BENEFITS</span>
+								<span ng-if="defaultLang == 'spanish'">BENEFICIOS</span> 
+							</strong>
+						</span> 
 					</a>
 					<a class="item" ng-if="challengeDetails.benefits1">
 						<span class="datatitle-t">{{ challengeDetails.benefits1 }}</span> 
@@ -32,23 +45,38 @@
 						<!-- Input -->
 							<ionic-datepicker date="StartDate" min="data.minStartDate" callback="CallbackStartDate">
 								<label class="item item-custom item-input item-floating-label">
-									<span class="input-label">Working From</span>
-									<input type="text" placeholder="Working From" ng-model="data.StartDate" name="StartDate" required>
+									<span class="input-label">
+										<span ng-if="defaultLang == 'english'">Working From</span>
+										<span ng-if="defaultLang == 'spanish'">Trabajando desde</span>
+									</span>
+									<input type="text" placeholder="{{ defaultLang == 'english' ? 'Working From' : 'Trabajando desde' }}" ng-model="data.StartDate" name="StartDate" required>
 								</label>
 							</ionic-datepicker>
-							<p class="error-p" ng-show="acceptThisChallengeForm.StartDate.$error.required && (!acceptThisChallengeForm.StartDate.$pristine || acceptThisChallengeForm.$submitted)">This Field Is Required</p>
+							<p class="error-p" ng-show="acceptThisChallengeForm.StartDate.$error.required && (!acceptThisChallengeForm.StartDate.$pristine || acceptThisChallengeForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+								<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							</p>
 						<!--/ Input -->
 						<!-- Input -->
 							<ionic-datepicker date="EndDate" min="data.minEndDate" callback="CallbackEndDate">
 								<label class="item item-custom item-input item-floating-label">
-									<span class="input-label">Working To</span>
-									<input type="text" placeholder="Working To" ng-model="data.EndDate" name="EndDate" required>
+									<span class="input-label">
+										<span ng-if="defaultLang == 'english'">Working To</span>
+										<span ng-if="defaultLang == 'spanish'">Trabajando para</span>
+									</span>
+									<input type="text" placeholder="{{ defaultLang == 'english' ? 'Working To' : 'Trabajando para' }}" ng-model="data.EndDate" name="EndDate" required>
 								</label>
 							</ionic-datepicker>
-							<p class="error-p" ng-show="acceptThisChallengeForm.EndDate.$error.required && (!acceptThisChallengeForm.EndDate.$pristine || acceptThisChallengeForm.$submitted)">This Field Is Required</p>
+							<p class="error-p" ng-show="acceptThisChallengeForm.EndDate.$error.required && (!acceptThisChallengeForm.EndDate.$pristine || acceptThisChallengeForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+								<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							</p>
 						<!--/ Input -->
 					</div>
-					<button class="button button-custom button-block">Fight back !</button>
+					<button class="button button-custom button-block">
+						<span ng-if="defaultLang == 'english'">Fight back !</span>
+						<span ng-if="defaultLang == 'spanish'">! Lucha atrás</span>
+					</button>
 				</form>					
 			</div>			
 		</div>

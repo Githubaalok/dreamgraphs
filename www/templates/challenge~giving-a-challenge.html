@@ -1,10 +1,18 @@
-<ion-view view-title="Challenge / Giving A Challenge">
+<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Challenge / Giving A Challenge</span>
+		<span ng-if="defaultLang == 'spanish'">reto / Dar un reto</span>
+    </ion-nav-title>
 	<ion-content>
 		<div class="shadow-custom">
           <img ng-if="challengeDetails.image" src="{{ challengeDetails.image }}" style="width:100%" alt="challengeImg">
 		  <div class="ion-dom">
 			<p ng-if="challengeDetails.title" class="challenge_heading text-center">{{ challengeDetails.title }}</p>
-			<p ng-if="challengeDetails.category_name" class="challenge_title text-center">Category : {{ challengeDetails.category_name }}</p>
+			<p ng-if="challengeDetails.category_name" class="challenge_title text-center">
+				<span ng-if="defaultLang == 'english'">Category : </span>
+				<span ng-if="defaultLang == 'spanish'">Categoría :</span>
+				{{ challengeDetails.category_name }}
+			</p>
 		  </div>
 		</div>
 		<div class="row">			
@@ -14,59 +22,105 @@
 						<!-- Input -->
 							<ionic-datepicker date="StartDate" min="data.minStartDate" callback="CallbackStartDate">
 								<label class="item item-custom item-input item-floating-label">
-									<span class="input-label">Start Date</span>
-									<input type="text" placeholder="Start Date" ng-model="data.StartDate" name="StartDate" required>
+									<span class="input-label">
+										<span ng-if="defaultLang == 'english'">Start Date</span>
+										<span ng-if="defaultLang == 'spanish'">Fecha de inicio</span>
+									</span>
+									<input type="text" placeholder="{{ defaultLang == 'english' ? 'Start Date' : 'Fecha de inicio' }}" ng-model="data.StartDate" name="StartDate" required>
 								</label>
 							</ionic-datepicker>
-							<p class="error-p" ng-show="givingThisChallengeForm.StartDate.$error.required && (!givingThisChallengeForm.StartDate.$pristine || givingThisChallengeForm.$submitted)">This Field Is Required</p>
+							<p class="error-p" ng-show="givingThisChallengeForm.StartDate.$error.required && (!givingThisChallengeForm.StartDate.$pristine || givingThisChallengeForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+								<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							</p>
 						<!--/ Input -->
 						<!-- Input -->
 							<ionic-datepicker date="EndDate" min="data.minEndDate" callback="CallbackEndDate">
 								<label class="item item-custom item-input item-floating-label">
-									<span class="input-label">End Date</span>
-									<input type="text" placeholder="End Date" ng-model="data.EndDate" name="EndDate" required>
+									<span class="input-label">
+										<span ng-if="defaultLang == 'english'">End Date</span>
+										<span ng-if="defaultLang == 'spanish'">Fecha final</span>
+									</span>
+									<input type="text" placeholder="{{ defaultLang == 'english' ? 'End Date' : 'Fecha final' }}" ng-model="data.EndDate" name="EndDate" required>
 								</label>
 							</ionic-datepicker>
-							<p class="error-p" ng-show="givingThisChallengeForm.EndDate.$error.required && (!givingThisChallengeForm.EndDate.$pristine || givingThisChallengeForm.$submitted)">This Field Is Required</p>
+							<p class="error-p" ng-show="givingThisChallengeForm.EndDate.$error.required && (!givingThisChallengeForm.EndDate.$pristine || givingThisChallengeForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+								<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							</p>
 						<!--/ Input -->
 						<!-- Radio -->
-							<ion-radio ng-model="data.type" name="type" ng-value="'reg_user'" required>Friend</ion-radio>
-							<ion-radio ng-model="data.type" name="type" ng-value="'guest'" required>Invited</ion-radio>
-							<p class="error-p" ng-show="givingThisChallengeForm.type.$error.required && (!givingThisChallengeForm.type.$pristine || givingThisChallengeForm.$submitted)">This Field Is Required</p>
+							<ion-radio ng-model="data.type" name="type" ng-value="'reg_user'" required>
+								{{ defaultLang == 'english' ? 'Friend' : 'Amigo' }}
+							</ion-radio>
+							<ion-radio ng-model="data.type" name="type" ng-value="'guest'" required>
+								{{ defaultLang == 'english' ? 'Invite' : 'Invitación' }}
+							</ion-radio>
+							<p class="error-p" ng-show="givingThisChallengeForm.type.$error.required && (!givingThisChallengeForm.type.$pristine || givingThisChallengeForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+								<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							</p>
 						<!--/ Radio -->
 						<div ng-show="data.type == 'guest'">
 							<!-- Input -->
 							  <label class="item item-custom item-input item-floating-label">
-								<span class="input-label">Name</span>
-								<input type="text" placeholder="Name" ng-model="data.name" name="name" ng-maxlength="15" ng-required="data.type == 'guest'" >
+								<span class="input-label">
+									<span ng-if="defaultLang == 'english'">Name</span>
+									<span ng-if="defaultLang == 'spanish'">Nombre</span>
+								</span>
+								<input type="text" placeholder="{{ defaultLang == 'english' ? 'Name' : 'Nombre' }}" ng-model="data.name" name="name" ng-maxlength="15" ng-required="data.type == 'guest'" >
 							  </label>
-							  <p class="error-p" ng-show="givingThisChallengeForm.name.$error.required && (!givingThisChallengeForm.name.$pristine || givingThisChallengeForm.$submitted)">This Field Is Required</p>
-							  <p class="error-p" ng-show="givingThisChallengeForm.name.$error.maxlength && (!givingThisChallengeForm.name.$pristine || givingThisChallengeForm.$submitted)">Cannot Longer Than 15 Characters</p>
+							  <p class="error-p" ng-show="givingThisChallengeForm.name.$error.required && (!givingThisChallengeForm.name.$pristine || givingThisChallengeForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+								<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							  </p>
+							  <p class="error-p" ng-show="givingThisChallengeForm.name.$error.maxlength && (!givingThisChallengeForm.name.$pristine || givingThisChallengeForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">Cannot Longer Than 15 Characters</span>
+								<span ng-if="defaultLang == 'spanish'">No puede tener más de 15 caracteres</span>
+							  </p>
 							<!--/ Input -->
 							<!-- Input -->
 							  <label class="item item-custom item-input item-floating-label">
-								<span class="input-label">Email</span>
-								<input type="email" placeholder="Email" ng-model="data.email" name="email" ng-maxlength="30" ng-required="data.type == 'guest'" >
+								<span class="input-label">
+									<span ng-if="defaultLang == 'english'">Email</span>
+									<span ng-if="defaultLang == 'spanish'">Email</span>
+								</span>
+								<input type="email" placeholder="{{ defaultLang == 'english' ? 'Email' : 'Email' }}" ng-model="data.email" name="email" ng-maxlength="30" ng-required="data.type == 'guest'" >
 							  </label>
-							  <p class="error-p" ng-show="givingThisChallengeForm.email.$error.required && (!givingThisChallengeForm.email.$pristine || givingThisChallengeForm.$submitted)">This Field Is Required</p>
-							  <p class="error-p" ng-show="givingThisChallengeForm.email.$error.maxlength && (!givingThisChallengeForm.email.$pristine || givingThisChallengeForm.$submitted)">Cannot Longer Than 30 Characters</p>
-							  <p class="error-p" ng-show="givingThisChallengeForm.email.$invalid && (!givingThisChallengeForm.email.$pristine || givingThisChallengeForm.$submitted) && !givingThisChallengeForm.email.$error.required">Email Is Not Valid</p>
+							  <p class="error-p" ng-show="givingThisChallengeForm.email.$error.required && (!givingThisChallengeForm.email.$pristine || givingThisChallengeForm.$submitted)">
+									<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+									<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							  </p>
+							  <p class="error-p" ng-show="givingThisChallengeForm.email.$error.maxlength && (!givingThisChallengeForm.email.$pristine || givingThisChallengeForm.$submitted)">
+							  	<span ng-if="defaultLang == 'english'">Cannot Longer Than 30 Characters</span>
+								<span ng-if="defaultLang == 'spanish'">No puede tener más de 30 caracteres</span>
+							  </p>
+							  <p class="error-p" ng-show="givingThisChallengeForm.email.$invalid && (!givingThisChallengeForm.email.$pristine || givingThisChallengeForm.$submitted) && !givingThisChallengeForm.email.$error.required">
+								<span ng-if="defaultLang == 'english'">Email Is Not Valid</span>
+								<span ng-if="defaultLang == 'spanish'">El correo no es válido</span>
+							  </p>
 							<!--/ Input -->
 						</div>
-						<div class="custom-search" ng-show="data.type == 'reg_user'">
+						<div class="custom-search" style="position: initial;z-index: 0;background: none;" ng-show="data.type == 'reg_user'">
 							<!-- Input -->
-							   <label class="item item-input item-select">
+							   <label class="item item-input item-select" style="padding-bottom:0px">
 								  <div class="input-label"></div>
-								  <select ng-model="data.friendobj" name="friendemail" ng-required="data.type == 'reg_user'" ng-options="friend as friend.fname for friend in friends " >
-									 <option value="" selected>Select Friend</option>
+								  <select ng-model="data.friendobj" name="friendemail" ng-required="data.type == 'reg_user'" ng-options="friend as friend.fname for friend in friends" >
+									 <option value="" selected>{{ defaultLang == 'english' ? 'Select Friend' : 'Seleccione Amigo' }}</option>
 									 <!-- <option value="{{ friend.email }}" ng-repeat="friend in friends">{{ friend.fname }} {{ friend.lname }}</option> -->
 								  </select>
 							   </label>
-							   <p class="error-p" ng-show="givingThisChallengeForm.friendemail.$error.required && (!givingThisChallengeForm.friendemail.$pristine || givingThisChallengeForm.$submitted)">This Field Is Required</p>
+							   <p class="error-p" ng-show="givingThisChallengeForm.friendemail.$error.required && (!givingThisChallengeForm.friendemail.$pristine || givingThisChallengeForm.$submitted)">
+									<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+									<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							   </p>
 						   <!--/ Input -->
 						</div>	
 					</div>
-					<button class="button button-custom button-block">Send Challenge</button>
+					<button class="button button-custom button-block">
+						<span ng-if="defaultLang == 'english'">Send Challenge</span>
+						<span ng-if="defaultLang == 'spanish'">Enviar desafío</span>
+					</button>
 				</form>					
 			</div>			
 		</div>

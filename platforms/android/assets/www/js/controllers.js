@@ -1421,9 +1421,16 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Challenges Controller **/
-.controller('challengesCtrl', function($http,$scope,$state,$ionicLoading) {
+.controller('challengesCtrl', function($http,$scope,$state,$ionicLoading,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=challenge_list **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		var login_var_local = window.localStorage.getItem("login_var_local");
 		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
 			$state.go('app.login');
@@ -1447,9 +1454,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Challenge Details Controller **/
-.controller('challengeDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('challengeDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=single_challenge_list&id=55 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.challengeDetails = {};
 		var action = "single_challenge_list";
 		var challenge_id = $stateParams.challenge_id;
@@ -1468,9 +1482,17 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Challenges - Accept This Challenge Controller **/
-.controller('acceptThisChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$ionicHistory,$filter) {
+.controller('acceptThisChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$ionicHistory,$filter,$rootScope) {
+	var lang = '';
 	$scope.data = {};
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.challengeDetails = {};
 		var action = "single_challenge_list";
 		var challenge_id = $stateParams.challenge_id;
@@ -1511,15 +1533,18 @@ angular.module('starter.controllers', [])
 	// End Datepicker
 	/** Challenge Yourself **/
 	$scope.submitacceptThisChallengeForm = function(FormName) {
+		lang = $scope.defaultLang;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -1528,7 +1553,7 @@ angular.module('starter.controllers', [])
 		else {
 			/** http://dreamgraphs.com/web_service.php?action=accept_challenge&user_id=9&record_id=5&challenge_id=49&end_date=15-12-2015&days=5&send_by=12 **/
 			var action = "accept_challenge";
-			var data_parameters = "action="+action+"&user_id="+global_login_id+"&challenge_id="+$scope.challengeDetails.challenge_id+"&start_date="+$scope.data.StartDate+"&end_date="+$scope.data.EndDate+"&send_by="+global_login_id;
+			var data_parameters = "action="+action+"&user_id="+global_login_id+"&challenge_id="+$scope.challengeDetails.challenge_id+"&start_date="+$scope.data.StartDate+"&end_date="+$scope.data.EndDate+"&send_by="+global_login_id+"&lang="+lang;
 			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 			$http.post(globalip,data_parameters, {
 				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1546,7 +1571,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-custom',
 						  onTap: function() { 
 							console.log('tapped');
@@ -1563,7 +1588,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-custom'
 						},
 					  ]
@@ -1575,9 +1600,17 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Challenges - Giving This Challenge Controller **/
-.controller('givingThisChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$ionicHistory,$filter) {
+.controller('givingThisChallengeCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$ionicHistory,$filter,$rootScope) {
+	var lang = '';
 	$scope.data = {};
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		/** Challenge Details **/
 		$scope.challengeDetails = {};
 		var action = "single_challenge_list";
@@ -1634,15 +1667,18 @@ angular.module('starter.controllers', [])
 	// End Datepicker
 	/** Giving A Challenge **/
 	$scope.submitgivingThisChallengeForm = function(FormName) {
+		lang = $scope.defaultLang;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -1653,7 +1689,7 @@ angular.module('starter.controllers', [])
 			var action = "send_challenge";
 			var name = $scope.data.type == 'reg_user' ? $scope.data.friendobj.fname : $scope.data.name;
 			var email = $scope.data.type == 'reg_user' ? $scope.data.friendobj.email : $scope.data.email;
-			var data_parameters = "action="+action+"&type="+$scope.data.type+"&email="+email+"&name="+name+"&challenge="+$scope.challengeDetails.challenge_id+"&start_date="+$scope.data.StartDate+"&end_date="+$scope.data.EndDate+"&current_user="+global_login_id;
+			var data_parameters = "action="+action+"&type="+$scope.data.type+"&email="+email+"&name="+name+"&challenge="+$scope.challengeDetails.challenge_id+"&start_date="+$scope.data.StartDate+"&end_date="+$scope.data.EndDate+"&current_user="+global_login_id+"&lang="+lang;
 			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 			$http.post(globalip,data_parameters, {
 				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1671,7 +1707,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-custom',
 						  onTap: function() { 
 							console.log('tapped');
@@ -1688,7 +1724,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-custom'
 						},
 					  ]
@@ -1867,9 +1903,17 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Friend List Controller **/
-.controller('friendsListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup) {
+.controller('friendsListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup,$rootScope) {
+	var lang = '';
 	/** http://dreamgraphs.com/web_service.php?action=friend_list&current_user=12 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		var action = "friend_list";
 		var data_parameters = "action="+action+"&current_user="+global_login_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -1886,9 +1930,11 @@ angular.module('starter.controllers', [])
 	});
 	/** Remove Friend (Unfriend) **/
 	$scope.unfriendUser = function(friend_id) {
+		lang = $scope.defaultLang;
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		/** http://dreamgraphs.com/web_service.php?action=unfriend&current_user=12&friend_id=3 **/
 		var action = "unfriend";
-		var data_parameters = "action="+action+"&friend_id="+friend_id+"&current_user="+global_login_id;
+		var data_parameters = "action="+action+"&friend_id="+friend_id+"&current_user="+global_login_id+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1905,7 +1951,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom',
 					  onTap: function() { 
 						console.log('tapped');
@@ -1922,7 +1968,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -1936,10 +1982,18 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Users List Controller **/
-.controller('usersListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup) {
+.controller('usersListCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$ionicPopup,$rootScope) {
+	var lang = '';
 	/** http://dreamgraphs.com/web_service.php?action=users_list&current_user=12 **/
 	//$scope.users = {};
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		var action = "users_list";
 		var data_parameters = "action="+action+"&current_user="+global_login_id;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -1957,8 +2011,10 @@ angular.module('starter.controllers', [])
 	/** Send And Cancel Friend Request **/
 	$scope.sendFriendRequest = function(friend_id,singleuser) {
 		/** http://dreamgraphs.com/web_service.php?action=send_request&current_user=12&request_user=18 **/
+		lang = $scope.defaultLang;
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		var action = "send_request";
-		var data_parameters = "action="+action+"&request_user="+friend_id+"&current_user="+global_login_id;
+		var data_parameters = "action="+action+"&request_user="+friend_id+"&current_user="+global_login_id+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1975,7 +2031,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom',
 					}
 				  ]
@@ -1988,7 +2044,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
