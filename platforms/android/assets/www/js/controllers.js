@@ -550,10 +550,18 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Wall Controller **/
-.controller('wallCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter,$ionicPopover) {
+.controller('wallCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter,$ionicPopover,$rootScope) {
+	var lang = '';
 	/** http://dreamgraphs.com/web_service.php?action=wall&user_id=48 **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		var login_var_local = window.localStorage.getItem("login_var_local");
 		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
 			$state.go('app.login');
@@ -578,6 +586,9 @@ angular.module('starter.controllers', [])
 	/** Like Details **/
 	$scope.likeDetails = function(wall_id) {
 		/** http://dreamgraphs.com/web_service.php?action=get_like_of_wall&wall_id=373 **/
+		lang = $scope.defaultLang;
+		var m3 = lang == 'english' ? 'Close' : 'Cerca';
+		var m4 = lang == 'english' ? 'Likes' : 'Gustos';
 		var likers = '';
 		var action = "get_like_of_wall";
 		var data_parameters = "action="+action+"&wall_id="+wall_id;
@@ -593,12 +604,12 @@ angular.module('starter.controllers', [])
 				$ionicLoading.hide();
 				$ionicPopup.show({
 				  template: likers,
-				  title: 'Likes',
+				  title: m4,
 				  scope: $scope,
 				  cssClass: 'my-custom-popup',
 				  buttons: [
 					{ 
-					  text: 'Close',
+					  text: m3,
 					  type: 'button-custom'
 					},
 				  ]
@@ -673,8 +684,11 @@ angular.module('starter.controllers', [])
 		}
 	}
 	$scope.openPopover = function($event,postimg="",anchorlink="",points="",complete="",type="") {
+		lang = $scope.defaultLang;
+		var si = lang == 'english' ? 'Share Image' : 'Compartir imagen';
+		var sl = lang == 'english' ? 'Share Link' : 'Compartir Enlace';
 		if(postimg==""){
-			template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+			template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+si+'</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+sl+'</a></li></ul></ion-content></ion-popover-view>';
 			$scope.popover = $ionicPopover.fromTemplate(template, {
 				scope: $scope
 			});
@@ -686,7 +700,7 @@ angular.module('starter.controllers', [])
 			if(type == 'c_c' || type == 'f_f' ){
 				complete = type;
 			}
-			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg;
+			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg+"&lang="+lang;
 			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 			$http.post(globalip,data_parameters, {
 				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -696,7 +710,7 @@ angular.module('starter.controllers', [])
 					postimg = response.data.new_image;
 				}
 				$ionicLoading.hide();
-				template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+				template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+si+'</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+sl+'</a></li></ul></ion-content></ion-popover-view>';
 				$scope.popover = $ionicPopover.fromTemplate(template, {
 					scope: $scope
 				});
@@ -734,10 +748,18 @@ angular.module('starter.controllers', [])
 	});
 })
 /** My Activity Controller **/
-.controller('myActivityCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter,$ionicPopover) {
+.controller('myActivityCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicPopup,$filter,$ionicPopover,$rootScope) {
+	var lang = '';
 	/** http://dreamgraphs.com/web_service.php?action=get_user_wall&user_id=50 **/
 	$scope.comments = '';
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.wallitems = {};
 		$scope.viewingSelfProfile = 'NO';
 		$scope.tit = 'User';
@@ -762,6 +784,9 @@ angular.module('starter.controllers', [])
 	/** Like Details **/
 	$scope.likeDetails = function(wall_id) {
 		/** http://dreamgraphs.com/web_service.php?action=get_like_of_wall&wall_id=373 **/
+		lang = $scope.defaultLang;
+		var m3 = lang == 'english' ? 'Close' : 'Cerca';
+		var m4 = lang == 'english' ? 'Likes' : 'Gustos';
 		var likers = '';
 		var action = "get_like_of_wall";
 		var data_parameters = "action="+action+"&wall_id="+wall_id;
@@ -777,12 +802,12 @@ angular.module('starter.controllers', [])
 				$ionicLoading.hide();
 				$ionicPopup.show({
 				  template: likers,
-				  title: 'Likes',
+				  title: m4,
 				  scope: $scope,
 				  cssClass: 'my-custom-popup',
 				  buttons: [
 					{ 
-					  text: 'Close',
+					  text: m3,
 					  type: 'button-custom'
 					},
 				  ]
@@ -829,6 +854,7 @@ angular.module('starter.controllers', [])
 	$scope.formData = {};
 	// Write A Comment
 	$scope.submitcommentForm = function(wall_id,index) {
+		lang = $scope.defaultLang;
 		/** http://dreamgraphs.com/web_service.php?action=put_comment_on_wall&user_id=12&wall_id=377&comment=looking nice **/
 		var data_parameters = "action=put_comment_on_wall"+"&user_id="+global_login_id+"&wall_id="+wall_id+"&comment="+$scope.formData.newcomment[index];
 		if($scope.formData.newcomment[index] != '' && $scope.formData.newcomment[index] != undefined) {
@@ -857,8 +883,11 @@ angular.module('starter.controllers', [])
 		}
 	}
 	$scope.openPopover = function($event,postimg="",anchorlink="",points="",complete="",type="") {
+		lang = $scope.defaultLang;
+		var si = lang == 'english' ? 'Share Image' : 'Compartir imagen';
+		var sl = lang == 'english' ? 'Share Link' : 'Compartir Enlace';
 		if(postimg==""){
-			template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+			template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+si+'</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+sl+'</a></li></ul></ion-content></ion-popover-view>';
 			$scope.popover = $ionicPopover.fromTemplate(template, {
 				scope: $scope
 			});
@@ -870,7 +899,7 @@ angular.module('starter.controllers', [])
 			if(type == 'c_c' || type == 'f_f' ){
 				complete = type;
 			}
-			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg;
+			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg+"&lang="+lang;
 			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 			$http.post(globalip,data_parameters, {
 				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -880,7 +909,7 @@ angular.module('starter.controllers', [])
 					postimg = response.data.new_image;
 				}
 				$ionicLoading.hide();
-				template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Image</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">Share Link</a></li></ul></ion-content></ion-popover-view>';
+				template = '<ion-popover-view class="social-share"><ion-content><ul class="list list-custom"><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\''+postimg+'\',\'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+si+'</a></li><li class="item"><a href="" onclick="window.plugins.socialsharing.shareViaFacebook(\'\',\'\',\''+anchorlink+'\', function() {console.log()}, function(errormsg){alert(errormsg)})">'+sl+'</a></li></ul></ion-content></ion-popover-view>';
 				$scope.popover = $ionicPopover.fromTemplate(template, {
 					scope: $scope
 				});
@@ -965,7 +994,8 @@ angular.module('starter.controllers', [])
 	}
 })
 /** updateProfileCtrl Controller **/
-.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams,$cordovaCamera,$cordovaFileTransfer) {
+.controller('updateProfileCtrl', function($http,$scope,$state,$ionicLoading,$ionicHistory,$ionicPopup,$filter,$stateParams,$cordovaCamera,$cordovaFileTransfer,$rootScope) {
+	var lang = '';
 	var alertPopup;
 	$scope.userData = {};
 	$scope.viewingSelfProfile = 'NO';
@@ -981,6 +1011,13 @@ angular.module('starter.controllers', [])
 		}
 	};
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		var login_var_local = window.localStorage.getItem("login_var_local");
 		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
 			$state.go('app.login');
@@ -1053,7 +1090,7 @@ angular.module('starter.controllers', [])
 		  buttons: [
 			{ 
 			  text: 'Cancel',
-			  type: 'button-positive'
+			  type: 'button-custom'
 			},
 		  ]
 		});
@@ -1144,7 +1181,7 @@ angular.module('starter.controllers', [])
 		  buttons: [
 			{ 
 			  text: 'Cancel',
-			  type: 'button-positive'
+			  type: 'button-custom'
 			},
 		  ]
 		});
@@ -1228,9 +1265,11 @@ angular.module('starter.controllers', [])
 	};
 	/** Follow - Unfollow **/
 	$scope.followunfollow = function(user_id,current_status) {
+		lang = $scope.defaultLang;
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		/** http://dreamgraphs.com/web_service.php?action=follow&user_id=48&current_user=12 **/
 		var action = "follow";
-		var data_parameters = "action="+action+"&user_id="+user_id+"&current_user="+global_login_id;
+		var data_parameters = "action="+action+"&user_id="+user_id+"&current_user="+global_login_id+"&lang="+lang;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 		$http.post(globalip,data_parameters, {
 			headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -1245,7 +1284,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					}
 				  ]
@@ -1258,7 +1297,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -1736,9 +1775,16 @@ angular.module('starter.controllers', [])
 	}
 })
 /** Friend Without Accept Controller **/
-.controller('friendWithoutAcceptedCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate) {
+.controller('friendWithoutAcceptedCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$ionicScrollDelegate,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=not_accpeted&user_id=12 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.notaccepted = {};
 		var action = "not_accpeted";
 		var data_parameters = "action="+action+"&user_id="+global_login_id;
@@ -1756,9 +1802,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Friend Without Accept Details Controller **/
-.controller('friendWithoutAcceptedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+.controller('friendWithoutAcceptedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=not_accpeted&user_id=12&record_id=231 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.notaccepted = {};
 		var action = "not_accpeted";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
@@ -2874,7 +2927,7 @@ angular.module('starter.controllers', [])
 			if(type == 'c_c' || type == 'f_f' ){
 				complete = type;
 			}
-			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg;
+			var data_parameters = "action="+action+"&title_name=api&url="+anchorlink+"&points="+points+"&complete="+complete+"&image1="+postimg+"&lang="+lang;
 			$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 			$http.post(globalip,data_parameters, {
 				headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -3179,9 +3232,16 @@ angular.module('starter.controllers', [])
 	}
 })
 /** friendChallengesCtrl Challenges **/
-.controller('friendChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup) {
+.controller('friendChallengesCtrl', function($http,$scope,$state,$ionicHistory,$ionicLoading,$ionicPopup,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_count&user_id=48 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		var login_var_local = window.localStorage.getItem("login_var_local");
 		if(login_var_local === undefined || login_var_local == null || login_var_local == '') {
 			$state.go('app.login');

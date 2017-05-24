@@ -1,4 +1,8 @@
-﻿<ion-view view-title="Challenges Friends / Without Accepted / Details">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Challenges Friends / Without Accepted / Details</span>
+		<span ng-if="defaultLang == 'spanish'">Desafíos Amigos / Sin Aceptar / Detalles</span>
+    </ion-nav-title>
     <ion-content>
         <div class="shadow-custom">
           <img ng-if="notaccepteddetails.image" src="{{ notaccepteddetails.image }}" style="width:100%" alt="challengeImg">
@@ -8,22 +12,49 @@
 		</div>
 		<div class="list list-custom">
 		  <a class="item" ng-if="notaccepteddetails.name">
-			<span class="datatitle">Name</span> <span class="datavalue">{{ notaccepteddetails.name }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Name</span>
+				<span ng-if="defaultLang == 'spanish'">Nombre</span>
+			</span> 
+			<span class="datavalue">{{ notaccepteddetails.name }}</span>
 		  </a>
 		  <a class="item" ng-if="notaccepteddetails.start_date">
-			<span class="datatitle">Start Date</span> <span class="datavalue">{{ notaccepteddetails.start_date }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Start Date</span>
+				<span ng-if="defaultLang == 'spanish'">Fecha de inicio</span>
+			</span> 
+			<span class="datavalue">{{ notaccepteddetails.start_date }}</span>
 		  </a>
 		  <a class="item" ng-if="notaccepteddetails.end_date">
-			<span class="datatitle">End Date</span> <span class="datavalue">{{ notaccepteddetails.end_date }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">End Date</span>
+				<span ng-if="defaultLang == 'spanish'">Fecha final</span>
+			</span> 
+			<span class="datavalue">{{ notaccepteddetails.end_date }}</span>
 		  </a>
 		  <a class="item">
-			<span class="datatitle">Status</span> <span class="datavalue">Not Accepted</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Status</span>
+				<span ng-if="defaultLang == 'spanish'">Estado</span>
+			</span> 
+			<span class="datavalue">
+				<span ng-if="defaultLang == 'english'">Not Accepted</span>
+				<span ng-if="defaultLang == 'spanish'">No aceptada</span>
+			</span>
 		  </a>
 		  <a class="item" ng-if="notaccepteddetails.intPuntos">
-			<span class="datatitle">Points</span> <span class="datavalue">{{ notaccepteddetails.intPuntos }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Points</span>
+				<span ng-if="defaultLang == 'spanish'">Puntos</span>
+			</span> 
+			<span class="datavalue">{{ notaccepteddetails.intPuntos }}</span>
 		  </a>
 		  <a class="item" ng-if="notaccepteddetails.full_description">
-			<span class="datatitle">Description</span> <span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="notaccepteddetails.full_description"></span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Description</span>
+				<span ng-if="defaultLang == 'spanish'">Descripción</span>
+			</span> 
+			<span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="notaccepteddetails.full_description"></span>
 		  </a>
 		</div>
 		<div class="row">

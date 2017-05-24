@@ -1,4 +1,8 @@
-﻿<ion-view view-title="Wall">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Wall</span>
+		<span ng-if="defaultLang == 'spanish'">Pared</span>
+    </ion-nav-title>
     <ion-content>
 		<div class="list card custom-list-card" ng-repeat="wallitem in wallitems track by $index" ng-if="!wallitems.err">
 			<div class="item item-avatar">
@@ -18,20 +22,30 @@
 					<div class="Cresult" ng-if="wallitem.type == 'c_c' || wallitem.type == 'f_f'">
 						<div class="resultCtitle_points">
 							<p>{{ wallitem.descripcion }}</p>
-							<p>Points: {{ wallitem.points }} </p>
+							<p>
+								<span ng-if="defaultLang == 'english'">Points : </span>
+								<span ng-if="defaultLang == 'spanish'">Puntos : </span>
+								{{ wallitem.points }} 
+							</p>
 						</div>
 						<img class="full-image" src="{{ wallitem.wall_image_url}}">
 						<div class="Cresult_text">
-							<h2 class="Cresult_textcc" ng-if="wallitem.type == 'c_c'"><i class="ion-android-happy"></i> Reto Completado!!</h2>
-							<h2 class="Cresult_textff" ng-if="wallitem.type == 'f_f'"><i class="ion-android-sad"></i> Reto Fallido!!</h2>
+							<h2 class="Cresult_textcc" ng-if="wallitem.type == 'c_c'"><i class="ion-android-happy"></i> 
+								<span ng-if="defaultLang == 'english'">Challenge Completed!!</span>
+								<span ng-if="defaultLang == 'spanish'">Reto Completado!!</span>
+							</h2>
+							<h2 class="Cresult_textff" ng-if="wallitem.type == 'f_f'"><i class="ion-android-sad"></i> 
+								<span ng-if="defaultLang == 'english'">Challenge Failed!!</span>
+								<span ng-if="defaultLang == 'spanish'">Reto fallado!</span>
+							</h2>
 						</div>
 					</div>
 				</div>
 				<p>{{ wallitem.details }}</p>
 				<p class="likeandcomments">
 					<span class="pull-left">
-						<span class="subdued"><a href="" ng-click="wallLikeDislike(wallitem.wall_id,$index,wallitem.user_exist);"><i ng-if="wallitem.user_exist == 0" class="ion-ios-heart-outline text-magenta" ></i><i ng-if="wallitem.user_exist != 0" class="ion-ios-heart text-magenta" ></i></a> <a href="" class="text-primary" ng-click="wallitem.like_count != 0 ? likeDetails(wallitem.wall_id) : '';">{{ wallitem.like_count }} Like</a></span>
-						<span class="subdued" style="padding-left:10px;"><a href="" ng-init="showComments[$index] = false" ng-click="showComments[$index] = !showComments[$index];showComments[$index] ? commentsDetails(wallitem.wall_id,$index) : '';"><i class="ion-ios-chatbubble-outline text-magenta"></i> <span class="text-primary">{{ wallitem.comment_count }} Comments</span></a></span>
+						<span class="subdued"><a href="" ng-click="wallLikeDislike(wallitem.wall_id,$index,wallitem.user_exist);"><i ng-if="wallitem.user_exist == 0" class="ion-ios-heart-outline text-magenta" ></i><i ng-if="wallitem.user_exist != 0" class="ion-ios-heart text-magenta" ></i></a> <a href="" class="text-primary" ng-click="wallitem.like_count != 0 ? likeDetails(wallitem.wall_id) : '';">{{ wallitem.like_count }} {{ defaultLang == 'english' ? 'Like' : 'Me gusta' }}</a></span>
+						<span class="subdued" style="padding-left:10px;"><a href="" ng-init="showComments[$index] = false" ng-click="showComments[$index] = !showComments[$index];showComments[$index] ? commentsDetails(wallitem.wall_id,$index) : '';"><i class="ion-ios-chatbubble-outline text-magenta"></i> <span class="text-primary">{{ wallitem.comment_count }} {{ defaultLang == 'english' ? 'Comments' : 'Comentarios' }}</span></a></span>
 					</span>
 					<span class="pull-right">
 						<i class="ion-android-share-alt text-magenta" ng-click="openPopover($event,'{{wallitem.wall_image_url}}','https://www.dreamgraphs.com/user/wall.php','{{wallitem.points}}','{{wallitem.Cumplimiento}}','{{wallitem.type}}')"></i>
@@ -49,13 +63,16 @@
 					  <p style="white-space: normal;">{{ getcomment.comment }}</p>
 					</a>
 					<a class="item item-thumbnail-left" style="padding:12px !important;" href="" ng-if="wallitems[$index].getcomments == 'No Comment Found'">
-					  <p>You Will Be The First To Comment On This</p>
+					  <p>
+						<span ng-if="defaultLang == 'english'">You Will Be The First To Comment On This</span>
+						<span ng-if="defaultLang == 'spanish'">Usted será el primero en comentar sobre esto</span>
+					  </p>
 					</a>
 					<div class="item item-thumbnail-left" style="padding-left:10px !important;">
 						<form name="commentForm[$index]" class="newcommentform" ng-submit="submitcommentForm(wallitem.wall_id,$index);" novalidate>
 							<div class="item item-input-inset">
 								<label class="item-input-wrapper" style="background:none;">
-									<textarea placeholder="Write Your Comment...." style="width:100%" ng-model="formData.newcomment[$index]" required></textarea>
+									<textarea placeholder="{{ defaultLang == 'english' ? 'Write Your Comment' : 'Escriba su comentario' }}...." style="width:100%" ng-model="formData.newcomment[$index]" required></textarea>
 								</label>
 								<button class="button icon ion-paper-airplane button-send" style="margin-left:0px;" ng-disabled="commentForm[$index].$invalid"></button>
 							</div>
@@ -67,7 +84,10 @@
 		<div class="row">
 			<div class="col col-100 text-center" style="margin-bottom:20px;">
 				<p><i ng-if="wallitems.err" class="ion-alert-circled icon-popup"></i></p>
-				<h4 ng-if="wallitems.err" class="text-primary">No Results Found</h4>
+				<h4 ng-if="wallitems.err" class="text-primary">
+					<span ng-if="defaultLang == 'english'">No Results Found</span>
+					<span ng-if="defaultLang == 'spanish'">No se han encontrado resultados</span>
+				</h4>
 			</div>
 		</div>
     </ion-content>
