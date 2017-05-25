@@ -1,4 +1,8 @@
-﻿<ion-view view-title="Challenges Friends / In Progress / Details">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Challenges Friends / In Progress / Details</span>
+		<span ng-if="defaultLang == 'spanish'">Retos amigos / En progreso / Detalles</span>
+    </ion-nav-title>
     <ion-content>
         <div class="shadow-custom">
           <img ng-if="inprogress_details.image" src="{{ inprogress_details.image }}" style="width:100%" alt="challengeImg">
@@ -8,28 +12,53 @@
 		</div>
 		<div class="list list-custom">
 		  <a class="item" ng-if="inprogress_details.first_name">
-			<span class="datatitle">Challenging</span> <span class="datavalue">{{ inprogress_details.first_name }} {{ inprogress_details.last_name }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Challenging</span>
+				<span ng-if="defaultLang == 'spanish'">Desafiante</span>
+			</span> 
+			<span class="datavalue">{{ inprogress_details.first_name }} {{ inprogress_details.last_name }}</span>
 		  </a>
 		  <a class="item" ng-if="inprogress_details.category">
-			<span class="datatitle">Category</span> <span class="datavalue">{{ inprogress_details.category }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Category</span>
+				<span ng-if="defaultLang == 'spanish'">Categoría</span>
+			</span> 
+			<span class="datavalue">{{ inprogress_details.category }}</span>
 		  </a>
 		  <a class="item" ng-if="inprogress_details.start_date">
-			<span class="datatitle">Start Date</span> <span class="datavalue">{{ inprogress_details.start_date }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Start Date</span>
+				<span ng-if="defaultLang == 'spanish'">Fecha de inicio</span>
+			</span> 
+			<span class="datavalue">{{ inprogress_details.start_date }}</span>
 		  </a>
 		  <a class="item" ng-if="inprogress_details.end_date">
-			<span class="datatitle">End Date</span> <span class="datavalue">{{ inprogress_details.end_date }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">End Date</span>
+				<span ng-if="defaultLang == 'spanish'">Fecha final</span>
+			</span> 
+			<span class="datavalue">{{ inprogress_details.end_date }}</span>
 		  </a>
 		  <a class="item" ng-if="inprogress_details.points">
-			<span class="datatitle">Points</span> <span class="datavalue">{{ inprogress_details.points }}</span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Points</span>
+				<span ng-if="defaultLang == 'spanish'">Puntos</span>
+			</span>
+			<span class="datavalue">{{ inprogress_details.points }}</span>
 		  </a>
 		  <a class="item" ng-if="inprogress_details.full_description">
-			<span class="datatitle">Description</span> <span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="inprogress_details.full_description"></span>
+			<span class="datatitle">
+				<span ng-if="defaultLang == 'english'">Description</span>
+				<span ng-if="defaultLang == 'spanish'">Descripción</span>
+			</span> 
+			<span class="datavalue" style="text-align: left;white-space: normal;width: 100%;margin-top: 5px;" ng-bind-html="inprogress_details.full_description"></span>
 		  </a>
 		</div>
 		<div class="row">
 		  <div class="col col-50 col-offset-25 text-center">
 			<a ui-sref="app.friend-challenges~daily-entry({ record_id:inprogress_details.idRetoAceptado })" class="button button-custom button-block">
-				See
+				<span ng-if="defaultLang == 'english'">See</span>
+				<span ng-if="defaultLang == 'spanish'">Ver</span>
 			</a>
 		  </div>
 		</div>

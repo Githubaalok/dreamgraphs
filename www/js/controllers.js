@@ -1829,9 +1829,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Friend In-Progress Controller **/
-.controller('friendInProgressCtrl', function($http,$scope,$state,$ionicLoading) {
+.controller('friendInProgressCtrl', function($http,$scope,$state,$ionicLoading,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge&user_id=20&condition=in_progress **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.in_progress = {};
 		var action = "friend_challenge";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&condition=in_progress";
@@ -1849,9 +1856,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Friend In-Progress Details Controller **/
-.controller('friendInProgressDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+.controller('friendInProgressDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_inprogress_details&user_id=20&record_id=234 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.inprogress_details = {};
 		var action = "friend_challenge_inprogress_details";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
@@ -1868,9 +1882,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Friend In-Failed Controller **/
-.controller('friendInFailedCtrl', function($http,$scope,$state,$ionicLoading) {
+.controller('friendInFailedCtrl', function($http,$scope,$state,$ionicLoading,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge&user_id=48&condition=failed **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.in_failed = {};
 		var action = "friend_challenge";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&condition=failed";
@@ -1888,9 +1909,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Friend In-Failed Details Controller **/
-.controller('friendInFailedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams) {
+.controller('friendInFailedDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_infailed_details&user_id=20&record_id=234 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.infailed_details = {};
 		var action = "friend_challenge_infailed_details";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;
@@ -1907,9 +1935,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Friend Achievments Controller **/
-.controller('friendAchievmentsCtrl', function($http,$scope,$state,$ionicLoading) {
+.controller('friendAchievmentsCtrl', function($http,$scope,$state,$ionicLoading,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge&user_id=20&condition=completed **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.achievments = {};
 		var action = "friend_challenge";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&condition=completed";
@@ -1927,9 +1962,16 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Friend Achievments Details Controller **/
-.controller('friendAchievmentDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('friendAchievmentDetailsCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=friend_challenge_achievements_details&user_id=20&record_id=234 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.achievments_details = {};
 		var action = "friend_challenge_achievements_details";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.record_id;

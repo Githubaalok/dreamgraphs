@@ -1,4 +1,8 @@
-﻿<ion-view view-title="User Activity">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Challenges Friends / In Progress / Daily Entry</span>
+		<span ng-if="defaultLang == 'spanish'">Retos amigos / En progreso / Entrada diaria</span>
+    </ion-nav-title>
 	<ion-content>
 		<div class="list card custom-list-card" ng-repeat="dailyentry in dailyentries" ng-if="!dailyentries.err">
 			<div class="item item-avatar">
@@ -18,8 +22,8 @@
 				<p>{{ dailyentry.details }}</p>
 				<p class="likeandcomments">
 					<span class="pull-left">
-						<span class="subdued"><a href="" ng-click="wallLikeDislike(dailyentry.wall_id,$index,dailyentry.user_exist);"><i ng-if="dailyentry.user_exist == 0" class="ion-ios-heart-outline text-magenta" ></i><i ng-if="dailyentry.user_exist != 0" class="ion-ios-heart text-magenta" ></i></a> <a href="" class="text-primary" ng-click="dailyentry.like_count != 0 ? likeDetails(dailyentry.wall_id) : '';">{{ dailyentry.like_count }} Like</a></span>
-						<span class="subdued" style="padding-left:10px;"><a href="" ng-init="showComments[$index] = false" ng-click="showComments[$index] = !showComments[$index];showComments[$index] ? commentsDetails(dailyentry.wall_id,$index) : '';"><i class="ion-ios-chatbubble-outline text-magenta"></i> <span class="text-primary">{{ dailyentry.comment_count }} Comments</span></a></span>
+						<span class="subdued"><a href="" ng-click="wallLikeDislike(dailyentry.wall_id,$index,dailyentry.user_exist);"><i ng-if="dailyentry.user_exist == 0" class="ion-ios-heart-outline text-magenta" ></i><i ng-if="dailyentry.user_exist != 0" class="ion-ios-heart text-magenta" ></i></a> <a href="" class="text-primary" ng-click="dailyentry.like_count != 0 ? likeDetails(dailyentry.wall_id) : '';">{{ dailyentry.like_count }} {{ defaultLang == 'english' ? 'Like' : 'Me gusta' }}</a></span>
+						<span class="subdued" style="padding-left:10px;"><a href="" ng-init="showComments[$index] = false" ng-click="showComments[$index] = !showComments[$index];showComments[$index] ? commentsDetails(dailyentry.wall_id,$index) : '';"><i class="ion-ios-chatbubble-outline text-magenta"></i> <span class="text-primary">{{ dailyentry.comment_count }} {{ defaultLang == 'english' ? 'Comments' : 'Comentarios' }}</span></a></span>
 					</span>
 					<span class="pull-right">
 						<i class="ion-android-share-alt text-magenta" ng-click="openPopover($event,'{{dailyentry.wall_image_url}}','https://www.dreamgraphs.com/','{{dailyentry.points}}','{{dailyentry.Cumplimiento}}','{{dailyentry.type}}')"></i>
@@ -37,13 +41,16 @@
 					  <p style="white-space: normal;">{{ getcomment.comment }}</p>
 					</a>
 					<a class="item item-thumbnail-left" style="padding:12px !important;" href="" ng-if="dailyentries[$index].getcomments == 'No Comment Found'">
-					  <p>You Will Be The First To Comment On This</p>
+					  <p>
+						<span ng-if="defaultLang == 'english'">You Will Be The First To Comment On This</span>
+						<span ng-if="defaultLang == 'spanish'">Usted será el primero en comentar sobre esto</span>
+					  </p>
 					</a>
 					<div class="item item-thumbnail-left" style="padding-left:10px !important;">
 						<form name="commentForm[$index]" class="newcommentform" ng-submit="submitcommentForm(dailyentry.wall_id,$index);" novalidate>
 							<div class="item item-input-inset">
 								<label class="item-input-wrapper" style="background:none;">
-									<textarea placeholder="Write Your Comment...." style="width:100%" ng-model="formData.newcomment[$index]" required></textarea>
+									<textarea placeholder="{{ defaultLang == 'english' ? 'Write Your Comment' : 'Escriba su comentario' }}...." style="width:100%" ng-model="formData.newcomment[$index]" required></textarea>
 								</label>
 								<button class="button icon ion-paper-airplane button-send" style="margin-left:0px;" ng-disabled="commentForm[$index].$invalid"></button>
 							</div>
@@ -55,7 +62,10 @@
 		<div class="row">
 			<div class="col col-100 text-center" style="margin-bottom:20px;">
 				<p><i ng-if="dailyentries.err" class="ion-alert-circled icon-popup"></i></p>
-				<h4 ng-if="dailyentries.err" class="text-primary">No Results Found</h4>
+				<h4 ng-if="dailyentries.err" class="text-primary">
+					<span ng-if="defaultLang == 'english'">No Results Found</span>
+					<span ng-if="defaultLang == 'spanish'">No se han encontrado resultados</span>
+				</h4>
 			</div>
 		</div>
     </ion-content>
