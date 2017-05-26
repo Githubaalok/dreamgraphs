@@ -91,9 +91,10 @@ angular.module('starter.controllers', [])
 .controller('registrationCtrl',function($scope,$http,$state,$ionicLoading,$ionicPopup) {
 	/* http://jainoswalfederation.com/webservice/?action=register */
 	var alertPopup; 
+	var lang = 'english';
 	$scope.submitRegistrationForm = function(FormName) {
 		var action = "user_registration";
-		var data_parameters = "action="+action+"&username="+$scope.username+"&first_name="+$scope.first_name+"&last_name="+$scope.last_name+"&email="+$scope.email+"&password="+$scope.password+"&phone="+$scope.phone+"&term_and_con=1" ;
+		var data_parameters = "action="+action+"&username="+$scope.username+"&first_name="+$scope.first_name+"&last_name="+$scope.last_name+"&email="+$scope.email+"&password="+$scope.password+"&phone="+$scope.phone+"&term_and_con=1"+"&lang="+lang ;
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
@@ -199,21 +200,34 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Change Password Controller **/
-.controller('changePassCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup) {
+.controller('changePassCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup,$rootScope) {
 	$scope.data = {};
+	var lang = '';
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
+	});
 	/* http://dreamgraphs.com/web_service.php?action=change_password&user_id=48&old_password=123&current_password=12345 */
 	$scope.submitchangePassForm = function(FormName) {
+		lang = $scope.defaultLang;
 		var action = "change_password";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&old_password="+$scope.data.old_password+"&current_password="+$scope.data.password;
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&old_password="+$scope.data.old_password+"&current_password="+$scope.data.password+"&lang="+lang;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -231,7 +245,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -286,21 +300,34 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Application compensation paypal Controller **/
-.controller('compenAppPaypalCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup) {
+.controller('compenAppPaypalCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup,$rootScope) {
 	$scope.comData = {};
+	var lang = '';
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
+	});
 	/* http://dreamgraphs.com/web_service.php?action=point_redeem_insert_entry&user_id=12&point=50&type_id=jayraj@gmail.com&payment_type=payu */
 	$scope.submitamountRedeemForm = function(FormName) {
+		lang = $scope.defaultLang;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		var action = "point_redeem_insert_entry";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.comData.points+"&type_id="+$scope.comData.type_id+"&payment_type=paypal";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.comData.points+"&type_id="+$scope.comData.type_id+"&lang="+lang+"&payment_type=paypal";
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -318,7 +345,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -333,21 +360,34 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Application compensation Payu Controller **/
-.controller('compenAppPayuCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup) {
+.controller('compenAppPayuCtrl',function($scope,$http,$ionicLoading,$state,$ionicPopup,$rootScope) {
 	$scope.comData = {};
+	var lang = '';
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
+	});
 	/* http://dreamgraphs.com/web_service.php?action=point_redeem_insert_entry&user_id=12&point=50&type_id=jayraj@gmail.com&payment_type=payu */
 	$scope.submitamountRedeemForm = function(FormName) {
+		lang = $scope.defaultLang;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		var action = "point_redeem_insert_entry";
-		var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.comData.points+"&type_id="+$scope.comData.type_id+"&payment_type=payu";
+		var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.comData.points+"&type_id="+$scope.comData.type_id+"&lang="+lang+"&payment_type=payu";
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -365,7 +405,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -384,6 +424,7 @@ angular.module('starter.controllers', [])
 	var alertPopup; 
 	$scope.banklist = $scope.data = {};
 	$scope.data.imageData = '';
+	var lang = '';
 	/** http://dreamgraphs.com/web_service.php?action=bank_list **/
 	$scope.$on('$ionicView.enter', function() {
 		var action = "bank_list";
@@ -1044,17 +1085,20 @@ angular.module('starter.controllers', [])
 	});
 	$scope.submitUpdateForm = function(FormName) {
 		/** http://dreamgraphs.com/web_service.php?action=user_registration&update=1&user_id=12&dob=5-10-1992&country=india&city=bhopal&aboutme=edited&gender=male&phone=9827568454&username=jay&first_name=jay&last_name=rrr&email=jay@gmail.com */
+		lang = $scope.defaultLang;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		var action = "user_registration";
-		var data_parameters = "action="+action+"&username="+$scope.userData.user_name+"&first_name="+$scope.userData.first_name+"&last_name="+$scope.userData.last_name+"&email="+$scope.userData.email+"&phone="+$scope.userData.phone+"&dob="+$scope.userData.dob+"&country="+$scope.userData.country+"&city="+$scope.userData.city+"&aboutme="+$scope.userData.aboutme+"&gender="+$scope.userData.gender+"&user_id="+global_login_id+"&update=1" ;
+		var data_parameters = "action="+action+"&username="+$scope.userData.user_name+"&first_name="+$scope.userData.first_name+"&last_name="+$scope.userData.last_name+"&email="+$scope.userData.email+"&phone="+$scope.userData.phone+"&dob="+$scope.userData.dob+"&country="+$scope.userData.country+"&city="+$scope.userData.city+"&aboutme="+$scope.userData.aboutme+"&gender="+$scope.userData.gender+"&user_id="+global_login_id+"&lang="+lang+"&update=1" ;
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -1072,7 +1116,7 @@ angular.module('starter.controllers', [])
 				  scope: $scope,
 				  buttons: [
 					{ 
-					  text: 'Ok',
+					  text: m2,
 					  type: 'button-custom'
 					},
 				  ]
@@ -1083,13 +1127,16 @@ angular.module('starter.controllers', [])
 	};
 	//Profile Photo
 	$scope.chooseOption4ProfileP = function() {
+		lang = $scope.defaultLang;
+		var m21 = lang == 'english' ? 'Choose Option' : 'Elegir opción';
+		var m22 = lang == 'english' ? 'Cancel' : 'Cancelar';
 		alertPopup = $ionicPopup.show({
 		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4Updateprofile()"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4Updateprofile()" ></button></div></div>',
-		  title: 'Choose Option',
+		  title: m21,
 		  scope: $scope,
 		  buttons: [
 			{ 
-			  text: 'Cancel',
+			  text: m22,
 			  type: 'button-custom'
 			},
 		  ]
@@ -1174,13 +1221,16 @@ angular.module('starter.controllers', [])
 	};
 	//Cover Photo
 	$scope.chooseOption4CoverP = function() {
+		lang = $scope.defaultLang;
+		var m21 = lang == 'english' ? 'Choose Option' : 'Elegir opción';
+		var m22 = lang == 'english' ? 'Cancel' : 'Cancelar';
 		alertPopup = $ionicPopup.show({
 		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4Updatecover()"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4Updatecover()" ></button></div></div>',
-		  title: 'Choose Option',
+		  title: m21,
 		  scope: $scope,
 		  buttons: [
 			{ 
-			  text: 'Cancel',
+			  text: m22,
 			  type: 'button-custom'
 			},
 		  ]
@@ -1315,53 +1365,63 @@ angular.module('starter.controllers', [])
 })
 /** Settings Controller **/
 .controller('settingsCtrl', function($http,$scope,$state,$rootScope) {
-	//Set Language
-	$rootScope.$on('defaultLang', function (event, args) {
-		$scope.defaultLang = args.defaultLang;
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 	});
-	if($scope.defaultLang == ''){
-		$scope.defaultLang = 'english';
-	}
 })
 /** Settings/Notification Controller **/
 .controller('settingsNotificationCtrl', function($http,$scope,$state,$rootScope) {
-	//Set Language
-	$rootScope.$on('defaultLang', function (event, args) {
-		$scope.defaultLang = args.defaultLang;
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 	});
-	if($scope.defaultLang == ''){
-		$scope.defaultLang = 'english';
-	}
 })
 /** Settings/Alert With Notification Controller **/
 .controller('settingsAlertWNotificationCtrl', function($http,$scope,$state,$rootScope) {
-	//Set Language
-	$rootScope.$on('defaultLang', function (event, args) {
-		$scope.defaultLang = args.defaultLang;
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 	});
-	if($scope.defaultLang == ''){
-		$scope.defaultLang = 'english';
-	}
 })
 /** Compensation Controller **/
 .controller('compensationCtrl', function($http,$scope,$state,$rootScope) {
-	//Set Language
-	$rootScope.$on('defaultLang', function (event, args) {
-		$scope.defaultLang = args.defaultLang;
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 	});
-	if($scope.defaultLang == ''){
-		$scope.defaultLang = 'english';
-	}
 })
 /** Compensation / app for comp Controller **/
 .controller('compensationApp4CompCtrl', function($http,$scope,$state,$rootScope) {
-	//Set Language
-	$rootScope.$on('defaultLang', function (event, args) {
-		$scope.defaultLang = args.defaultLang;
+	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 	});
-	if($scope.defaultLang == ''){
-		$scope.defaultLang = 'english';
-	}
 })
 /** Home Controller **/
 .controller('homeCtrl', function($http,$scope,$state,$ionicHistory,$ionicSlideBoxDelegate,$ionicPopup,$ionicLoading,$timeout,$rootScope,$ionicSideMenuDelegate) {

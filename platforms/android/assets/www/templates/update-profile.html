@@ -1,4 +1,8 @@
-<ion-view view-title="Edit Profile">
+<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Edit Profile</span>
+		<span ng-if="defaultLang == 'spanish'">Editar perfil</span>
+    </ion-nav-title>
 	<ion-content>
         <div class="row">
           <div class="col col-100">
@@ -6,98 +10,169 @@
 				<div class="list list-custom">
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">Username</span>
-						<input type="text" placeholder="Username" ng-model="userData.user_name" name="user_name" ng-minlength="5" required>
+						<span class="input-label">
+							<span ng-if="defaultLang == 'english'">Username</span>
+							<span ng-if="defaultLang == 'spanish'">Nombre de usuario</span>
+						</span>
+						<input type="text" placeholder="{{ defaultLang == 'english' ? 'Username' : 'Nombre de usuario' }}" ng-model="userData.user_name" name="user_name" ng-minlength="5" required>
 					  </label>
-					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.required && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.minlength && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">Min 5 Characters Is Required</p>
+					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.required && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">
+						<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+						<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+					  </p>
+					  <p class="error-p" ng-show="updateProfileForm.user_name.$error.minlength && (!updateProfileForm.user_name.$pristine || updateProfileForm.$submitted)">
+						<span ng-if="defaultLang == 'english'">Min 5 Characters Is Required</span>
+						<span ng-if="defaultLang == 'spanish'">Min 5 caracteres es necesario</span>
+					  </p>
 					<!--/ Input -->
 					<div class="row" style="padding-left: 0;padding-right: 0;">
 						<div class="col col-50" style="padding-left: 0;">
 							<!-- Input -->
 							  <label class="item item-custom item-input item-floating-label">
-								<span class="input-label">First Name</span>
-								<input type="text" placeholder="First Name" ng-model="userData.first_name" name="first_name" ng-maxlength="15" required>
+								<span class="input-label">
+									<span ng-if="defaultLang == 'english'">First Name</span>
+									<span ng-if="defaultLang == 'spanish'">Nombre de pila</span>
+								</span>
+								<input type="text" placeholder="{{ defaultLang == 'english' ? 'First Name' : 'Nombre de pila' }}" ng-model="userData.first_name" name="first_name" ng-maxlength="15" required>
 							  </label>
-							  <p class="error-p" ng-show="updateProfileForm.first_name.$error.required && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-							  <p class="error-p" ng-show="updateProfileForm.first_name.$error.maxlength && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 15 Characters</p>
+							  <p class="error-p" ng-show="updateProfileForm.first_name.$error.required && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+								<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+							  </p>
+							  <p class="error-p" ng-show="updateProfileForm.first_name.$error.maxlength && (!updateProfileForm.first_name.$pristine || updateProfileForm.$submitted)">
+								<span ng-if="defaultLang == 'english'">Cannot Longer Than 15 Characters</span>
+								<span ng-if="defaultLang == 'spanish'">No puede tener más de 15 caracteres</span>
+							  </p>
 							<!--/ Input -->
 						</div>
 						<div class="col col-50" style="padding-right: 0;">
 						<!-- Input -->
 						  <label class="item item-custom item-input item-floating-label">
-							<span class="input-label">Last Name</span>
-							<input type="text" placeholder="Last Name" ng-model="userData.last_name" name="last_name" ng-maxlength="15" required>
+							<span class="input-label">
+								<span ng-if="defaultLang == 'english'">Last Name</span>
+								<span ng-if="defaultLang == 'spanish'">Apellido</span>
+							</span>
+							<input type="text" placeholder="{{ defaultLang == 'english' ? 'Last Name' : 'Apellido' }}" ng-model="userData.last_name" name="last_name" ng-maxlength="15" required>
 						  </label>
-						  <p class="error-p" ng-show="updateProfileForm.last_name.$error.required && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-						  <p class="error-p" ng-show="updateProfileForm.last_name.$error.maxlength && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 15 Characters</p>
+						  <p class="error-p" ng-show="updateProfileForm.last_name.$error.required && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">
+							<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+							<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+						  </p>
+						  <p class="error-p" ng-show="updateProfileForm.last_name.$error.maxlength && (!updateProfileForm.last_name.$pristine || updateProfileForm.$submitted)">
+							<span ng-if="defaultLang == 'english'">Cannot Longer Than 15 Characters</span>
+							<span ng-if="defaultLang == 'spanish'">No puede tener más de 15 caracteres</span>
+						  </p>
 						<!--/ Input -->
 						</div>
 					</div>
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">Email</span>
-						<input type="email" placeholder="Email" ng-model="userData.email" name="email" ng-maxlength="40" required>
+						<span class="input-label">
+							<span ng-if="defaultLang == 'english'">Email</span>
+							<span ng-if="defaultLang == 'spanish'">Email</span>
+						</span>
+						<input type="email" placeholder="{{ defaultLang == 'english' ? 'Email' : 'Email' }}" ng-model="userData.email" name="email" ng-maxlength="40" required>
 					  </label>
-					  <p class="error-p" ng-show="updateProfileForm.email.$error.required && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.email.$error.maxlength && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted)">Cannot Longer Than 40 Characters</p>
-					  <p class="error-p" ng-show="updateProfileForm.email.$invalid && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted) && !updateProfileForm.email.$error.required">Email Is Not Valid</p>
+					  <p class="error-p" ng-show="updateProfileForm.email.$error.required && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted)">
+						<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+						<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+					  </p>
+					  <p class="error-p" ng-show="updateProfileForm.email.$error.maxlength && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted)">
+						<span ng-if="defaultLang == 'english'">Cannot Longer Than 40 Characters</span>
+						<span ng-if="defaultLang == 'spanish'">No puede tener más de 40 caracteres</span>
+					  </p>
+					  <p class="error-p" ng-show="updateProfileForm.email.$invalid && (!updateProfileForm.email.$pristine || updateProfileForm.$submitted) && !updateProfileForm.email.$error.required">
+						<span ng-if="defaultLang == 'english'">Email Is Not Valid</span>
+						<span ng-if="defaultLang == 'spanish'">El correo no es válido</span>
+					  </p>
 					<!--/ Input -->
 				    <!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">Phone</span>
-						<input type="tel" placeholder="Phone" ng-model="userData.phone" name="phone" ng-minlength="8" ng-pattern="/^[0-9]{1,15}$/" required>
+						<span class="input-label">
+							<span ng-if="defaultLang == 'english'">Phone</span>
+							<span ng-if="defaultLang == 'spanish'">Teléfono</span>
+						</span>
+						<input type="tel" placeholder="{{ defaultLang == 'english' ? 'Phone' : 'Teléfono' }}" ng-model="userData.phone" name="phone" ng-minlength="8" ng-pattern="/^[0-9]{1,15}$/" required>
 					  </label>
-					  <p class="error-p" ng-show="updateProfileForm.phone.$error.required && (!updateProfileForm.phone.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.phone.$error.minlength && (!updateProfileForm.phone.$pristine || updateProfileForm.$submitted)">Min 8 Characters Is Required</p>
-					  <p class="error-p" ng-show="updateProfileForm.phone.$error.pattern && (!updateProfileForm.phone.$pristine || updateProfileForm.$submitted) && !updateProfileForm.phone.$error.minlength">Phone Number Is Invalid</p>
+					  <p class="error-p" ng-show="updateProfileForm.phone.$error.required && (!updateProfileForm.phone.$pristine || updateProfileForm.$submitted)">
+						<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+						<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+					  </p>
+					  <p class="error-p" ng-show="updateProfileForm.phone.$error.minlength && (!updateProfileForm.phone.$pristine || updateProfileForm.$submitted)">
+						<span ng-if="defaultLang == 'english'">Min 8 Characters Is Required</span>
+						<span ng-if="defaultLang == 'spanish'">Se requieren 8 caracteres mínimos</span>
+					  </p>
+					  <p class="error-p" ng-show="updateProfileForm.phone.$error.pattern && (!updateProfileForm.phone.$pristine || updateProfileForm.$submitted) && !updateProfileForm.phone.$error.minlength">
+						<span ng-if="defaultLang == 'english'">Phone Number Is Invalid</span>
+						<span ng-if="defaultLang == 'spanish'">El número de teléfono no es válido</span>
+					  </p>
 				    <!--/ Input -->
 					<!-- Input -->
 						<ionic-datepicker date="dob" callback="Callbackdob">
 							<label class="item item-custom item-input item-floating-label">
-								<span class="input-label">Date of Birth</span>
-								<input type="text" placeholder="Date of Birth" ng-model="userData.dob" name="dob" required>
+								<span class="input-label">
+									<span ng-if="defaultLang == 'english'">Date of Birth</span>
+									<span ng-if="defaultLang == 'spanish'">Fecha de nacimiento</span>
+								</span>
+								<input type="text" placeholder="{{ defaultLang == 'english' ? 'Date of Birth' : 'Fecha de nacimiento' }}" ng-model="userData.dob" name="dob" required>
 							</label>
 						</ionic-datepicker>
-						<p class="error-p" ng-show="updateProfileForm.dob.$error.required && (!updateProfileForm.dob.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+						<p class="error-p" ng-show="updateProfileForm.dob.$error.required && (!updateProfileForm.dob.$pristine || updateProfileForm.$submitted)">
+							<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+							<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+						</p>
 					<!--/ Input -->
 					<!-- Input -->
-						<label class="item item-input item-select">	
-							<div class="input-label custom-input-lable" style="padding-top: 60px;"> Country	</div>	
+						<label class="item item-input item-select">		
 							<select class="custom-amount-select" ng-model="userData.country" name="country" required>
-								<option value="" >Select</option>
+								<option value="" >{{ defaultLang == 'english' ? 'Select Country' : 'Seleccionar país' }}</option>
 								<option ng-repeat="countryname in country_arr" value="{{ countryname }}" >{{ countryname }}</option>
 							</select>					  
 						</label>
-						<p class="error-p" ng-show="updateProfileForm.country.$error.required && (!updateProfileForm.country.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+						<p class="error-p" ng-show="updateProfileForm.country.$error.required && (!updateProfileForm.country.$pristine || updateProfileForm.$submitted)">
+							<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+							<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+						</p>
 					<!--/ Input -->
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">City</span>
-						<input type="text" placeholder="City" ng-model="userData.city" name="city" required>
+						<span class="input-label">
+							<span ng-if="defaultLang == 'english'">City</span>
+							<span ng-if="defaultLang == 'spanish'">Ciudad</span>
+						</span>
+						<input type="text" placeholder="{{ defaultLang == 'english' ? 'City' : 'Ciudad' }}" ng-model="userData.city" name="city" required>
 					  </label>
-					  <p class="error-p" ng-show="updateProfileForm.city.$error.required && (!updateProfileForm.city.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+					  <p class="error-p" ng-show="updateProfileForm.city.$error.required && (!updateProfileForm.city.$pristine || updateProfileForm.$submitted)">
+						<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+						<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+					  </p>
 					<!--/ Input -->
 					<!-- Input -->
 					  <label class="item item-custom item-input item-floating-label">
-						<span class="input-label">About Me</span>
+						<span class="input-label">
+							<span ng-if="defaultLang == 'english'">About Me</span>
+							<span ng-if="defaultLang == 'spanish'">Sobre mi</span>
+						</span>
 						<textarea placeholder="About Me" ng-model="userData.aboutme" name="aboutme"></textarea>
 					  </label>
 					<!--/ Input -->
 					<!-- Input -->
-						<label class="item item-input item-select">	
-							<div class="input-label custom-input-lable" style="padding-top: 60px;"> Gender </div>	
+						<label class="item item-input item-select">		
 							<select class="custom-amount-select" ng-model="userData.gender" name="gender" required>
-								<option value="">Select</option>
-								<option value="male">Male</option>
-								<option value="female">Female</option>
+								<option value="">{{ defaultLang == 'english' ? 'Select Gender' : 'Seleccione género' }}</option>
+								<option value="male">{{ defaultLang == 'english' ? 'Male' : 'Masculino' }}</option>
+								<option value="female">{{ defaultLang == 'english' ? 'Female' : 'Hembra' }}</option>
 							</select>					  
 						</label>
-						<p class="error-p" ng-show="updateProfileForm.gender.$error.required && (!updateProfileForm.gender.$pristine || updateProfileForm.$submitted)">This Field Is Required</p>
+						<p class="error-p" ng-show="updateProfileForm.gender.$error.required && (!updateProfileForm.gender.$pristine || updateProfileForm.$submitted)">
+							<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+							<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+						</p>
 					<!--/ Input -->
 				</div>
 				<button class="button button-custom button-block">
-					Save
+					<span ng-if="defaultLang == 'english'">Save</span>
+					<span ng-if="defaultLang == 'spanish'">Salvar</span>
 				</button>
             </form>
           </div>
