@@ -1,4 +1,8 @@
-﻿<ion-view view-title="Compensation / Transaction - Details">
+﻿<ion-view view-title="">
+	<ion-nav-title>
+		<span ng-if="defaultLang == 'english'">Compensation / Transaction - Details</span>
+		<span ng-if="defaultLang == 'spanish'">Compensación / Transacción - Detalles</span>
+    </ion-nav-title>
 	<ion-content>
 		<div class="shadow-custom">
 			<img src="{{ transaction.image_url }}" style="width:100%" alt="challengeImg">	<div class="ion-dom">
@@ -7,24 +11,45 @@
 		</div>
 		<div class="list list-custom">
 			<a class="item">
-				<span class="datatitle">Name</span>
+				<span class="datatitle">
+					<span ng-if="defaultLang == 'english'">Name</span>
+					<span ng-if="defaultLang == 'spanish'">Nombre</span>
+				</span>
 				<span class="datavalue">{{ transaction.user_name }}</span>
 			</a>
 			<a class="item">
-				<span class="datatitle">Challenges</span>
+				<span class="datatitle">
+					<span ng-if="defaultLang == 'english'">Challenge</span>
+					<span ng-if="defaultLang == 'spanish'">Reto</span>
+				</span>
 				<span class="datavalue">{{ transaction.strDescripcion }}</span>
 			</a>
 			<a class="item">
-				<span class="datatitle">Amount</span>
+				<span class="datatitle">
+					<span ng-if="defaultLang == 'english'">Amount</span>
+					<span ng-if="defaultLang == 'spanish'">Cantidad</span>
+				</span>
 				<span class="datavalue">{{ transaction.amount }}$</span>
 			</a>
 			<a class="item">
-				<span class="datatitle">Send/Received</span>
-				<span class="datavalue" ng-if="transaction.status == 'received'">Received</span>
-				<span class="datavalue" ng-if="transaction.status == 'sent'">Sent</span>
+				<span class="datatitle">
+					<span ng-if="defaultLang == 'english'">Send / Received</span>
+					<span ng-if="defaultLang == 'spanish'">Enviar / Recibir</span>
+				</span>
+				<span class="datavalue" ng-if="transaction.status == 'received'">
+					<span ng-if="defaultLang == 'english'">Received</span>
+					<span ng-if="defaultLang == 'spanish'">Recibir</span>
+				</span>
+				<span class="datavalue" ng-if="transaction.status == 'sent'">
+					<span ng-if="defaultLang == 'english'">Sent</span>
+					<span ng-if="defaultLang == 'spanish'">Expedido</span>
+				</span>
 			</a>
 			<a class="item">
-				<span class="datatitle">Date</span>
+				<span class="datatitle">
+					<span ng-if="defaultLang == 'english'">Date</span>
+					<span ng-if="defaultLang == 'spanish'">Fecha</span>
+				</span>
 				<span class="datavalue">{{ transaction.date_time }}</span>
 			</a>
 		</div>

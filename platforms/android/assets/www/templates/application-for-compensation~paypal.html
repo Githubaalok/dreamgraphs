@@ -9,19 +9,40 @@
 				<form name="amountRedeemForm" ng-submit="submitamountRedeemForm(amountRedeemForm);" novalidate>				
 					<div class="list list-custom">	
 						<label class="item item-custom item-input item-floating-label">
-							<span class="input-label">Points</span>
-							<input type="tel" placeholder="Points" name="points" ng-model="comData.points" ng-pattern="/^[0-9]{1,15}$/" required>
+							<span class="input-label">
+								<span ng-if="defaultLang == 'english'">Points</span>
+								<span ng-if="defaultLang == 'spanish'">Puntos</span>
+							</span>
+							<input type="tel" placeholder="{{ defaultLang == 'english' ? 'Points' : 'Puntos' }}" name="points" ng-model="comData.points" ng-pattern="/^[0-9]{1,15}$/" required>
 						</label>
-						<p class="error-p" ng-show="amountRedeemForm.points.$error.required && (!amountRedeemForm.points.$pristine || amountRedeemForm.$submitted)">This Field Is Required</p>
-						<p class="error-p" ng-show="amountRedeemForm.points.$error.pattern && (!amountRedeemForm.points.$pristine || amountRedeemForm.$submitted) && !amountRedeemForm.points.$error.minlength">Points Are Invalid</p>
+						<p class="error-p" ng-show="amountRedeemForm.points.$error.required && (!amountRedeemForm.points.$pristine || amountRedeemForm.$submitted)">
+							<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+							<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+						</p>
+						<p class="error-p" ng-show="amountRedeemForm.points.$error.pattern && (!amountRedeemForm.points.$pristine || amountRedeemForm.$submitted) && !amountRedeemForm.points.$error.minlength">
+							<span ng-if="defaultLang == 'english'">Points Are Invalid</span>
+							<span ng-if="defaultLang == 'spanish'">Los puntos no son válidos</span>
+						</p>
 						<label class="item item-custom item-input item-floating-label">
-							<span class="input-label">ID</span>
-							<input type="email" placeholder="Email ID" name="type_id" ng-model="comData.type_id" required>
+							<span class="input-label">
+								<span ng-if="defaultLang == 'english'">Email ID</span>
+								<span ng-if="defaultLang == 'spanish'">Identificación de correo</span>
+							</span>
+							<input type="email" placeholder="{{ defaultLang == 'english' ? 'Email ID' : 'Identificación de correo' }}" name="type_id" ng-model="comData.type_id" required>
 						</label>
-						<p class="error-p" ng-show="amountRedeemForm.type_id.$error.required && (!amountRedeemForm.type_id.$pristine || amountRedeemForm.$submitted)">This Field Is Required</p>
-						<p class="error-p" ng-show="amountRedeemForm.type_id.$invalid && (!amountRedeemForm.type_id.$pristine || amountRedeemForm.$submitted) && !amountRedeemForm.type_id.$error.required">Email Is Not Valid</p>
+						<p class="error-p" ng-show="amountRedeemForm.type_id.$error.required && (!amountRedeemForm.type_id.$pristine || amountRedeemForm.$submitted)">
+							<span ng-if="defaultLang == 'english'">This Field Is Required</span>
+							<span ng-if="defaultLang == 'spanish'">Este campo es requerido</span>
+						</p>
+						<p class="error-p" ng-show="amountRedeemForm.type_id.$invalid && (!amountRedeemForm.type_id.$pristine || amountRedeemForm.$submitted) && !amountRedeemForm.type_id.$error.required">
+							<span ng-if="defaultLang == 'english'">Email Is Not Valid</span>
+							<span ng-if="defaultLang == 'spanish'">El correo no es válido</span>
+						</p>
 					</div>								
-					<button class="button button-custom button-block">Send Request</button>
+					<button class="button button-custom button-block">
+						<span ng-if="defaultLang == 'english'">Send Request</span>
+						<span ng-if="defaultLang == 'spanish'">Enviar petición</span>
+					</button>
 				</form>					
 			</div>	
 		</div>

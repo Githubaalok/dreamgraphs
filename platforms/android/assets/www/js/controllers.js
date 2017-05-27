@@ -260,9 +260,17 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Compensation/Transaction Controller **/
-.controller('compensationTransactionCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('compensationTransactionCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
 	/** http://dreamgraphs.com/web_service.php?action=transactions&user_id=20 **/
+	var lang = '';
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.transactions = {};
 		var action = "transactions";
 		var data_parameters = "action="+action+"&user_id="+global_login_id;
@@ -280,9 +288,17 @@ angular.module('starter.controllers', [])
 	});
 })
 /** Compensation/Transaction Details Controller **/
-.controller('compensationTransactionDetailCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory) {
+.controller('compensationTransactionDetailCtrl', function($http,$scope,$state,$ionicLoading,$stateParams,$ionicHistory,$rootScope) {
+	var lang = '';
 	/** http://dreamgraphs.com/web_service.php?action=transactions&user_id=20&record_id=18 **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		$scope.transactions = {};
 		var action = "transactions";
 		var data_parameters = "action="+action+"&user_id="+global_login_id+"&record_id="+$stateParams.trans_id;
@@ -420,13 +436,20 @@ angular.module('starter.controllers', [])
 	};
 })
 /** Compensation pay colombia Controller **/
-.controller('compenAppPayColCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$cordovaCamera,$cordovaFileTransfer) {
+.controller('compenAppPayColCtrl', function($http,$scope,$state,$ionicLoading,$ionicPopup,$stateParams,$cordovaCamera,$cordovaFileTransfer,$rootScope) {
 	var alertPopup; 
 	$scope.banklist = $scope.data = {};
 	$scope.data.imageData = '';
 	var lang = '';
 	/** http://dreamgraphs.com/web_service.php?action=bank_list **/
 	$scope.$on('$ionicView.enter', function() {
+		//Set Language
+		$rootScope.$on('defaultLang', function (event, args) {
+			$scope.defaultLang = args.defaultLang;
+		});
+		if($scope.defaultLang == ''){
+			$scope.defaultLang = 'english';
+		}
 		var action = "bank_list";
 		var data_parameters = "action="+action;
 		$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
@@ -442,13 +465,16 @@ angular.module('starter.controllers', [])
 		});
 	});
 	$scope.chooseOption4PPhoto = function() {
+		lang = $scope.defaultLang;
+		var m1 = lang == 'english' ? 'Choose Option' : 'Elegir opción';
+		var m3 = lang == 'english' ? 'Close' : 'Cerca';
 		alertPopup = $ionicPopup.show({
 		  template: '<div class="row text-center"><div class="col col-50"><button style="line-height:28px;" class="button button-royal icon ion-camera" ng-click="takePhoto4UploadPPhotoM();"></button></div><div class="col col-50"><button style="line-height:28px;" class="button button-energized icon ion-images" ng-click="choosePhoto4UploadPPhotoM();" ></button></div></div>',
-		  title: 'Choose Option',
+		  title: $m1,
 		  scope: $scope,
 		  buttons: [
 			{ 
-			  text: 'Close',
+			  text: m3,
 			  type: 'button-custom'
 			},
 		  ]
@@ -498,17 +524,20 @@ angular.module('starter.controllers', [])
 		});
 	}
 	$scope.submitamountRedeemForm = function(FormName) {
+		lang = $scope.defaultLang;
+		var m1 = lang == 'english' ? 'Form Is Incomplete' : 'El formulario es incompleto';
+		var m2 = lang == 'english' ? 'Ok' : 'De acuerdo';
 		/** http://dreamgraphs.com/web_service.php?action=point_redeem_insert_entry&user_id=12&point=50&type_id=jayraj@gmail.com&payment_type=payu **/
 		/** Additional bank_name,account_number,typeof_account,nameof_owner,phone,document **/
 		if(FormName.$invalid) {
 			console.log('Form is invalid');
 			$ionicPopup.show({
 			  template: '',
-			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> Form Is Incomplete',
+			  title: '<p><i class="ion-android-cancel icon-popup"></i></p> '+m1,
 			  scope: $scope,
 			  buttons: [
 				{ 
-				  text: 'Ok',
+				  text: m2,
 				  type: 'button-custom'
 				},
 			  ]
@@ -517,7 +546,7 @@ angular.module('starter.controllers', [])
 		else{
 			if($scope.data.imageData == ''){
 				var action = "point_redeem_insert_entry";
-				var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.data.points+"&type_id="+$scope.data.type_id+"&payment_type=colombia"+"&bank_name="+$scope.data.bank_name+"&account_number="+$scope.data.account_number+"&typeof_account="+$scope.data.typeof_account+"&nameof_owner="+$scope.data.nameof_owner+"&phone="+$scope.data.phone ;
+				var data_parameters = "action="+action+"&user_id="+global_login_id+"&point="+$scope.data.points+"&type_id="+$scope.data.type_id+"&payment_type=colombia"+"&bank_name="+$scope.data.bank_name+"&account_number="+$scope.data.account_number+"&typeof_account="+$scope.data.typeof_account+"&nameof_owner="+$scope.data.nameof_owner+"&phone="+$scope.data.phone+"&lang="+lang ;
 				$ionicLoading.show({template: '<ion-spinner icon="ios" class="spinner-primary"></ion-spinner>'});
 				$http.post(globalip,data_parameters, {
 					headers: {'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
@@ -529,7 +558,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-custom'
 						},
 					  ]
@@ -573,7 +602,7 @@ angular.module('starter.controllers', [])
 					  scope: $scope,
 					  buttons: [
 						{ 
-						  text: 'Ok',
+						  text: m2,
 						  type: 'button-positive'
 						},
 					  ]
